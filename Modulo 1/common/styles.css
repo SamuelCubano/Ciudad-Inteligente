@@ -354,9 +354,11 @@ h1,h2,h3,h4{margin:0;font-family:var(--font-h);font-weight:600;letter-spacing:.2
 }
 .float-badge b{display:block;font-size:.83rem;color:var(--green-900);font-family:var(--font-h)}
 .float-badge small{font-size:.7rem;color:var(--ink-soft);font-weight:700}
-.fb-1{top:-22px;right:-12px;animation:floatY 5s ease-in-out infinite}
-.fb-2{bottom:-26px;left:-18px;animation:floatY 6.4s ease-in-out infinite .8s}
-@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
+.fb-1{top:-18px;right:-10px;animation:floatY 5s ease-in-out infinite}
+.fb-2{top:105%;opacity:0.9;animation:floatX 6.4s ease-in-out infinite .8s}
+.fb-3{top:105%;right:0px;opacity:0.9;animation:floatX 5.5s ease-in-out infinite 1.2s}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes floatX{0%,100%{transform:translateX(0)}50%{transform:translateX(-6px)}}
 .fb-ico{width:32px;height:32px;border-radius:11px;display:grid;place-items:center;color:#fff;flex-shrink:0}
 .fb-ico svg{width:16px;height:16px;stroke-width:2.8}
 
@@ -433,6 +435,27 @@ h1,h2,h3,h4{margin:0;font-family:var(--font-h);font-weight:600;letter-spacing:.2
 .alert-body small{font-size:.75rem;color:var(--ink-soft);font-weight:700}
 .alert-min{margin-left:auto;font-family:var(--font-h);font-weight:700;color:var(--amber);font-size:1.05rem;white-space:nowrap}
 .alert-item.crit .alert-min{color:var(--red)}
+
+/* Traffic list static */
+.traffic-list{display:flex;flex-direction:column;gap:10px;max-height:330px;overflow:auto}
+.traffic-item{display:flex;flex-direction:column;gap:4px;padding:12px;border-radius:14px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.85);transition:.2s}
+.traffic-item:hover{background:#fff;box-shadow:var(--shadow-sm)}
+.traffic-route{display:flex;align-items:center;gap:10px}
+.traffic-route .route-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.traffic-route strong{font-family:var(--font-h);font-size:.88rem;color:var(--green-900)}
+.traffic-status{font-size:.65rem;font-weight:900;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.traffic-status.fluido{background:rgba(74,169,108,.15);color:var(--green-700)}
+.traffic-status.moderado{background:rgba(245,166,35,.15);color:#a96c00}
+.traffic-status.congestionado{background:rgba(229,72,77,.15);color:#c0373b}
+.traffic-meta{font-size:.7rem;color:var(--ink-soft);font-weight:600}
+
+/* Alert variants for static HTML */
+.alert-item.leve{border-left-color:var(--green-500)}
+.alert-item.moderada{border-left-color:var(--amber)}
+.alert-item.critica{border-left-color:var(--red)}
+.alert-route{font-family:var(--font-h);font-size:.82rem;color:var(--green-900);font-weight:700}
+.alert-detail{font-size:.75rem;color:var(--ink-soft);font-weight:600}
+.alert-time{margin-left:auto;font-size:.68rem;color:var(--ink-soft);white-space:nowrap}
 
 /* ============ MAPA ============ */
 .routes-layout{display:grid;grid-template-columns:1fr 330px;gap:16px;align-items:start}
@@ -615,7 +638,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--font-h);font-weight:600;letter-spacing:.2
 
 /* Driver photo styles */
 .driver-photo{width:100px;height:100px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.3);box-shadow:0 4px 20px rgba(0,0,0,.3)}
-.driver-photo img{width:100%;height:100%;object-fit:cover}
+.driver-photo img{width:145%;height:145%;object-fit:cover}
 .driver-name{font-family:var(--font-h);color:#fff;font-size:1.1rem;font-weight:700;text-shadow:0 2px 8px rgba(0,0,0,.4)}
 .driver-id{color:rgba(255,255,255,.7);font-size:.8rem;font-weight:600;letter-spacing:.5px}
 .reader-text{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:rgba(255,255,255,.9);font-size:.78rem;font-weight:800;letter-spacing:.4px}

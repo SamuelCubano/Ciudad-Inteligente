@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TransUrbano | Servicio de Transporte Urbano</title>
-<meta name="description" content="Plataforma de gestiÃ³n del Servicio de Transporte Urbano: rutas activas, trÃ¡fico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
+<meta name="description" content="Plataforma de gestión del Servicio de Transporte Urbano: rutas activas, tráfico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -22,9 +22,8 @@
   <div class="cloud cloud-3"></div>
   <div class="cloud cloud-4"></div>
   <div class="hills"></div>
-  <div class="bubbles" id="bubbles"></div>
-</div>
-  </div>
+<div class="bubbles" id="bubbles"></div>
+    </div>
 
 <!-- ================= NAV ================= -->
 <header class="topbar" id="topbar">
@@ -52,7 +51,7 @@
     </button>
   </nav>
 
-  <button class="burger" id="burger" aria-label="Abrir menÃº"><span></span><span></span><span></span></button>
+  <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
 </header>
 
 <main>
@@ -66,16 +65,16 @@
         <span class="line grad">sin incertidumbre</span>
       </h1>
       <p class="hero-sub">
-        Rutas activas, trÃ¡fico en vivo, disponibilidad de unidades y registro GPS de tiempos.
-        El sistema ofrece una soluciÃ³n integral a la incertidumbre del transporte y su pasaje,
-        la reclamaciÃ³n de incidentes y la informaciÃ³n inmediata de datos de las unidades.
+        Rutas activas, tráfico en vivo, disponibilidad de unidades y registro GPS de tiempos.
+        El sistema ofrece una solución integral a la incertidumbre del transporte y su pasaje,
+        la reclamación de incidentes y la información inmediata de datos de las unidades.
       </p>
       <div class="hero-actions">
-        <a href="rutas.html" class="btn btn-primary btn-lg">
+        <a href="../rutas/index.html" class="btn btn-primary btn-lg">
           <svg viewBox="0 0 24 24"><path d="M9 20l-6-2V6l6 2 6-2 6 2v12l-6-2-6 2z"/></svg>
           Ver mapa en vivo
         </a>
-        <a href="incidencias.html" class="btn btn-glass btn-lg">
+        <a href="../incidencias/index.html" class="btn btn-glass btn-lg">
           <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
           Reportar incidencia
         </a>
@@ -84,23 +83,23 @@
       <div class="hero-stats" id="heroStats">
         <div class="stat glass">
           <span class="stat-ico ico-green"><svg viewBox="0 0 24 24"><path d="M9 20l-6-2V6l6 2 6-2 6 2v12l-6-2-6 2z"/></svg></span>
-          <b class="counter" data-target="8">0</b>
+          <b class="counter">14</b>
           <small>Rutas activas</small>
         </div>
         <div class="stat glass">
           <span class="stat-ico ico-blue"><svg viewBox="0 0 24 24"><path d="M5 17h14M6 17V9l6-4 6 4v8"/></svg></span>
-          <b class="counter" data-target="18">0</b>
-          <small>Unidades disponibles</small>
+          <b class="counter">86</b>
+          <small>Unidades en servicio</small>
         </div>
         <div class="stat glass">
           <span class="stat-ico ico-amber"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-          <b class="counter" data-target="47">0</b>
+          <b class="counter">47</b>
           <small>Paradas activas</small>
         </div>
         <div class="stat glass">
           <span class="stat-ico ico-sky"><svg viewBox="0 0 24 24"><path d="M12 22s8-4.5 8-11a8 8 0 1 0-16 0c0 6.5 8 11 8 11z"/><circle cx="12" cy="11" r="3"/></svg></span>
-          <b class="counter" data-target="96">0</b>
-          <small>% eficiencia</small>
+          <b class="counter">94</b>
+          <small>% eficiencia global</small>
         </div>
       </div>
     </div>
@@ -113,13 +112,14 @@
         </div>
         <div class="mini-map" id="miniMap"></div>
         <div class="globe-foot">
-          <div class="chip"><span class="k">Unidades en ruta</span><span class="v" id="kpiUnits">0</span></div>
-          <div class="chip"><span class="k">Retraso prom.</span><span class="v" id="kpiDelay">0 min</span></div>
-          <div class="chip"><span class="k">Incidencias hoy</span><span class="v" id="kpiIncidents">0</span></div>
+          <div class="chip"><span class="k">Unidades en ruta</span><span class="v" id="kpiUnits">86</span></div>
+          <div class="chip"><span class="k">Retraso prom.</span><span class="v" id="kpiDelay">4 min</span></div>
+          <div class="chip"><span class="k">Incidencias hoy</span><span class="v" id="kpiIncidents">12</span></div>
         </div>
       </div>
-      <div class="float-badge fb-1 glass"><span class="fb-ico ico-green"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><div><b>Tarjeta validada</b><small>Conductor #15827344</small></div></div>
-      <div class="float-badge fb-2 glass"><span class="fb-ico ico-amber"><svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><div><b>Incidencia registrada</b><small>Retraso en Av. BolÃ­var</small></div></div>
+      <div class="float-badge fb-1 glass"><span class="fb-ico ico-green"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span><div><b>Tarjeta validada</b><small>Conductor #4417 · U-101</small></div></div>
+      <div class="float-badge fb-2 glass"><span class="fb-ico ico-amber"><svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></span><div><b>Incidencia registrada</b><small>Retraso +8 min en Av. Miranda</small></div></div>
+      <div class="float-badge fb-3 glass"><span class="fb-ico ico-blue"><svg viewBox="0 0 24 24"><path d="M12 22s8-4.5 8-11a8 8 0 1 0-16 0c0 6.5 8 11 8 11z"/></svg></span><div><b>Ruta R4 congestionada</b><small>Velocidad 12 km/h · Flujo 41%</small></div></div>
     </div>
   </div>
 </section>
@@ -132,7 +132,7 @@
         <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
         <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
       </a>
-      <p class="muted">SoluciÃ³n a la incertidumbre del transporte y su pasaje, reclamaciÃ³n de incidentes e informaciÃ³n inmediata de datos de las unidades.</p>
+      <p class="muted">Solución a la incertidumbre del transporte y su pasaje, reclamación de incidentes e información inmediata de datos de las unidades.</p>
     </div>
     <div class="foot-col">
       <h4>Módulo 1</h4>
@@ -148,25 +148,25 @@
     <div class="foot-col">
       <h4>No funcional</h4>
       <ul>
-        <li>IdentificaciÃ³n con tarjeta</li>
-        <li>UbicaciÃ³n espacial GPS</li>
+        <li>Identificación con tarjeta</li>
+        <li>Ubicación espacial GPS</li>
         <li>Registro de tiempos</li>
-        <li>BotÃ³n de emergencia</li>
-        <li>BotÃ³n de reporte</li>
+        <li>Botón de emergencia</li>
+        <li>Botón de reporte</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>Proyecto</h4>
       <ul>
-        <li>Universidad â€” IUJO</li>
-        <li>Curso: IngenierÃ­a de Software</li>
-        <li>Producto de demostraciÃ³n</li>
+        <li>Universidad "” IUJO</li>
+        <li>Curso: Ingeniería de Software</li>
+        <li>Producto de demostración</li>
         <li>Datos simulados en el navegador</li>
       </ul>
     </div>
   </div>
   <div class="foot-bottom">
-    <span>Â© 2026 TransUrbano Â· Proyecto universitario</span>
+    <span>© 2026 TransUrbano · Proyecto universitario</span>
     <span>Hecho con HTML, CSS, JS y GSAP</span>
   </div>
 </footer>
@@ -199,6 +199,47 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="../common/script.js"></script>
+<script>
+  // Reloj en vivo
+  function actualizarReloj() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    const el = document.getElementById('clock');
+    if (el) el.textContent = h + ':' + m + ':' + s;
+  }
+  actualizarReloj();
+  setInterval(actualizarReloj, 1000);
+
+  // Mini-mapa Leaflet
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof L !== 'undefined') {
+      const map = L.map('miniMap', {
+        center: [10.5060, -66.9146],
+        zoom: 12,
+        zoomControl: false,
+        attributionControl: true,
+        scrollWheelZoom: false,
+        dragging: false
+      });
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap', maxZoom: 19
+      }).addTo(map);
+      
+      // Rutas rápidas
+      const rutas = [
+        { color: '#2f9e63', coords: [[10.5060,-66.9146],[10.5095,-66.9050],[10.5060,-66.9220],[10.4953,-66.9235]] },
+        { color: '#29b6f6', coords: [[10.5060,-66.9146],[10.4969,-66.8857],[10.5085,-66.8990],[10.5218,-66.9454]] },
+        { color: '#8b7cf6', coords: [[10.5060,-66.9146],[10.5030,-66.9000],[10.4969,-66.8857]] },
+        { color: '#f5a623', coords: [[10.5060,-66.9146],[10.4969,-66.8857],[10.4956,-66.8489],[10.4821,-66.8404]] }
+      ];
+      rutas.forEach(r => L.polyline(r.coords, { color: r.color, weight: 2, opacity: 0.7 }).addTo(map));
+      const allCoords = rutas.flatMap(r => r.coords);
+      if (allCoords.length) map.fitBounds(allCoords, { padding: [10, 10] });
+    }
+  });
+</script>
 </body>
 </html>
 

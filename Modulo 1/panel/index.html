@@ -24,7 +24,6 @@
   <div class="hills"></div>
   <div class="bubbles" id="bubbles"></div>
 </div>
-  </div>
 
 <!-- ================= NAV ================= -->
 <header class="topbar" id="topbar">
@@ -67,7 +66,7 @@
     <div class="kpi glass">
       <div class="kpi-head"><span>Unidades en servicio</span><span class="kpi-chip ok">+3 hoy</span></div>
       <div class="kpi-body">
-        <b class="counter" data-target="86">0</b>
+        <b class="counter">86</b>
         <div class="ring" style="--p:86"><span>86%</span></div>
       </div>
       <small>De 104 unidades totales en la flota</small>
@@ -75,7 +74,7 @@
     <div class="kpi glass">
       <div class="kpi-head"><span>Rutas con tráfico fluido</span><span class="kpi-chip ok">Estable</span></div>
       <div class="kpi-body">
-        <b class="counter" data-target="14">0</b>
+        <b class="counter">14</b>
         <div class="ring ring-green" style="--p:58"><span>58%</span></div>
       </div>
       <small>6 rutas moderadas · 4 rutas congestionadas</small>
@@ -83,7 +82,7 @@
     <div class="kpi glass">
       <div class="kpi-head"><span>Retraso promedio</span><span class="kpi-chip warn">+1.2 min</span></div>
       <div class="kpi-body">
-        <b class="counter" data-target="4">0</b><span class="unit-min">min</span>
+        <b class="counter">4</b><span class="unit-min">min</span>
         <div class="ring ring-amber" style="--p:32"><span>32%</span></div>
       </div>
       <small>Sobre el horario programado de paradas</small>
@@ -91,7 +90,7 @@
     <div class="kpi glass">
       <div class="kpi-head"><span>Incidencias abiertas</span><span class="kpi-chip bad">Crítica 1</span></div>
       <div class="kpi-body">
-        <b class="counter" data-target="12">0</b>
+        <b class="counter">12</b>
         <div class="ring ring-red" style="--p:48"><span>48%</span></div>
       </div>
       <small>Resueltas automáticamente: 87%</small>
@@ -107,15 +106,77 @@
           <button class="seg-btn" data-mode="avg">Promedio</button>
         </span>
       </div>
-      <ul class="traffic-list" id="trafficList"></ul>
+      <ul class="traffic-list" id="trafficList">
+        <li class="traffic-item">
+          <div class="traffic-route">
+            <span class="route-dot" style="background:#2f9e63"></span>
+            <strong>R1 — Av. Bolívar</strong>
+            <span class="traffic-status fluido">Fluido</span>
+          </div>
+          <div class="traffic-meta">Velocidad: 28 km/h · Flujo: 85%</div>
+        </li>
+        <li class="traffic-item">
+          <div class="traffic-route">
+            <span class="route-dot" style="background:#29b6f6"></span>
+            <strong>R2 — Caracas-La Guaira</strong>
+            <span class="traffic-status moderado">Moderado</span>
+          </div>
+          <div class="traffic-meta">Velocidad: 18 km/h · Flujo: 62%</div>
+        </li>
+        <li class="traffic-item">
+          <div class="traffic-route">
+            <span class="route-dot" style="background:#8b7cf6"></span>
+            <strong>R3 — Av. Universidad</strong>
+            <span class="traffic-status fluido">Fluido</span>
+          </div>
+          <div class="traffic-meta">Velocidad: 24 km/h · Flujo: 78%</div>
+        </li>
+        <li class="traffic-item">
+          <div class="traffic-route">
+            <span class="route-dot" style="background:#f5a623"></span>
+            <strong>R4 — Av. Miranda</strong>
+            <span class="traffic-status congestionado">Congestionado</span>
+          </div>
+          <div class="traffic-meta">Velocidad: 12 km/h · Flujo: 41%</div>
+        </li>
+        <li class="traffic-item">
+          <div class="traffic-route">
+            <span class="route-dot" style="background:#e5484d"></span>
+            <strong>R5 — Autopista del Este</strong>
+            <span class="traffic-status congestionado">Congestionado</span>
+          </div>
+          <div class="traffic-meta">Velocidad: 9 km/h · Flujo: 33%</div>
+        </li>
+      </ul>
     </div>
 
     <div class="card glass alerts-card">
       <div class="card-head">
         <h3>Avisos de llegadas tardías</h3>
-        <span class="badge-pulse" id="alertCount">0</span>
+        <span class="badge-pulse" id="alertCount">4</span>
       </div>
-      <ul class="alerts-list" id="alertsList"></ul>
+      <ul class="alerts-list" id="alertsList">
+        <li class="alert-item critica">
+          <div class="alert-route">R4 — Av. Miranda</div>
+          <div class="alert-detail">U-401 retraso <strong>+8 min</strong> en La California</div>
+          <span class="alert-time">Hace 3 min</span>
+        </li>
+        <li class="alert-item critica">
+          <div class="alert-route">R2 — Caracas-La Guaira</div>
+          <div class="alert-detail">U-202 retraso <strong>+12 min</strong> en Caraballeda</div>
+          <span class="alert-time">Hace 7 min</span>
+        </li>
+        <li class="alert-item moderada">
+          <div class="alert-route">R1 — Av. Bolívar</div>
+          <div class="alert-detail">U-103 retraso <strong>+4 min</strong> en Parque Central</div>
+          <span class="alert-time">Hace 12 min</span>
+        </li>
+        <li class="alert-item leve">
+          <div class="alert-route">R3 — Av. Universidad</div>
+          <div class="alert-detail">U-301 retraso <strong>+2 min</strong> en Bellas Artes</div>
+          <span class="alert-time">Hace 18 min</span>
+        </li>
+      </ul>
     </div>
   </div>
 </section>
