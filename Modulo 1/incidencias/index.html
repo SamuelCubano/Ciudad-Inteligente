@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TransUrbano | Servicio de Transporte Urbano</title>
-<meta name="description" content="Plataforma de gestiÃ³n del Servicio de Transporte Urbano: rutas activas, trÃ¡fico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
+<meta name="description" content="PLataforma de gestión del Servicio de Transporte Urbano: rutas activas, tráfico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -52,7 +52,7 @@
     </button>
   </nav>
 
-  <button class="burger" id="burger" aria-label="Abrir menÃº"><span></span><span></span><span></span></button>
+  <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
 </header>
 
 <main>
@@ -60,7 +60,7 @@
 <section class="section" id="incidencias">
   <div class="section-head">
     <h2 class="title"><span class="title-bar"></span>Reporte de incidencias</h2>
-    <p class="subtitle">Canal de reclamaciÃ³n: los tiempos de respuesta se registran y se notifican al usuario.</p>
+    <p class="subtitle">Canal de reclamación: los tiempos de respuesta se registran y se notifican al usuario.</p>
   </div>
 
   <div class="inc-layout">
@@ -71,11 +71,11 @@
         <label for="incTipo">Tipo de incidencia</label>
         <select id="incTipo" required>
           <option value="">Seleccione...</option>
-          <option value="retraso">Retraso prolongado</option>
+          <option value="retraso">Retraso proLongado</option>
           <option value="sobrecupo">Sobrecupo / falta de espacio</option>
-          <option value="unidad">Falla mecÃ¡nica de la unidad</option>
+          <option value="unidad">Falla mecánica de la unidad</option>
           <option value="parada">Parada no operativa</option>
-          <option value="ruta">DesvÃ­o de ruta</option>
+          <option value="ruta">Desvío de ruta</option>
           <option value="seguridad">Seguridad / conducta</option>
           <option value="otro">Otro</option>
         </select>
@@ -92,24 +92,24 @@
             <option value="baja">Baja</option>
             <option value="media" selected>Media</option>
             <option value="alta">Alta</option>
-            <option value="critica">CrÃ­tica</option>
+            <option value="critica">Crítica</option>
           </select>
         </div>
       </div>
 
       <div class="field">
-        <label for="incDesc">DescripciÃ³n</label>
+        <label for="incDesc">Descripción</label>
         <textarea id="incDesc" rows="4" required placeholder="Describa lo ocurrido, hora aproximada y detalle de la unidad..."></textarea>
       </div>
 
       <div class="field">
-        <span class="label">UbicaciÃ³n de la incidencia</span>
-        <div class="gps-row">
+        <span class="label">Ubicación de la incidencia</span>
+        <div class="GPS-row">
           <button type="button" class="btn btn-soft" id="btnGps">
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
             Obtener GPS
           </button>
-          <span class="gps-value" id="gpsValue">Sin coordenadas â€” use el botÃ³n o escrÃ­balas</span>
+          <span class="GPS-value" id="GPSValue">Sin coordenadas "” use el botón o escríbalas</span>
         </div>
         <input type="text" id="incCoords" placeholder="Latitud, Longitud (opcional manual)" class="full-input">
       </div>
@@ -135,9 +135,9 @@
       </div>
       <div class="card glass sla-card">
         <h3>Tiempos de respuesta</h3>
-        <div class="sla-row"><span>Acknowledge</span><div class="bar"><i style="width:78%"></i></div><b>1.8 min</b></div>
-        <div class="sla-row"><span>ResoluciÃ³n</span><div class="bar"><i style="width:54%"></i></div><b>6.4 min</b></div>
-        <div class="sla-row"><span>SatisfacciÃ³n</span><div class="bar"><i style="width:92%"></i></div><b>94%</b></div>
+        <div class="sla-row"><span>Identificación</span><div class="bar"><i style="width:78%"></i></div><b>1.8 min</b></div>
+        <div class="sla-row"><span>Resolución</span><div class="bar"><i style="width:54%"></i></div><b>6.4 min</b></div>
+        <div class="sla-row"><span>Satisfacción</span><div class="bar"><i style="width:92%"></i></div><b>94%</b></div>
       </div>
     </div>
   </div>
@@ -151,40 +151,41 @@
         <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
         <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
       </a>
-      <p class="muted">SoluciÃ³n a la incertidumbre del transporte y su pasaje, reclamaciÃ³n de incidentes e informaciÃ³n inmediata de datos de las unidades.</p>
+      <p class="muted">Solución a la incertidumbre del transporte y su pasaje, reclamación de incidentes e información inmediata de datos de las unidades.</p>
     </div>
     <div class="foot-col">
-      <h4>Funcionalidad</h4>
+      <h4>Módulo 1</h4>
       <ul>
-        <li>Rutas activas y trÃ¡fico</li>
-        <li>Unidades y caracterÃ­sticas</li>
-        <li>Reporte de incidencias</li>
-        <li>UbicaciÃ³n de paradas</li>
-        <li>Avisos de llegadas tardÃ­as</li>
+        <li>Panel de control</li>
+        <li>Rutas</li>
+        <li>Unidades</li>
+        <li>Paradas</li>
+        <li>Incidencias</li>
+        <li>Conductores</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>No funcional</h4>
       <ul>
-        <li>IdentificaciÃ³n con tarjeta</li>
-        <li>UbicaciÃ³n espacial GPS</li>
+        <li>Identificación con tarjeta</li>
+        <li>Ubicación espacial GPS</li>
         <li>Registro de tiempos</li>
-        <li>BotÃ³n de emergencia</li>
-        <li>BotÃ³n de reporte</li>
+        <li>Botón de emergencia</li>
+        <li>Botón de reporte</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>Proyecto</h4>
       <ul>
-        <li>Universidad â€” IUJO</li>
-        <li>Curso: IngenierÃ­a de Software</li>
-        <li>Producto de demostraciÃ³n</li>
+        <li>Universidad "” IUJO</li>
+        <li>Curso: Ingeniería de Software</li>
+        <li>Producto de demostración</li>
         <li>Datos simulados en el navegador</li>
       </ul>
     </div>
   </div>
   <div class="foot-bottom">
-    <span>Â© 2026 TransUrbano Â· Proyecto universitario</span>
+    <span>© 2026 TransUrbano · Proyecto universitario</span>
     <span>Hecho con HTML, CSS, JS y GSAP</span>
   </div>
 </footer>

@@ -22,13 +22,7 @@
 
   let rutaSeleccionada = null;
 
-  /* Clave de los basemaps de CARTO (carto.com/basemaps). Desde el 25/09/2026 CARTO
-     exige clave en las teselas raster: sin ella responde con un mosaico de aviso
-     "API KEY REQUIRED" en lugar del mapa. */
-  const CARTO_KEY = 'cb1_4qtz_1_a4f910a24681b990d4cbaf49';
 
-  /* ==============================================================
-     1.1 CORREDORES REALES DE CARACAS
      ============================================================== */
 
   const RUTAS = [
@@ -145,27 +139,18 @@
      3. PARADAS
      ============================================================== */
 
-  const paradas = [];
-  (function generarParadas() {
-    RUTAS.forEach((r, ri) => {
-      const n = 5 + (ri % 3);
-      const nombres = PARADAS_RUTA[r.id] || [];
-      for (let i = 0; i < n; i++) {
-        const t = n === 1 ? 0.5 : i / (n - 1);
-        paradas.push({
-          id: 'P' + (String(ri + 1) + String(i + 1).padStart(2, '0')),
-          nombre: nombres.length ? nombres[i % nombres.length] : 'Parada ' + (i + 1),
-          ruta: r.id,
-          t: t,
-          sector: r.sector,
-          capacidad: randInt(20, 90),
-          pasajeros: randInt(0, 40),
-          espera: randInt(1, 12)
-        });
-      }
-      r.paradas = n;   // la cabecera refleja las paradas realmente generadas
-    });
-  })();
+  const paradas = [
+    { id: 'P101', nombre: 'Terminal La Bandera', ruta: 'R1', sector: 'Centro', capacidad: 60, pasajeros: 12, espera: 2 },
+    { id: 'P102', nombre: 'Plaza Venezuela', ruta: 'R1', sector: 'Centro', capacidad: 80, pasajeros: 28, espera: 5 },
+    { id: 'P103', nombre: 'Parque Central', ruta: 'R1', sector: 'Centro', capacidad: 50, pasajeros: 8, espera: 1 },
+    { id: 'P301', nombre: 'Bellas Artes', ruta: 'R3', sector: 'Norte', capacidad: 70, pasajeros: 15, espera: 3 },
+    { id: 'P302', nombre: 'Ciudad Universitaria', ruta: 'R3', sector: 'Norte', capacidad: 90, pasajeros: 35, espera: 7 },
+    { id: 'P303', nombre: 'Los Chaguaramos', ruta: 'R3', sector: 'Norte', capacidad: 40, pasajeros: 5, espera: 4 },
+    { id: 'P401', nombre: 'La California', ruta: 'R4', sector: 'Este', capacidad: 60, pasajeros: 22, espera: 6 },
+    { id: 'P402', nombre: 'Chacao', ruta: 'R4', sector: 'Este', capacidad: 85, pasajeros: 40, espera: 9 },
+    { id: 'P403', nombre: 'Altamira', ruta: 'R4', sector: 'Este', capacidad: 55, pasajeros: 18, espera: 3 },
+    { id: 'P404', nombre: 'Petare', ruta: 'R4', sector: 'Este', capacidad: 100, pasajeros: 55, espera: 12 }
+  ];
 
   /* ==============================================================
      4. UTILIDADES UI
@@ -246,27 +231,6 @@
   /* ==============================================================
      5. MAPA LEAFLET + OPENSTREETMAP EN VIVO
      ============================================================== */
-
-  const TIENDAS = {
-    claro: {
-      url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=' + CARTO_KEY,
-      attr: '&copy; OpenStreetMap &copy; CARTO',
-      max: 19,
-      nombre: 'Estilo claro (CARTO Voyager)'
-    },
-    oscuro: {
-      url: 'https://{s}.basemaps.cartocdn.com/rastertiles/dark_all/{z}/{x}/{y}{r}.png?key=' + CARTO_KEY,
-      attr: '&copy; OpenStreetMap &copy; CARTO',
-      max: 19,
-      nombre: 'Estilo oscuro (CARTO Dark Matter)'
-    },
-    estandar: {
-      url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-      attr: '&copy; OpenStreetMap',
-      max: 19,
-      nombre: 'Estándar de OpenStreetMap'
-    }
-  };
 
   let mapa = null;
   let mapaMini = null;
@@ -362,9 +326,9 @@
     /* Encuadre inicial: la red completa de Caracas */
     mapa.fitBounds(limitesRed(), { padding: [6, 6], maxZoom: 13 });
 
-    capaActual = L.tileLayer(TIENDAS.claro.url, {
-      attribution: TIENDAS.claro.attr,
-      maxZoom: TIENDAS.claro.max,
+    capaActual = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 19,
       crossOrigin: true
     }).addTo(mapa);
 
@@ -380,32 +344,6 @@
     dibujarRutas(mapa, true);
     dibujarParadas(mapa, true);
     dibujarUnidades(mapa, false);
-
-    // Control de capas interno (botón "capa")
-    const controlCapas = L.control({ position: 'topright' });
-    controlCapas.onAdd = function () {
-      const div = L.DomUtil.create('div', 'leaflet-control-capas');
-      div.innerHTML =
-        '<button type="button" data-capa="claro" class="cap-btn active">Claro</button>' +
-        '<button type="button" data-capa="oscuro" class="cap-btn">Oscuro</button>' +
-        '<button type="button" data-capa="estandar" class="cap-btn">OSM</button>';
-      L.DomEvent.disableClickPropagation(div);
-      div.addEventListener('click', (e) => {
-        const btn = e.target.closest('.cap-btn');
-        if (!btn) return;
-        const modo = btn.dataset.capa;
-        div.querySelectorAll('.cap-btn').forEach(b => b.classList.toggle('active', b === btn));
-        const nueva = L.tileLayer(TIENDAS[modo].url, {
-          attribution: TIENDAS[modo].attr, maxZoom: TIENDAS[modo].max, crossOrigin: true
-        });
-        if (capaActual) mapa.removeLayer(capaActual);
-        capaActual = nueva.addTo(mapa);
-        capaActual.bringToBack();
-        toast('Mapa base actualizado', TIENDAS[modo].nombre, 'info');
-      });
-      return div;
-    };
-    controlCapas.addTo(mapa);
 
     // al redimensionar la ventana el mapa debe recalcular su tamaño
     window.addEventListener('resize', () => {
@@ -561,8 +499,8 @@
     /* Vista general de la red en el mini mapa */
     mapaMini.fitBounds(limitesRed(), { padding: [6, 6], maxZoom: 12 });
 
-    capaMini = L.tileLayer(TIENDAS.claro.url, {
-      attribution: TIENDAS.claro.attr, maxZoom: TIENDAS.claro.max, crossOrigin: true
+    capaMini = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors', maxZoom: 19, crossOrigin: true
     }).addTo(mapaMini);
 
     RUTAS.forEach(prepararRuta);
@@ -586,19 +524,7 @@
   $('#btnZoomIn').addEventListener('click', () => { if (mapa) mapa.zoomIn(); });
   $('#btnZoomOut').addEventListener('click', () => { if (mapa) mapa.zoomOut(); });
   $('#btnCapa').addEventListener('click', () => {
-    if (!mapa) return;
-    const url = (capaActual && capaActual._url) || '';
-    /* ciclo: claro -> oscuro -> OSM -> claro */
-    let modo = 'claro';
-    if (url.indexOf('dark_all') > -1) modo = 'estandar';
-    else if (url.indexOf('cartocdn') > -1) modo = 'oscuro';
-    const nueva = TIENDAS[modo];
-    if (capaActual) mapa.removeLayer(capaActual);
-    capaActual = L.tileLayer(nueva.url, {
-      attribution: nueva.attr, maxZoom: nueva.max, crossOrigin: true
-    }).addTo(mapa);
-    capaActual.bringToBack();
-    toast('Mapa base actualizado', nueva.nombre, 'info');
+    toast('Mapa base', 'Usando OpenStreetMap estándar', 'info');
   });
   $('#btnLocate').addEventListener('click', () => {
     if (!mapa) return;
@@ -892,14 +818,18 @@
     const lista = paradas.filter(p => !filtro || p.nombre.toLowerCase().includes(filtro) || p.ruta.toLowerCase().includes(filtro));
     cont.innerHTML = '';
     lista.forEach((p, i) => {
-      const li = document.createElement('div');
-      li.className = 'stop-item' + (p.pasajeros > 25 ? ' busy' : '');
-      li.innerHTML =
-        '<span class="stop-idx">' + (i + 1) + '</span>' +
-        '<div class="stop-info"><b>' + p.nombre + '</b><small>' + p.id + ' · Ruta ' + p.ruta + ' · ' + p.sector + ' · ' + p.pasajeros + ' en espera</small></div>' +
-        '<div class="stop-eta"><b>' + p.espera + ' min</b><small>ETA</small></div>';
-      li.addEventListener('click', () => detalleParada(p, RUTAS.find(r => r.id === p.ruta)));
-      cont.appendChild(li);
+      const tr = document.createElement('tr');
+      const estado = p.pasajeros > 40 ? 'chip-red' : (p.pasajeros > 20 ? 'chip-amber' : 'chip-green');
+      const estadoTxt = p.pasajeros > 40 ? 'Saturada' : (p.pasajeros > 20 ? 'Alta demanda' : 'Activa');
+      tr.innerHTML =
+        '<td>' + p.nombre + '</td>' +
+        '<td>' + p.ruta + '</td>' +
+        '<td>' + p.sector + '</td>' +
+        '<td>' + p.pasajeros + '</td>' +
+        '<td>' + p.espera + ' min</td>' +
+        '<td><span class="chip ' + estado + '">' + estadoTxt + '</span></td>';
+      tr.addEventListener('click', () => detalleParada(p, RUTAS.find(r => r.id === p.ruta)));
+      cont.appendChild(tr);
     });
   }
   $('#stopSearch').addEventListener('input', (e) => renderParadas(e.target.value.toLowerCase()));

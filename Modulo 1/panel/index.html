@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TransUrbano | Servicio de Transporte Urbano</title>
-<meta name="description" content="Plataforma de gestiÃ³n del Servicio de Transporte Urbano: rutas activas, trÃ¡fico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
+<meta name="description" content="PLataforma de gestión del Servicio de Transporte Urbano: rutas activas, tráfico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -52,7 +52,7 @@
     </button>
   </nav>
 
-  <button class="burger" id="burger" aria-label="Abrir menÃº"><span></span><span></span><span></span></button>
+  <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
 </header>
 
 <main>
@@ -60,7 +60,7 @@
 <section class="section" id="panel">
   <div class="section-head">
     <h2 class="title"><span class="title-bar"></span>Panel de control operativo</h2>
-    <p class="subtitle">Estado general de la flota, red de rutas y semÃ¡foro del trÃ¡fico en tiempo real.</p>
+    <p class="subtitle">Estado general de la flota, red de rutas y semáforo del tráfico en tiempo real.</p>
   </div>
 
   <div class="kpi-row">
@@ -73,12 +73,12 @@
       <small>De 104 unidades totales en la flota</small>
     </div>
     <div class="kpi glass">
-      <div class="kpi-head"><span>Rutas con trÃ¡fico fluido</span><span class="kpi-chip ok">Estable</span></div>
+      <div class="kpi-head"><span>Rutas con tráfico fluido</span><span class="kpi-chip ok">Estable</span></div>
       <div class="kpi-body">
         <b class="counter" data-target="14">0</b>
         <div class="ring ring-green" style="--p:58"><span>58%</span></div>
       </div>
-      <small>6 rutas moderadas Â· 4 rutas congestionadas</small>
+      <small>6 rutas moderadas · 4 rutas congestionadas</small>
     </div>
     <div class="kpi glass">
       <div class="kpi-head"><span>Retraso promedio</span><span class="kpi-chip warn">+1.2 min</span></div>
@@ -89,19 +89,19 @@
       <small>Sobre el horario programado de paradas</small>
     </div>
     <div class="kpi glass">
-      <div class="kpi-head"><span>Incidencias abiertas</span><span class="kpi-chip bad">CrÃ­tica 1</span></div>
+      <div class="kpi-head"><span>Incidencias abiertas</span><span class="kpi-chip bad">Crítica 1</span></div>
       <div class="kpi-body">
         <b class="counter" data-target="12">0</b>
         <div class="ring ring-red" style="--p:48"><span>48%</span></div>
       </div>
-      <small>Resueltas automÃ¡ticamente: 87%</small>
+      <small>Resueltas automáticamente: 87%</small>
     </div>
   </div>
 
   <div class="panel-grid">
     <div class="card glass traffic-card">
       <div class="card-head">
-        <h3>IdentificaciÃ³n de trÃ¡fico</h3>
+        <h3>Identificación de tráfico</h3>
         <span class="seg" id="trafficSeg">
           <button class="seg-btn active" data-mode="realtime">Tiempo real</button>
           <button class="seg-btn" data-mode="avg">Promedio</button>
@@ -112,7 +112,7 @@
 
     <div class="card glass alerts-card">
       <div class="card-head">
-        <h3>Avisos de llegadas tardÃ­as</h3>
+        <h3>Avisos de llegadas tardías</h3>
         <span class="badge-pulse" id="alertCount">0</span>
       </div>
       <ul class="alerts-list" id="alertsList"></ul>
@@ -128,40 +128,41 @@
         <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
         <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
       </a>
-      <p class="muted">SoluciÃ³n a la incertidumbre del transporte y su pasaje, reclamaciÃ³n de incidentes e informaciÃ³n inmediata de datos de las unidades.</p>
+      <p class="muted">Solución a la incertidumbre del transporte y su pasaje, reclamación de incidentes e información inmediata de datos de las unidades.</p>
     </div>
     <div class="foot-col">
-      <h4>Funcionalidad</h4>
+      <h4>Módulo 1</h4>
       <ul>
-        <li>Rutas activas y trÃ¡fico</li>
-        <li>Unidades y caracterÃ­sticas</li>
-        <li>Reporte de incidencias</li>
-        <li>UbicaciÃ³n de paradas</li>
-        <li>Avisos de llegadas tardÃ­as</li>
+        <li>Panel de control</li>
+        <li>Rutas</li>
+        <li>Unidades</li>
+        <li>Paradas</li>
+        <li>Incidencias</li>
+        <li>Conductores</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>No funcional</h4>
       <ul>
-        <li>IdentificaciÃ³n con tarjeta</li>
-        <li>UbicaciÃ³n espacial GPS</li>
+        <li>Identificación con tarjeta</li>
+        <li>Ubicación espacial GPS</li>
         <li>Registro de tiempos</li>
-        <li>BotÃ³n de emergencia</li>
-        <li>BotÃ³n de reporte</li>
+        <li>Botón de emergencia</li>
+        <li>Botón de reporte</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>Proyecto</h4>
       <ul>
-        <li>Universidad â€” IUJO</li>
-        <li>Curso: IngenierÃ­a de Software</li>
-        <li>Producto de demostraciÃ³n</li>
+        <li>Universidad "” IUJO</li>
+        <li>Curso: Ingeniería de Software</li>
+        <li>Producto de demostración</li>
         <li>Datos simulados en el navegador</li>
       </ul>
     </div>
   </div>
   <div class="foot-bottom">
-    <span>Â© 2026 TransUrbano Â· Proyecto universitario</span>
+    <span>© 2026 TransUrbano · Proyecto universitario</span>
     <span>Hecho con HTML, CSS, JS y GSAP</span>
   </div>
 </footer>

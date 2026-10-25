@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TransUrbano | Servicio de Transporte Urbano</title>
-<meta name="description" content="Plataforma de gestiÃ³n del Servicio de Transporte Urbano: rutas activas, trÃ¡fico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
+<meta name="description" content="PLataforma de gestión del Servicio de Transporte Urbano: rutas activas, tráfico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -52,29 +52,54 @@
     </button>
   </nav>
 
-  <button class="burger" id="burger" aria-label="Abrir menÃº"><span></span><span></span><span></span></button>
+  <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
 </header>
 
 <main>
 
 <section class="section" id="paradas">
   <div class="section-head">
-    <h2 class="title"><span class="title-bar"></span>UbicaciÃ³n de paradas</h2>
+    <h2 class="title"><span class="title-bar"></span>Ubicación de paradas</h2>
     <p class="subtitle">Paradas activas con tiempo estimado de llegada y capacidad.</p>
   </div>
 
-  <div class="stops-layout">
+<div class="stops-layout">
     <div class="card glass stops-card">
       <div class="card-head">
-        <h3>PrÃ³ximas paradas</h3>
+        <h3>Próximas paradas</h3>
         <input type="search" id="stopSearch" class="mini-input" placeholder="Filtrar parada...">
       </div>
-      <div class="stops-scroll" id="stopsList"></div>
+      <div class="stops-table-wrap">
+        <table class="stops-table">
+          <thead>
+            <tr>
+              <th>Parada</th>
+              <th>Ruta</th>
+              <th>Sector</th>
+              <th>En espera</th>
+              <th>ETA</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody id="stopsList">
+            <tr><td>Terminal La Bandera</td><td>R1</td><td>Centro</td><td>12</td><td>2 min</td><td><span class="chip chip-green">Activa</span></td></tr>
+            <tr><td>Plaza Venezuela</td><td>R1</td><td>Centro</td><td>28</td><td>5 min</td><td><span class="chip chip-amber">Alta demanda</span></td></tr>
+            <tr><td>Parque Central</td><td>R1</td><td>Centro</td><td>8</td><td>1 min</td><td><span class="chip chip-green">Activa</span></td></tr>
+            <tr><td>Bellas Artes</td><td>R3</td><td>Norte</td><td>15</td><td>3 min</td><td><span class="chip chip-green">Activa</span></td></tr>
+            <tr><td>Ciudad Universitaria</td><td>R3</td><td>Norte</td><td>35</td><td>7 min</td><td><span class="chip chip-red">Saturada</span></td></tr>
+            <tr><td>Los Chaguaramos</td><td>R3</td><td>Norte</td><td>5</td><td>4 min</td><td><span class="chip chip-green">Activa</span></td></tr>
+            <tr><td>La California</td><td>R4</td><td>Este</td><td>22</td><td>6 min</td><td><span class="chip chip-amber">Alta demanda</span></td></tr>
+            <tr><td>Chacao</td><td>R4</td><td>Este</td><td>40</td><td>9 min</td><td><span class="chip chip-red">Saturada</span></td></tr>
+            <tr><td>Altamira</td><td>R4</td><td>Este</td><td>18</td><td>3 min</td><td><span class="chip chip-green">Activa</span></td></tr>
+            <tr><td>Petare</td><td>R4</td><td>Este</td><td>55</td><td>12 min</td><td><span class="chip chip-red">Saturada</span></td></tr>
+          </tbody>
+        </table>
+</div>
     </div>
     <div class="card glass stop-map-card">
-      <div class="card-head"><h3>DistribuciÃ³n de paradas</h3><span class="muted">Zona centro</span></div>
-      <div class="heat" id="heatMap"></div>
-      <p class="muted small">Densidad de paradas por sector. Mayor concentraciÃ³n = mÃ¡s cobertura y menor espera.</p>
+      <div class="card-head"><h3>Distribución de paradas</h3><span class="muted">Zona centro</span></div>
+      <div id="stopsMap" style="width:100%;height:350px;"></div>
+      <p class="muted small">Paradas geolocalizadas. Haz clic en un marcador para ver detalles.</p>
     </div>
   </div>
 </section>
@@ -87,40 +112,41 @@
         <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
         <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
       </a>
-      <p class="muted">SoluciÃ³n a la incertidumbre del transporte y su pasaje, reclamaciÃ³n de incidentes e informaciÃ³n inmediata de datos de las unidades.</p>
+      <p class="muted">Solución a la incertidumbre del transporte y su pasaje, reclamación de incidentes e información inmediata de datos de las unidades.</p>
     </div>
     <div class="foot-col">
-      <h4>Funcionalidad</h4>
+      <h4>Módulo 1</h4>
       <ul>
-        <li>Rutas activas y trÃ¡fico</li>
-        <li>Unidades y caracterÃ­sticas</li>
-        <li>Reporte de incidencias</li>
-        <li>UbicaciÃ³n de paradas</li>
-        <li>Avisos de llegadas tardÃ­as</li>
+        <li>Panel de control</li>
+        <li>Rutas</li>
+        <li>Unidades</li>
+        <li>Paradas</li>
+        <li>Incidencias</li>
+        <li>Conductores</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>No funcional</h4>
       <ul>
-        <li>IdentificaciÃ³n con tarjeta</li>
-        <li>UbicaciÃ³n espacial GPS</li>
+        <li>Identificación con tarjeta</li>
+        <li>Ubicación espacial GPS</li>
         <li>Registro de tiempos</li>
-        <li>BotÃ³n de emergencia</li>
-        <li>BotÃ³n de reporte</li>
+        <li>Botón de emergencia</li>
+        <li>Botón de reporte</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>Proyecto</h4>
       <ul>
-        <li>Universidad â€” IUJO</li>
-        <li>Curso: IngenierÃ­a de Software</li>
-        <li>Producto de demostraciÃ³n</li>
+        <li>Universidad "” IUJO</li>
+        <li>Curso: Ingeniería de Software</li>
+        <li>Producto de demostración</li>
         <li>Datos simulados en el navegador</li>
       </ul>
     </div>
   </div>
   <div class="foot-bottom">
-    <span>Â© 2026 TransUrbano Â· Proyecto universitario</span>
+    <span>© 2026 TransUrbano · Proyecto universitario</span>
     <span>Hecho con HTML, CSS, JS y GSAP</span>
   </div>
 </footer>
@@ -153,6 +179,70 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="../common/script.js"></script>
+<script>
+  // Mapa de paradas con Leaflet + OpenStreetMap
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof L === 'undefined') return;
+    
+    const map = L.map('stopsMap', {
+      center: [10.5060, -66.9146],
+      zoom: 12,
+      zoomControl: false,
+      attributionControl: true,
+      scrollWheelZoom: true
+    });
+    
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 19
+    }).addTo(map);
+    
+    // Paradas con coordenadas aproximadas
+    const paradas = [
+      { nombre: 'Terminal La Bandera', ruta: 'R1', sector: 'Centro', espera: 2, pasajeros: 12, coords: [10.4953, -66.9235], estado: 'Activa' },
+      { nombre: 'Plaza Venezuela', ruta: 'R1', sector: 'Centro', espera: 5, pasajeros: 28, coords: [10.5095, -66.9050], estado: 'Alta demanda' },
+      { nombre: 'Parque Central', ruta: 'R1', sector: 'Centro', espera: 1, pasajeros: 8, coords: [10.5060, -66.9146], estado: 'Activa' },
+      { nombre: 'Bellas Artes', ruta: 'R3', sector: 'Norte', espera: 3, pasajeros: 15, coords: [10.4988, -66.8520], estado: 'Activa' },
+      { nombre: 'Ciudad Universitaria', ruta: 'R3', sector: 'Norte', espera: 7, pasajeros: 35, coords: [10.5001, -66.8441], estado: 'Saturada' },
+      { nombre: 'Los Chaguaramos', ruta: 'R3', sector: 'Norte', espera: 4, pasajeros: 5, coords: [10.4700, -66.8300], estado: 'Activa' },
+      { nombre: 'La California', ruta: 'R4', sector: 'Este', espera: 6, pasajeros: 22, coords: [10.4956, -66.8489], estado: 'Alta demanda' },
+      { nombre: 'Chacao', ruta: 'R4', sector: 'Este', espera: 9, pasajeros: 40, coords: [10.4821, -66.8404], estado: 'Saturada' },
+      { nombre: 'Altamira', ruta: 'R4', sector: 'Este', espera: 3, pasajeros: 18, coords: [10.4666, -66.8078], estado: 'Activa' },
+      { nombre: 'Petare', ruta: 'R4', sector: 'Este', espera: 12, pasajeros: 55, coords: [10.4787, -66.8072], estado: 'Saturada' }
+    ];
+    
+    function getEstadoColor(estado) {
+      if (estado === 'Activa') return '#2f9e63';
+      if (estado === 'Alta demanda') return '#f5a623';
+      return '#e5484d';
+    }
+    
+    function getEstadoIcon(estado) {
+      const color = getEstadoColor(estado);
+      return L.divIcon({
+        className: 'parada-marker',
+        html: '<div style="width:20px;height:20px;background:' + color + ';border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.4)"></div>',
+        iconSize: [20, 20],
+        iconAnchor: [10, 10]
+      });
+    }
+    
+    const bounds = [];
+    paradas.forEach(p => {
+      const marker = L.marker(p.coords, { icon: getEstadoIcon(p.estado) }).addTo(map);
+      marker.bindPopup(
+        '<strong>' + p.nombre + '</strong><br>' +
+        'Ruta: ' + p.ruta + ' | Sector: ' + p.sector + '<br>' +
+        'Pasajeros en espera: ' + p.pasajeros + '<br>' +
+        'ETA: ' + p.espera + ' min<br>' +
+        '<span style="color:' + getEstadoColor(p.estado) + ';font-weight:bold">● ' + p.estado + '</span>'
+      );
+      bounds.push(p.coords);
+    });
+    
+    if (bounds.length) map.fitBounds(bounds, { padding: [20, 20] });
+  });
+</script>
 </body>
 </html>
 

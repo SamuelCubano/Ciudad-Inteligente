@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TransUrbano | Servicio de Transporte Urbano</title>
-<meta name="description" content="Plataforma de gestiÃ³n del Servicio de Transporte Urbano: rutas activas, trÃ¡fico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
+<meta name="description" content="PLataforma de gestión del Servicio de Transporte Urbano: rutas activas, tráfico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -24,7 +24,6 @@
   <div class="hills"></div>
   <div class="bubbles" id="bubbles"></div>
 </div>
-  </div>
 
 <!-- ================= NAV ================= -->
 <header class="topbar" id="topbar">
@@ -52,7 +51,7 @@
     </button>
   </nav>
 
-  <button class="burger" id="burger" aria-label="Abrir menÃº"><span></span><span></span><span></span></button>
+  <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
 </header>
 
 <main>
@@ -60,7 +59,7 @@
 <section class="section" id="unidades">
   <div class="section-head">
     <h2 class="title"><span class="title-bar"></span>Unidades disponibles</h2>
-    <p class="subtitle">CaracterÃ­sticas de cada unidad: puestos, espacios reservados, conductor responsable y estado operativo.</p>
+    <p class="subtitle">Características de cada unidad: puestos, espacios reservados, conductor responsable y estado operativo.</p>
   </div>
 
   <div class="filters">
@@ -77,7 +76,143 @@
     </div>
   </div>
 
-  <div class="units-grid" id="unitsGrid"></div>
+  <div class="units-grid" id="unitsGrid">
+    <article class="unit-card">
+      <div class="uc-head">
+        <div><div class="uc-id">U-101</div><div class="uc-pLate">PLACA A1B2C3 · Articulado</div></div>
+        <span class="uc-status operativa">En ruta</span>
+      </div>
+      <div class="uc-driver">
+        <span class="uc-avatar">JG</span>
+        <div><b>Juan García</b><small>Conductor · Tarjeta COND-4417</small></div>
+      </div>
+      <div class="uc-specs">
+        <div class="spec"><b>80</b><small>Puestos</small></div>
+        <div class="spec"><b>4</b><small>Espacios</small></div>
+        <div class="spec"><b>R1</b><small>Ruta</small></div>
+      </div>
+      <div class="uc-foot"><span>Ocupación 65%</span><span class="uc-view">Ver detalle <svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>
+    </article>
+
+    <article class="unit-card">
+      <div class="uc-head">
+        <div><div class="uc-id">U-102</div><div class="uc-pLate">PLACA D4E5F6 · Articulado</div></div>
+        <span class="uc-status operativa">En ruta</span>
+      </div>
+      <div class="uc-driver">
+        <span class="uc-avatar">MP</span>
+        <div><b>María Pérez</b><small>Conductor · Tarjeta COND-4418</small></div>
+      </div>
+      <div class="uc-specs">
+        <div class="spec"><b>80</b><small>Puestos</small></div>
+        <div class="spec"><b>4</b><small>Espacios</small></div>
+        <div class="spec"><b>R1</b><small>Ruta</small></div>
+      </div>
+      <div class="uc-foot"><span>Ocupación 72%</span><span class="uc-view">Ver detalle <svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>
+    </article>
+
+    <article class="unit-card">
+      <div class="uc-head">
+        <div><div class="uc-id">U-201</div><div class="uc-pLate">PLACA G7H8I9 · Estándar</div></div>
+        <span class="uc-status operativa">En ruta</span>
+      </div>
+      <div class="uc-driver">
+        <span class="uc-avatar">CL</span>
+        <div><b>Carlos López</b><small>Conductor · Tarjeta COND-4419</small></div>
+      </div>
+      <div class="uc-specs">
+        <div class="spec"><b>45</b><small>Puestos</small></div>
+        <div class="spec"><b>2</b><small>Espacios</small></div>
+        <div class="spec"><b>R2</b><small>Ruta</small></div>
+      </div>
+      <div class="uc-foot"><span>Ocupación 48%</span><span class="uc-view">Ver detalle <svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>
+    </article>
+
+    <article class="unit-card">
+      <div class="uc-head">
+        <div><div class="uc-id">U-202</div><div class="uc-pLate">PLACA J0K1L2 · Estándar</div></div>
+        <span class="uc-status parada">En parada</span>
+      </div>
+      <div class="uc-driver">
+        <span class="uc-avatar">AR</span>
+        <div><b>Ana Rodríguez</b><small>Conductor · Tarjeta COND-4420</small></div>
+      </div>
+      <div class="uc-specs">
+        <div class="spec"><b>45</b><small>Puestos</small></div>
+        <div class="spec"><b>2</b><small>Espacios</small></div>
+        <div class="spec"><b>R2</b><small>Ruta</small></div>
+      </div>
+      <div class="uc-foot"><span>Ocupación 30%</span><span class="uc-view">Ver detalle <svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>
+    </article>
+
+    <article class="unit-card">
+      <div class="uc-head">
+        <div><div class="uc-id">U-301</div><div class="uc-pLate">PLACA M3N4O5 · Articulado</div></div>
+        <span class="uc-status operativa">En ruta</span>
+      </div>
+      <div class="uc-driver">
+        <span class="uc-avatar">JM</span>
+        <div><b>José Martínez</b><small>Conductor · Tarjeta COND-4421</small></div>
+      </div>
+      <div class="uc-specs">
+        <div class="spec"><b>80</b><small>Puestos</small></div>
+        <div class="spec"><b>4</b><small>Espacios</small></div>
+        <div class="spec"><b>R3</b><small>Ruta</small></div>
+      </div>
+      <div class="uc-foot"><span>Ocupación 85%</span><span class="uc-view">Ver detalle <svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>
+    </article>
+
+    <article class="unit-card">
+      <div class="uc-head">
+        <div><div class="uc-id">U-302</div><div class="uc-pLate">PLACA P6Q7R8 · Estándar</div></div>
+        <span class="uc-status mantenimiento">Mantenimiento</span>
+      </div>
+      <div class="uc-driver">
+        <span class="uc-avatar">LG</span>
+        <div><b>Luis González</b><small>Conductor · Tarjeta COND-4422</small></div>
+      </div>
+      <div class="uc-specs">
+        <div class="spec"><b>45</b><small>Puestos</small></div>
+        <div class="spec"><b>2</b><small>Espacios</small></div>
+        <div class="spec"><b>R3</b><small>Ruta</small></div>
+      </div>
+      <div class="uc-foot"><span>Ocupación 0%</span><span class="uc-view">Ver detalle <svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>
+    </article>
+
+    <article class="unit-card">
+      <div class="uc-head">
+        <div><div class="uc-id">U-401</div><div class="uc-pLate">PLACA S9T0U1 · Articulado</div></div>
+        <span class="uc-status operativa">En ruta</span>
+      </div>
+      <div class="uc-driver">
+        <span class="uc-avatar">PF</span>
+        <div><b>Patricia Fernández</b><small>Conductor · Tarjeta COND-4423</small></div>
+      </div>
+      <div class="uc-specs">
+        <div class="spec"><b>80</b><small>Puestos</small></div>
+        <div class="spec"><b>4</b><small>Espacios</small></div>
+        <div class="spec"><b>R4</b><small>Ruta</small></div>
+      </div>
+      <div class="uc-foot"><span>Ocupación 55%</span><span class="uc-view">Ver detalle <svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>
+    </article>
+
+    <article class="unit-card">
+      <div class="uc-head">
+        <div><div class="uc-id">U-402</div><div class="uc-pLate">PLACA V2W3X4 · Estándar</div></div>
+        <span class="uc-status parada">En parada</span>
+      </div>
+      <div class="uc-driver">
+        <span class="uc-avatar">RS</span>
+        <div><b>Roberto Sánchez</b><small>Conductor · Tarjeta COND-4424</small></div>
+      </div>
+      <div class="uc-specs">
+        <div class="spec"><b>45</b><small>Puestos</small></div>
+        <div class="spec"><b>2</b><small>Espacios</small></div>
+        <div class="spec"><b>R4</b><small>Ruta</small></div>
+      </div>
+      <div class="uc-foot"><span>Ocupación 25%</span><span class="uc-view">Ver detalle <svg viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></span></div>
+    </article>
+  </div>
 </section>
 
 <!-- ================= FOOTER ================= -->
@@ -88,40 +223,41 @@
         <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
         <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
       </a>
-      <p class="muted">SoluciÃ³n a la incertidumbre del transporte y su pasaje, reclamaciÃ³n de incidentes e informaciÃ³n inmediata de datos de las unidades.</p>
+      <p class="muted">Solución a la incertidumbre del transporte y su pasaje, reclamación de incidentes e información inmediata de datos de las unidades.</p>
     </div>
     <div class="foot-col">
-      <h4>Funcionalidad</h4>
+      <h4>Módulo 1</h4>
       <ul>
-        <li>Rutas activas y trÃ¡fico</li>
-        <li>Unidades y caracterÃ­sticas</li>
-        <li>Reporte de incidencias</li>
-        <li>UbicaciÃ³n de paradas</li>
-        <li>Avisos de llegadas tardÃ­as</li>
+        <li>Panel de control</li>
+        <li>Rutas</li>
+        <li>Unidades</li>
+        <li>Paradas</li>
+        <li>Incidencias</li>
+        <li>Conductores</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>No funcional</h4>
       <ul>
-        <li>IdentificaciÃ³n con tarjeta</li>
-        <li>UbicaciÃ³n espacial GPS</li>
+        <li>Identificación con tarjeta</li>
+        <li>Ubicación espacial GPS</li>
         <li>Registro de tiempos</li>
-        <li>BotÃ³n de emergencia</li>
-        <li>BotÃ³n de reporte</li>
+        <li>Botón de emergencia</li>
+        <li>Botón de reporte</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>Proyecto</h4>
       <ul>
-        <li>Universidad â€” IUJO</li>
-        <li>Curso: IngenierÃ­a de Software</li>
-        <li>Producto de demostraciÃ³n</li>
+        <li>Universidad "” IUJO</li>
+        <li>Curso: Ingeniería de Software</li>
+        <li>Producto de demostración</li>
         <li>Datos simulados en el navegador</li>
       </ul>
     </div>
   </div>
   <div class="foot-bottom">
-    <span>Â© 2026 TransUrbano Â· Proyecto universitario</span>
+    <span>© 2026 TransUrbano · Proyecto universitario</span>
     <span>Hecho con HTML, CSS, JS y GSAP</span>
   </div>
 </footer>

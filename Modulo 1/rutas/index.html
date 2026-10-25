@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TransUrbano | Servicio de Transporte Urbano</title>
-<meta name="description" content="Plataforma de gestiÃ³n del Servicio de Transporte Urbano: rutas activas, trÃ¡fico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
+<meta name="description" content="PLataforma de gestión del Servicio de Transporte Urbano: rutas activas, tráfico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -24,7 +24,6 @@
   <div class="hills"></div>
   <div class="bubbles" id="bubbles"></div>
 </div>
-  </div>
 
 <!-- ================= NAV ================= -->
 <header class="topbar" id="topbar">
@@ -52,7 +51,7 @@
     </button>
   </nav>
 
-  <button class="burger" id="burger" aria-label="Abrir menÃº"><span></span><span></span><span></span></button>
+  <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
 </header>
 
 <main>
@@ -67,15 +66,15 @@
     <div class="card glass map-card">
       <div class="map-toolbar">
         <div class="map-legend">
-          <span><i class="lg lg-route"></i> Ruta activa</span>
-          <span><i class="lg lg-stop"></i> Parada</span>
-          <span><i class="lg lg-unit"></i> Unidad</span>
+          <span class="legend-item"><i style="background:#2f9e63"></i> 5 en ruta</span>
+          <span class="legend-item"><i style="background:#29b6f6"></i> 2 en parada</span>
+          <span class="legend-item"><i style="background:#e5484d"></i> 1 en mantenimiento</span>
         </div>
         <div class="map-tools">
           <button class="icon-btn" id="btnCapa" title="Cambiar mapa base"><svg viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5M3 17l9 5 9-5"/></svg></button>
           <button class="icon-btn" id="btnZoomIn" title="Acercar"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
           <button class="icon-btn" id="btnZoomOut" title="Alejar"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
-          <button class="icon-btn" id="btnLocate" title="Mi ubicaciÃ³n"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg></button>
+          <button class="icon-btn" id="btnLocate" title="Mi ubicación"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg></button>
         </div>
       </div>
       <div class="map-viewport" id="mapViewport">
@@ -91,7 +90,40 @@
     <aside class="routes-side">
       <div class="card glass">
         <div class="card-head"><h3>Detalle de rutas</h3></div>
-        <div class="route-list" id="routeList"></div>
+        <div class="route-list" id="routeList">
+          <div class="route-item">
+            <div class="route-header">
+              <span class="route-color" style="background:#2f9e63"></span>
+              <strong>R1 — Av. Bolívar</strong>
+              <span class="route-badge operativa">5 en ruta</span>
+            </div>
+            <small>Terminal La Bandera → Los Chaguaramos · 14 km · 26 paradas</small>
+          </div>
+          <div class="route-item">
+            <div class="route-header">
+              <span class="route-color" style="background:#29b6f6"></span>
+              <strong>R2 — Caracas-La Guaira</strong>
+              <span class="route-badge parada">2 en parada</span>
+            </div>
+            <small>Centro → Litoral · 28 km · 31 paradas</small>
+          </div>
+          <div class="route-item">
+            <div class="route-header">
+              <span class="route-color" style="background:#8b7cf6"></span>
+              <strong>R3 — Av. Universidad</strong>
+              <span class="route-badge operativa">1 en ruta</span>
+            </div>
+            <small>Plaza Venezuela → Ciudad Universitaria · 18 km · 24 paradas</small>
+          </div>
+          <div class="route-item">
+            <div class="route-header">
+              <span class="route-color" style="background:#f5a623"></span>
+              <strong>R4 — Av. Miranda</strong>
+              <span class="route-badge mantenimiento">1 en mantenimiento</span>
+            </div>
+            <small>Petare → Centro · 22 km · 28 paradas</small>
+          </div>
+        </div>
       </div>
     </aside>
   </div>
@@ -105,40 +137,41 @@
         <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
         <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
       </a>
-      <p class="muted">SoluciÃ³n a la incertidumbre del transporte y su pasaje, reclamaciÃ³n de incidentes e informaciÃ³n inmediata de datos de las unidades.</p>
+      <p class="muted">Solución a la incertidumbre del transporte y su pasaje, reclamación de incidentes e información inmediata de datos de las unidades.</p>
     </div>
     <div class="foot-col">
-      <h4>Funcionalidad</h4>
+      <h4>Módulo 1</h4>
       <ul>
-        <li>Rutas activas y trÃ¡fico</li>
-        <li>Unidades y caracterÃ­sticas</li>
-        <li>Reporte de incidencias</li>
-        <li>UbicaciÃ³n de paradas</li>
-        <li>Avisos de llegadas tardÃ­as</li>
+        <li>Panel de control</li>
+        <li>Rutas</li>
+        <li>Unidades</li>
+        <li>Paradas</li>
+        <li>Incidencias</li>
+        <li>Conductores</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>No funcional</h4>
       <ul>
-        <li>IdentificaciÃ³n con tarjeta</li>
-        <li>UbicaciÃ³n espacial GPS</li>
+        <li>Identificación con tarjeta</li>
+        <li>Ubicación espacial GPS</li>
         <li>Registro de tiempos</li>
-        <li>BotÃ³n de emergencia</li>
-        <li>BotÃ³n de reporte</li>
+        <li>Botón de emergencia</li>
+        <li>Botón de reporte</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>Proyecto</h4>
       <ul>
-        <li>Universidad â€” IUJO</li>
-        <li>Curso: IngenierÃ­a de Software</li>
-        <li>Producto de demostraciÃ³n</li>
+        <li>Universidad "” IUJO</li>
+        <li>Curso: Ingeniería de Software</li>
+        <li>Producto de demostración</li>
         <li>Datos simulados en el navegador</li>
       </ul>
     </div>
   </div>
   <div class="foot-bottom">
-    <span>Â© 2026 TransUrbano Â· Proyecto universitario</span>
+    <span>© 2026 TransUrbano · Proyecto universitario</span>
     <span>Hecho con HTML, CSS, JS y GSAP</span>
   </div>
 </footer>
@@ -171,6 +204,114 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="../common/script.js"></script>
+<script>
+  // Inicialización directa del mapa de rutas con unidades en movimiento
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof L === 'undefined') return;
+    
+    const map = L.map('cityMap', {
+      center: [10.5060, -66.9146],
+      zoom: 13,
+      zoomControl: false,
+      attributionControl: true,
+      scrollWheelZoom: true
+    });
+    
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+      maxZoom: 19
+    }).addTo(map);
+    
+    // Rutas de ejemplo
+    const rutas = [
+      { id: 'R1', nombre: 'Av. Bolívar', color: '#2f9e63', coords: [[10.5060,-66.9146],[10.5095,-66.9050],[10.5060,-66.9220],[10.4953,-66.9235],[10.4818,-66.9498]] },
+      { id: 'R2', nombre: 'Caracas-La Guaira', color: '#29b6f6', coords: [[10.5060,-66.9146],[10.4969,-66.8857],[10.5085,-66.8990],[10.5218,-66.9454]] },
+      { id: 'R3', nombre: 'Av. Universidad', color: '#8b7cf6', coords: [[10.5060,-66.9146],[10.5030,-66.9000],[10.4969,-66.8857],[10.4988,-66.8520]] },
+      { id: 'R4', nombre: 'Av. Miranda', color: '#f5a623', coords: [[10.5060,-66.9146],[10.4969,-66.8857],[10.4956,-66.8489],[10.4821,-66.8404]] }
+    ];
+    
+    // Dibujar rutas
+    rutas.forEach(r => {
+      L.polyline(r.coords, { color: r.color, weight: 4, opacity: 0.8 }).addTo(map);
+    });
+    
+    // Ajustar vista
+    const allCoords = rutas.flatMap(r => r.coords);
+    if (allCoords.length) map.fitBounds(allCoords, { padding: [20, 20] });
+    
+    // Función para interpolar posición a lo largo de una ruta
+    function getPointAlongLine(coords, progress) {
+      // progress: 0 a 1
+      let totalDist = 0;
+      const segments = [];
+      for (let i = 0; i < coords.length - 1; i++) {
+        const a = coords[i], b = coords[i + 1];
+        const d = Math.sqrt(Math.pow(b[0] - a[0], 2) + Math.pow(b[1] - a[1], 2));
+        segments.push({ start: a, end: b, dist: d });
+        totalDist += d;
+      }
+      const target = totalDist * progress;
+      let accum = 0;
+      for (const seg of segments) {
+        if (accum + seg.dist >= target) {
+          const t = (target - accum) / seg.dist;
+          return [
+            seg.start[0] + (seg.end[0] - seg.start[0]) * t,
+            seg.start[1] + (seg.end[1] - seg.start[1]) * t
+          ];
+        }
+        accum += seg.dist;
+      }
+      return coords[coords.length - 1];
+    }
+    
+    // Crear icono de bus
+    function createBusIcon(color) {
+      return L.divIcon({
+        className: 'bus-marker',
+        html: '<div style="width:24px;height:24px;background:' + color + ';border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.3);transform:rotate(45deg)"></div>',
+        iconSize: [24, 24],
+        iconAnchor: [12, 12]
+      });
+    }
+    
+    // Unidades simuladas por ruta
+    // 5 en ruta (verde), 2 en parada (azul), 1 en mantenimiento (rojo)
+    const unidades = [
+      { ruta: 'R1', pos: 0.1, speed: 0.0008, color: '#2f9e63', id: 'U-101', estado: 'en_ruta' },
+      { ruta: 'R1', pos: 0.3, speed: 0.0006, color: '#2f9e63', id: 'U-102', estado: 'en_ruta' },
+      { ruta: 'R1', pos: 0.5, speed: 0.0007, color: '#2f9e63', id: 'U-103', estado: 'en_ruta' },
+      { ruta: 'R1', pos: 0.7, speed: 0.0005, color: '#2f9e63', id: 'U-104', estado: 'en_ruta' },
+      { ruta: 'R1', pos: 0.9, speed: 0.0008, color: '#2f9e63', id: 'U-105', estado: 'en_ruta' },
+      { ruta: 'R2', pos: 0.2, speed: 0, color: '#29b6f6', id: 'U-201', estado: 'en_parada' },
+      { ruta: 'R2', pos: 0.6, speed: 0, color: '#29b6f6', id: 'U-202', estado: 'en_parada' },
+      { ruta: 'R3', pos: 0.5, speed: 0, color: '#e5484d', id: 'U-301', estado: 'mantenimiento' }
+    ];
+    
+    // Crear marcadores
+    const markers = unidades.map(u => {
+      const ruta = rutas.find(r => r.id === u.ruta);
+      const pos = getPointAlongLine(ruta.coords, u.pos);
+      const marker = L.marker(pos, { icon: createBusIcon(u.color) }).addTo(map);
+      marker.bindTooltip(u.id, { permanent: true, direction: 'top', offset: [0, -15] });
+      return { marker, ruta, ...u };
+    });
+    
+    // Animación
+    function animate() {
+      markers.forEach(u => {
+        if (u.estado === 'en_ruta') {
+          u.pos += u.speed;
+          if (u.pos > 1) u.pos = 0; // Loop
+          const newPos = getPointAlongLine(u.ruta.coords, u.pos);
+          u.marker.setLatLng(newPos);
+        }
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+  });
+</script>
 </body>
 </html>
 

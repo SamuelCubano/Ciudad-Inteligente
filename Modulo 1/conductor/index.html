@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TransUrbano | Servicio de Transporte Urbano</title>
-<meta name="description" content="Plataforma de gestiÃ³n del Servicio de Transporte Urbano: rutas activas, trÃ¡fico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
+<meta name="description" content="PLataforma de gestión del Servicio de Transporte Urbano: rutas activas, tráfico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
   <div class="hills"></div>
   <div class="bubbles" id="bubbles"></div>
 </div>
-  </div>
+</div>
 
 <!-- ================= NAV ================= -->
 <header class="topbar" id="topbar">
@@ -52,42 +52,43 @@
     </button>
   </nav>
 
-  <button class="burger" id="burger" aria-label="Abrir menÃº"><span></span><span></span><span></span></button>
+  <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
 </header>
 
 <main>
 
 <section class="section" id="conductor">
   <div class="section-head">
-    <h2 class="title"><span class="title-bar"></span>EstaciÃ³n del conductor</h2>
-    <p class="subtitle">IdentificaciÃ³n con tarjeta, asignaciÃ³n de unidad y registro GPS de tiempos de llegada.</p>
+    <h2 class="title"><span class="title-bar"></span>Estación del conductor</h2>
+    <p class="subtitle">Identificación con tarjeta, asignación de unidad y registro GPS de tiempos de llegada.</p>
   </div>
 
   <div class="driver-layout">
     <div class="card glass card-reader">
       <div class="reader-visual">
-        <div class="reader-glow"></div>
-        <div class="reader-slot"><span></span><span></span><span></span></div>
-        <div class="reader-text">Inserte o acerque la tarjeta</div>
+        <div class="driver-photo">
+          <img src="https://i.pinimg.com/736x/b6/a5/57/b6a557cd27de0e7f37074379c9190c97.jpg" alt="Juan García" />
+        </div>
+        <div class="driver-name">Juan García</div>
+        <div class="driver-id">COND-4417</div>
       </div>
       <form id="tarjetaForm" class="tarjeta-form">
-        <label for="tarjetaInput">NÃºmero de tarjeta / cÃ©dula</label>
+        <label for="tarjetaInput">Código de conductor</label>
         <div class="input-icon">
           <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
-          <input type="text" id="tarjetaInput" placeholder="V-00000000" maxlength="14" autocomplete="off">
+          <input type="text" id="tarjetaInput" placeholder="COD-1234" maxlength="12" autocomplete="off">
         </div>
-        <p class="hint">Pruebe <b>4417</b> (conductor) o <b>1024</b> (pasajero).</p>
         <button class="btn btn-primary btn-block" type="submit">
           <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="m10 17 5-5-5-5"/><path d="M15 12H3"/></svg>
           Validar identidad
         </button>
       </form>
       <div class="card-session" id="cardSession" hidden>
-        <div class="session-avatar" id="sessionAvatar">â€”</div>
+        <div class="session-avatar" id="sessionAvatar">PS</div>
         <div class="session-info">
-          <b id="sessionName">â€”</b>
-          <span id="sessionRole">â€”</span>
-          <span class="chip chip-green" id="sessionCard">â€”</span>
+          <b id="sessionName">Pedro Sanches</b>
+          <span id="sessionRole">A0656</span>
+          <span class="chip chip-green" id="sessionCard">Autobus 32 puestos</span>
         </div>
         <button class="btn btn-glass btn-sm" id="btnLogout">Salir</button>
       </div>
@@ -99,14 +100,23 @@
         <span class="live-tag"><i></i> <span id="gpsClock">--:--:--</span></span>
       </div>
       <div class="gps-status">
-        <div class="gps-pos"><span>PosiciÃ³n actual</span><b id="gpsPos">Lat: â€” / Lon: â€”</b></div>
-        <div class="gps-pos"><span>Unidad asignada</span><b id="gpsUnit">Sin asignar</b></div>
-        <div class="gps-pos"><span>PrecisiÃ³n</span><b id="gpsAcc">â€” m</b></div>
+        <div class="gps-pos"><span>Posición actual</span><b id="gpsPos">Lat: 10.5060° / Lon: -66.9146°</b></div>
+        <div class="gps-pos"><span>Unidad asignada</span><b id="gpsUnit">U-101 (Placa A1B2C3)</b></div>
+        <div class="gps-pos"><span>Precisión</span><b id="gpsAcc">5 m</b></div>
       </div>
       <div class="gps-table-wrap">
         <table class="gps-table">
           <thead><tr><th>Parada</th><th>Programado</th><th>Real (GPS)</th><th>Diferencia</th><th>Estado</th></tr></thead>
-          <tbody id="gpsRows"></tbody>
+          <tbody id="gpsRows">
+            <tr><td>Terminal La Bandera</td><td>06:00</td><td>06:00</td><td class="ok">+0 min</td><td><span class="chip chip-green">A tiempo</span></td></tr>
+            <tr><td>Plaza Venezuela</td><td>06:15</td><td>06:16</td><td class="warn">+1 min</td><td><span class="chip chip-amber">Retraso leve</span></td></tr>
+            <tr><td>Parque Central</td><td>06:28</td><td>06:27</td><td class="ok">-1 min</td><td><span class="chip chip-green">Adelantado</span></td></tr>
+            <tr><td>Bellas Artes</td><td>06:38</td><td>06:42</td><td class="warn">+4 min</td><td><span class="chip chip-amber">Retraso</span></td></tr>
+            <tr><td>Ciudad Universitaria</td><td>06:50</td><td>06:50</td><td class="ok">+0 min</td><td><span class="chip chip-green">A tiempo</span></td></tr>
+            <tr><td>Los Chaguaramos</td><td>07:05</td><td>07:12</td><td class="bad">+7 min</td><td><span class="chip chip-red">Retraso crítico</span></td></tr>
+            <tr><td>La California</td><td>07:20</td><td>--:--</td><td>--</td><td><span class="chip">Pendiente</span></td></tr>
+            <tr><td>Chacao</td><td>07:35</td><td>--:--</td><td>--</td><td><span class="chip">Pendiente</span></td></tr>
+          </tbody>
         </table>
       </div>
       <button class="btn btn-soft btn-block" id="btnSimularGps">
@@ -125,40 +135,41 @@
         <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
         <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
       </a>
-      <p class="muted">SoluciÃ³n a la incertidumbre del transporte y su pasaje, reclamaciÃ³n de incidentes e informaciÃ³n inmediata de datos de las unidades.</p>
+      <p class="muted">Solución a la incertidumbre del transporte y su pasaje, reclamación de incidentes e información inmediata de datos de las unidades.</p>
     </div>
     <div class="foot-col">
-      <h4>Funcionalidad</h4>
+      <h4>Módulo 1</h4>
       <ul>
-        <li>Rutas activas y trÃ¡fico</li>
-        <li>Unidades y caracterÃ­sticas</li>
-        <li>Reporte de incidencias</li>
-        <li>UbicaciÃ³n de paradas</li>
-        <li>Avisos de llegadas tardÃ­as</li>
+        <li>Panel de control</li>
+        <li>Rutas</li>
+        <li>Unidades</li>
+        <li>Paradas</li>
+        <li>Incidencias</li>
+        <li>Conductores</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>No funcional</h4>
       <ul>
-        <li>IdentificaciÃ³n con tarjeta</li>
-        <li>UbicaciÃ³n espacial GPS</li>
+        <li>Identificación con tarjeta</li>
+        <li>Ubicación espacial GPS</li>
         <li>Registro de tiempos</li>
-        <li>BotÃ³n de emergencia</li>
-        <li>BotÃ³n de reporte</li>
+        <li>Botón de emergencia</li>
+        <li>Botón de reporte</li>
       </ul>
     </div>
     <div class="foot-col">
       <h4>Proyecto</h4>
       <ul>
-        <li>Universidad â€” IUJO</li>
-        <li>Curso: IngenierÃ­a de Software</li>
-        <li>Producto de demostraciÃ³n</li>
+        <li>Universidad "” IUJO</li>
+        <li>Curso: Ingeniería de Software</li>
+        <li>Producto de demostración</li>
         <li>Datos simulados en el navegador</li>
       </ul>
     </div>
   </div>
   <div class="foot-bottom">
-    <span>Â© 2026 TransUrbano Â· Proyecto universitario</span>
+    <span>© 2026 TransUrbano · Proyecto universitario</span>
     <span>Hecho con HTML, CSS, JS y GSAP</span>
   </div>
 </footer>
