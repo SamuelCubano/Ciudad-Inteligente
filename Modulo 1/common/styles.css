@@ -615,6 +615,18 @@ h1,h2,h3,h4{margin:0;font-family:var(--font-h);font-weight:600;letter-spacing:.2
 .inc-time{font-size:.7rem;color:var(--ink-soft);font-weight:800;white-space:nowrap}
 .inc-item p{margin:5px 0 7px;font-size:.82rem;color:var(--ink-soft);line-height:1.5}
 .inc-meta{display:flex;gap:7px;flex-wrap:wrap}
+.inc-badge{font-size:.62rem;font-weight:900;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.inc-badge.critica{background:rgba(229,72,77,.15);color:#c0373b}
+.inc-badge.alta{background:rgba(245,166,35,.15);color:#a96c00}
+.inc-badge.media{background:rgba(41,182,246,.15);color:var(--sky-700)}
+.inc-badge.baja{background:rgba(74,169,108,.15);color:var(--green-700)}
+.inc-info{display:flex;flex-direction:column;gap:3px}
+.inc-info strong{font-size:.85rem;color:var(--green-900);font-family:var(--font-h)}
+.inc-info small{font-size:.7rem;color:var(--ink-soft);font-weight:600}
+.inc-status{font-size:.65rem;font-weight:900;padding:3px 8px;border-radius:999px;white-space:nowrap;align-self:flex-start}
+.inc-status.en-proceso{background:rgba(41,182,246,.15);color:var(--sky-700)}
+.inc-status.resuelta{background:rgba(74,169,108,.15);color:var(--green-700)}
+.inc-status.escalada{background:rgba(229,72,77,.15);color:#c0373b}
 @keyframes slideIn{from{opacity:0;transform:translateX(-18px)}to{opacity:1;transform:none}}
 .sla-card h3{font-size:1.05rem;color:var(--green-900);margin-bottom:14px}
 .sla-row{display:grid;grid-template-columns:96px 1fr 62px;align-items:center;gap:11px;margin-bottom:11px;font-size:.8rem;font-weight:800;color:var(--ink-soft)}

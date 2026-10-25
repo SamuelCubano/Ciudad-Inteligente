@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TransUrbano | Servicio de Transporte Urbano</title>
-<meta name="description" content="PLataforma de gestión del Servicio de Transporte Urbano: rutas activas, tráfico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
+<meta name="description" content="Plataforma de gestión del Servicio de Transporte Urbano: rutas activas, tráfico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -109,7 +109,7 @@
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg>
             Obtener GPS
           </button>
-          <span class="GPS-value" id="GPSValue">Sin coordenadas "” use el botón o escríbalas</span>
+          <span class="GPS-value" id="GPSValue">Sin coordenadas "" use el botón o escríbalas</span>
         </div>
         <input type="text" id="incCoords" placeholder="Latitud, Longitud (opcional manual)" class="full-input">
       </div>
@@ -130,8 +130,73 @@
 
     <div class="inc-side">
       <div class="card glass">
-        <div class="card-head"><h3>Seguimiento</h3><span class="muted" id="incTotal">0 reportes</span></div>
-        <ul class="inc-list" id="incList"></ul>
+        <div class="card-head"><h3>Seguimiento</h3><span class="muted" id="incTotal">8 reportes</span></div>
+        <ul class="inc-list" id="incList">
+          <li class="inc-item">
+            <div class="inc-info">
+              <span class="inc-badge critica">Crítica</span>
+              <strong>Retraso prolongado R4</strong>
+              <small>U-401 · Av. Miranda · Hace 15 min</small>
+            </div>
+            <span class="inc-status en-proceso">En proceso</span>
+          </li>
+          <li class="inc-item">
+            <div class="inc-info">
+              <span class="inc-badge alta">Alta</span>
+              <strong>Sobrecupo R2</strong>
+              <small>U-202 · Caracas-La Guaira · Hace 42 min</small>
+            </div>
+            <span class="inc-status resuelta">Resuelta</span>
+          </li>
+          <li class="inc-item">
+            <div class="inc-info">
+              <span class="inc-badge media">Media</span>
+              <strong>Falla mecánica R1</strong>
+              <small>U-103 · Av. Bolívar · Hace 1 h</small>
+            </div>
+            <span class="inc-status en-proceso">En proceso</span>
+          </li>
+          <li class="inc-item">
+            <div class="inc-info">
+              <span class="inc-badge baja">Baja</span>
+              <strong>Parada no operativa R3</strong>
+              <small>Bellas Artes · Hace 2 h</small>
+            </div>
+            <span class="inc-status resuelta">Resuelta</span>
+          </li>
+          <li class="inc-item">
+            <div class="inc-info">
+              <span class="inc-badge critica">Crítica</span>
+              <strong>Seguridad / conducta R4</strong>
+              <small>U-402 · Petare · Hace 3 h</small>
+            </div>
+            <span class="inc-status escalada">Escalada</span>
+          </li>
+          <li class="inc-item">
+            <div class="inc-info">
+              <span class="inc-badge media">Media</span>
+              <strong>Desvío de ruta R2</strong>
+              <small>U-201 · Caraballeda · Hace 4 h</small>
+            </div>
+            <span class="inc-status resuelta">Resuelta</span>
+          </li>
+          <li class="inc-item">
+            <div class="inc-info">
+              <span class="inc-badge baja">Baja</span>
+              <strong>Otro R1</strong>
+              <small>Terminal La Bandera · Hace 5 h</small>
+            </div>
+            <span class="inc-status resuelta">Resuelta</span>
+          </li>
+          <li class="inc-item">
+            <div class="inc-info">
+              <span class="inc-badge alta">Alta</span>
+              <strong>Retraso prolongado R3</strong>
+              <small>U-301 · Av. Universidad · Hace 6 h</small>
+            </div>
+            <span class="inc-status en-proceso">En proceso</span>
+          </li>
+        </ul>
       </div>
       <div class="card glass sla-card">
         <h3>Tiempos de respuesta</h3>
@@ -177,7 +242,7 @@
     <div class="foot-col">
       <h4>Proyecto</h4>
       <ul>
-        <li>Universidad "” IUJO</li>
+        <li>Universidad "" IUJO</li>
         <li>Curso: Ingeniería de Software</li>
         <li>Producto de demostración</li>
         <li>Datos simulados en el navegador</li>
