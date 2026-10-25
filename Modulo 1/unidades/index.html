@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TransUrbano | Servicio de Transporte Urbano</title>
+<meta name="description" content="Plataforma de gestiÃ³n del Servicio de Transporte Urbano: rutas activas, trÃ¡fico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="../common/styles.css">
+</head>
+<body>
+
+<!-- ================= SKY / BACKGROUND ================= -->
+<div class="scene" aria-hidden="true">
+  <div class="sky-gradient"></div>
+  <div class="sun-glow"></div>
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="cloud cloud-4"></div>
+  <div class="hills"></div>
+  <div class="bubbles" id="bubbles"></div>
+</div>
+  </div>
+
+<!-- ================= NAV ================= -->
+<header class="topbar" id="topbar">
+  <a class="brand" href="../inicio/index.html">
+    <span class="brand-mark">
+      <svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg>
+    </span>
+    <span class="brand-text">
+      <strong>TransUrbano</strong>
+      <small>Servicio de Transporte Urbano</small>
+    </span>
+  </a>
+
+  <nav class="menu" id="menu">
+    <a href="../inicio/index.html" class="m-link">Inicio</a>
+    <a href="../panel/index.html" class="m-link">Panel</a>
+    <a href="../rutas/index.html" class="m-link">Rutas</a>
+    <a href="../unidades/index.html" class="m-link active">Unidades</a>
+    <a href="../paradas/index.html" class="m-link">Paradas</a>
+    <a href="../incidencias/index.html" class="m-link">Incidencias</a>
+    <a href="../conductor/index.html" class="m-link">Conductor</a>
+    <button class="btn-glass btn-user" id="btnTarjeta">
+      <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
+      <span id="userChipText">Identificar tarjeta</span>
+    </button>
+  </nav>
+
+  <button class="burger" id="burger" aria-label="Abrir menÃº"><span></span><span></span><span></span></button>
+</header>
+
+<main>
+
+<section class="section" id="unidades">
+  <div class="section-head">
+    <h2 class="title"><span class="title-bar"></span>Unidades disponibles</h2>
+    <p class="subtitle">CaracterÃ­sticas de cada unidad: puestos, espacios reservados, conductor responsable y estado operativo.</p>
+  </div>
+
+  <div class="filters">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="text" id="unitSearch" placeholder="Buscar por ID, placa o conductor...">
+    </div>
+    <div class="filter-chips" id="unitFilters">
+      <button class="chip-btn active" data-f="all">Todas</button>
+      <button class="chip-btn" data-f="operativa">Operativas</button>
+      <button class="chip-btn" data-f="parada">En parada</button>
+      <button class="chip-btn" data-f="mantenimiento">Mantenimiento</button>
+      <button class="chip-btn" data-f="accessible">Accesible</button>
+    </div>
+  </div>
+
+  <div class="units-grid" id="unitsGrid"></div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="foot-grid">
+    <div class="foot-col">
+      <a class="brand footer-brand" href="../inicio/index.html">
+        <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
+        <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
+      </a>
+      <p class="muted">SoluciÃ³n a la incertidumbre del transporte y su pasaje, reclamaciÃ³n de incidentes e informaciÃ³n inmediata de datos de las unidades.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Funcionalidad</h4>
+      <ul>
+        <li>Rutas activas y trÃ¡fico</li>
+        <li>Unidades y caracterÃ­sticas</li>
+        <li>Reporte de incidencias</li>
+        <li>UbicaciÃ³n de paradas</li>
+        <li>Avisos de llegadas tardÃ­as</li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>No funcional</h4>
+      <ul>
+        <li>IdentificaciÃ³n con tarjeta</li>
+        <li>UbicaciÃ³n espacial GPS</li>
+        <li>Registro de tiempos</li>
+        <li>BotÃ³n de emergencia</li>
+        <li>BotÃ³n de reporte</li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Proyecto</h4>
+      <ul>
+        <li>Universidad â€” IUJO</li>
+        <li>Curso: IngenierÃ­a de Software</li>
+        <li>Producto de demostraciÃ³n</li>
+        <li>Datos simulados en el navegador</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>Â© 2026 TransUrbano Â· Proyecto universitario</span>
+    <span>Hecho con HTML, CSS, JS y GSAP</span>
+  </div>
+</footer>
+</main>
+
+<!-- ================= FLOATING ACTIONS ================= -->
+<div class="fab-stack">
+  <button class="fab fab-report" id="btnReporte" title="Reportar incidencia">
+    <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+    <span class="fab-label">Reportar</span>
+  </button>
+  <button class="fab fab-emerg" id="btnEmergencia" title="Emergencia">
+    <span class="fab-pulse"></span>
+    <svg viewBox="0 0 24 24"><path d="M12 2 2 7v6c0 5 4.2 8.8 10 9 5.8-.2 10-4 10-9V7z"/><path d="M12 8v5"/><circle cx="12" cy="16.2" r="1"/></svg>
+    <span class="fab-label">Emergencia</span>
+  </button>
+</div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="../common/script.js"></script>
+</body>
+</html>
+
+
+
