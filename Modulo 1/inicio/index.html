@@ -40,15 +40,17 @@
   <nav class="menu" id="menu">
     <a href="../inicio/index.html" class="m-link active">Inicio</a>
     <a href="../panel/index.html" class="m-link">Panel</a>
-    <a href="../rutas/index.html" class="m-link">Rutas</a>
+    <a href="../rutas/index.html" class="m-link">Rutas y Paradas</a>
     <a href="../unidades/index.html" class="m-link">Unidades</a>
-    <a href="../paradas/index.html" class="m-link">Paradas</a>
-    <a href="../incidencias/index.html" class="m-link">Incidencias</a>
+        <a href="../incidencias/index.html" class="m-link">Incidencias</a>
     <a href="../conductor/index.html" class="m-link">Conductor</a>
-    <button class="btn-glass btn-user" id="btnTarjeta">
+    <a href="../tarjeta/index.html" class="m-link">Tarjeta</a>
+    <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
       <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
-      <span id="userChipText">Identificar tarjeta</span>
+      <span id="userChipText">Admin</span>
+      <span id="btnLogout" style="margin-left:8px;font-size:.75rem;font-weight:700;color:#c0373b;cursor:pointer">Cerrar sesión</span>
     </button>
+
   </nav>
 
   <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
@@ -143,6 +145,7 @@
         <li>Paradas</li>
         <li>Incidencias</li>
         <li>Conductores</li>
+        <li>Tarjeta</li>
       </ul>
     </div>
     <div class="foot-col">
@@ -158,7 +161,7 @@
     <div class="foot-col">
       <h4>Proyecto</h4>
       <ul>
-        <li>Universidad "” IUJO</li>
+        <li>Universidad "— IUJO</li>
         <li>Curso: Ingeniería de Software</li>
         <li>Producto de demostración</li>
         <li>Datos simulados en el navegador</li>
@@ -227,7 +230,7 @@
         attribution: '&copy; OpenStreetMap', maxZoom: 19
       }).addTo(map);
       
-      // Rutas rápidas
+      // Rutas r·pidas
       const rutas = [
         { color: '#2f9e63', coords: [[10.5060,-66.9146],[10.5095,-66.9050],[10.5060,-66.9220],[10.4953,-66.9235]] },
         { color: '#29b6f6', coords: [[10.5060,-66.9146],[10.4969,-66.8857],[10.5085,-66.8990],[10.5218,-66.9454]] },
@@ -242,6 +245,13 @@
 </script>
 </body>
 </html>
+
+
+
+
+
+
+
 
 
 

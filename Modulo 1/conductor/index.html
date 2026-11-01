@@ -3,13 +3,39 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TransUrbano | Servicio de Transporte Urbano</title>
-<meta name="description" content="PLataforma de gestión del Servicio de Transporte Urbano: rutas activas, tráfico en vivo, unidades disponibles, reporte de incidencias y seguimiento GPS.">
+<title>TransUrbano | Estación del Conductor</title>
+<meta name="description" content="Identificación con tarjeta, asignación de unidad y registro GPS de tiempos de llegada.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <link rel="stylesheet" href="../common/styles.css">
+<style>
+  .crud-list{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow:auto}
+  .crud-item{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.85);display:flex;justify-content:space-between;align-items:center;gap:10px;transition:.2s}
+  .crud-item:hover{background:#fff;box-shadow:var(--shadow-sm)}
+  .crud-item .info{flex:1}
+  .crud-item .info b{font-family:var(--font-h);font-size:.92rem;color:var(--green-900);display:block}
+  .crud-item .info small{font-size:.72rem;color:var(--ink-soft);font-weight:600}
+  .crud-item .actions{display:flex;gap:4px;flex-shrink:0}
+  .crud-btn{padding:5px 9px;border-radius:7px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;transition:.2s}
+  .crud-btn.edit{background:rgba(41,182,246,.15);color:var(--sky-700)}
+  .crud-btn.suspend{background:rgba(245,166,35,.18);color:#a96c00}
+  .crud-btn.del{background:rgba(229,72,77,.15);color:#c0373b}
+  .crud-btn:hover{transform:translateY(-1px)}
+  .filter-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+  .filter-row .search-box{flex:1;min-width:180px;max-width:260px}
+  .filter-row .search-box input{padding:9px 14px 9px 36px;border-radius:12px;border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.75);font-size:.85rem;font-weight:700;outline:none;width:100%}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .field{display:flex;flex-direction:column;gap:4px}
+  .field label{font-size:.78rem;font-weight:800;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.4px}
+  .field input,.field select{padding:10px 14px;border-radius:12px;border:1px solid rgba(11,61,46,.1);background:rgba(255,255,255,.85);font-size:.88rem;font-weight:600;outline:none;width:100%;font-family:var(--font-b)}
+  .field input:focus,.field select:focus{background:#fff;border-color:var(--sky-400);box-shadow:0 0 0 3px rgba(79,195,247,.22)}
+  .status-chip{font-size:.62rem;font-weight:900;padding:2px 7px;border-radius:999px;white-space:nowrap}
+  .status-chip.activo{background:rgba(74,169,108,.16);color:var(--green-700)}
+  .status-chip.suspendido{background:rgba(245,166,35,.18);color:#a96c00}
+  .status-chip.inactivo{background:rgba(229,72,77,.15);color:#c0373b}
+</style>
 </head>
 <body>
 
@@ -23,7 +49,6 @@
   <div class="cloud cloud-4"></div>
   <div class="hills"></div>
   <div class="bubbles" id="bubbles"></div>
-</div>
 </div>
 
 <!-- ================= NAV ================= -->
@@ -41,14 +66,15 @@
   <nav class="menu" id="menu">
     <a href="../inicio/index.html" class="m-link">Inicio</a>
     <a href="../panel/index.html" class="m-link">Panel</a>
-    <a href="../rutas/index.html" class="m-link">Rutas</a>
+    <a href="../rutas/index.html" class="m-link">Rutas y Paradas</a>
     <a href="../unidades/index.html" class="m-link">Unidades</a>
-    <a href="../paradas/index.html" class="m-link">Paradas</a>
     <a href="../incidencias/index.html" class="m-link">Incidencias</a>
     <a href="../conductor/index.html" class="m-link active">Conductor</a>
-    <button class="btn-glass btn-user" id="btnTarjeta">
+    <a href="../tarjeta/index.html" class="m-link">Tarjeta</a>
+    <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
       <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
-      <span id="userChipText">Identificar tarjeta</span>
+      <span id="userChipText">Admin</span>
+      <span id="btnLogout" style="margin-left:8px;font-size:.75rem;font-weight:700;color:#c0373b;cursor:pointer">Cerrar sesión</span>
     </button>
   </nav>
 
@@ -100,22 +126,22 @@
         <span class="live-tag"><i></i> <span id="gpsClock">05:35:00</span></span>
       </div>
       <div class="gps-status">
-        <div class="gps-pos"><span>Posición actual</span><b id="gpsPos">Lat: 10.5060° / Lon: -66.9146°</b></div>
+        <div class="gps-pos"><span>Posición actual</span><b id="gpsPos">Lat: 10.5060· / Lon: -66.9146·</b></div>
         <div class="gps-pos"><span>Unidad asignada</span><b id="gpsUnit">U-101 (Placa A1B2C3)</b></div>
         <div class="gps-pos"><span>Precisión</span><b id="gpsAcc">5 m</b></div>
       </div>
       <div class="gps-table-wrap">
         <table class="gps-table">
-          <thead><tr><th>Parada</th><th>Programado</th><th>Real (GPS)</th><th>Diferencia</th><th>Estado</th></tr></thead>
+          <thead><tr><th>Parada</th><th>Programado</th><th>Real (GPS)</th><th>Diferencia</th><th>Estado</th><th>Acciones</th></tr></thead>
           <tbody id="gpsRows">
-            <tr><td>Terminal La Bandera</td><td>06:00</td><td>06:00</td><td class="ok">+0 min</td><td><span class="chip chip-green">A tiempo</span></td></tr>
-            <tr><td>Plaza Venezuela</td><td>06:15</td><td>06:16</td><td class="warn">+1 min</td><td><span class="chip chip-amber">Retraso leve</span></td></tr>
-            <tr><td>Parque Central</td><td>06:28</td><td>06:27</td><td class="ok">-1 min</td><td><span class="chip chip-green">Adelantado</span></td></tr>
-            <tr><td>Bellas Artes</td><td>06:38</td><td>06:42</td><td class="warn">+4 min</td><td><span class="chip chip-amber">Retraso</span></td></tr>
-            <tr><td>Ciudad Universitaria</td><td>06:50</td><td>06:50</td><td class="ok">+0 min</td><td><span class="chip chip-green">A tiempo</span></td></tr>
-            <tr><td>Los Chaguaramos</td><td>07:05</td><td>07:12</td><td class="bad">+7 min</td><td><span class="chip chip-red">Retraso crítico</span></td></tr>
-            <tr><td>La California</td><td>07:20</td><td>--:--</td><td>--</td><td><span class="chip">Pendiente</span></td></tr>
-            <tr><td>Chacao</td><td>07:35</td><td>--:--</td><td>--</td><td><span class="chip">Pendiente</span></td></tr>
+            <tr><td>Terminal La Bandera</td><td>06:00</td><td>06:00</td><td class="ok">+0 min</td><td><span class="chip chip-green">A tiempo</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Plaza Venezuela</td><td>06:15</td><td>06:16</td><td class="warn">+1 min</td><td><span class="chip chip-amber">Retraso leve</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Parque Central</td><td>06:28</td><td>06:27</td><td class="ok">-1 min</td><td><span class="chip chip-green">Adelantado</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Bellas Artes</td><td>06:38</td><td>06:42</td><td class="warn">+4 min</td><td><span class="chip chip-amber">Retraso</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Ciudad Universitaria</td><td>06:50</td><td>06:50</td><td class="ok">+0 min</td><td><span class="chip chip-green">A tiempo</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Los Chaguaramos</td><td>07:05</td><td>07:12</td><td class="bad">+7 min</td><td><span class="chip chip-red">Retraso crático</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>La California</td><td>07:20</td><td>--:--</td><td>--</td><td><span class="chip">Pendiente</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Chacao</td><td>07:35</td><td>--:--</td><td>--</td><td><span class="chip">Pendiente</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -123,6 +149,70 @@
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4.5 8-11a8 8 0 1 0-16 0c0 6.5 8 11 8 11z"/><circle cx="12" cy="11" r="3"/></svg>
         Simular recorrido GPS (registrar llegadas)
       </button>
+    </div>
+  </div>
+</section>
+
+<!-- Management section -->
+<section class="section" id="gestion" style="padding-top:0">
+  <div class="section-head" style="margin-bottom:20px">
+    <h2 class="title"><span class="title-bar"></span>Gestión de conductores</h2>
+    <p class="subtitle">Administra conductores, asigna rutas y unidades, edita horarios.</p>
+  </div>
+
+  <div class="driver-layout">
+    <div class="card glass">
+      <div class="card-head"><h3>Conductores registrados</h3></div>
+      <div class="filter-row">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="text" id="driverSearch" placeholder="Buscar conductor..." style="padding:9px 14px 9px 36px;border-radius:12px;border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.75);font-size:.85rem;font-weight:700;outline:none;width:100%">
+        </div>
+      </div>
+      <div class="crud-list">
+        <div class="crud-item">
+          <div class="info"><b>Leo Pessi</b><small>CON-4417 · U-1000 · R1 · <span class="status-chip activo">Activo</span></small></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
+        </div>
+        <div class="crud-item">
+          <div class="info"><b>Cristian Orlando</b><small>CON-4418 · U-1007 · R2 · <span class="status-chip activo">Activo</span></small></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
+        </div>
+        <div class="crud-item">
+          <div class="info"><b>Cierro a las Siete</b><small>CON-4419 · U-1014 · R3 · <span class="status-chip suspendido">Suspendido</span></small></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
+        </div>
+        <div class="crud-item">
+          <div class="info"><b>Lamina de Tamal</b><small>CON-4420 · U-1021 · R2 · <span class="status-chip activo">Activo</span></small></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
+        </div>
+        <div class="crud-item">
+          <div class="info"><b>Nicolas Inmaduro</b><small>CON-4421 · U-1028 · R3 · <span class="status-chip activo">Activo</span></small></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card glass">
+      <div class="card-head"><h3>Asignar / Editar conductor</h3></div>
+      <form class="tarjeta-form" style="display:flex;flex-direction:column;gap:10px">
+        <div class="field-row">
+          <div class="field"><label>Nombre completo</label><input type="text" placeholder="Ej: Juan Pérez"></div>
+          <div class="field"><label>Código conductor</label><input type="text" placeholder="Ej: CON-4425"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Ruta asignada</label><select><option>R1</option><option>R2</option><option>R3</option><option>R4</option><option>R5</option><option>R6</option><option>R7</option><option>R8</option></select></div>
+          <div class="field"><label>Unidad asignada</label><select><option>U-1000</option><option>U-1007</option><option>U-1014</option><option>U-1021</option><option>U-1028</option></select></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Cambiar hora de salida</label><input type="time" value="06:00"></div>
+          <div class="field"><label>Estado</label><select><option>Activo</option><option>Suspendido</option><option>Inactivo</option></select></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:4px">
+          <button class="btn btn-primary" type="submit">Guardar cambios</button>
+          <button class="btn btn-soft" type="button">Asignar nueva ruta</button>
+        </div>
+      </form>
     </div>
   </div>
 </section>
@@ -141,11 +231,11 @@
       <h4>Módulo 1</h4>
       <ul>
         <li>Panel de control</li>
-        <li>Rutas</li>
+        <li>Rutas y paradas</li>
         <li>Unidades</li>
-        <li>Paradas</li>
         <li>Incidencias</li>
         <li>Conductores</li>
+        <li>Tarjeta</li>
       </ul>
     </div>
     <div class="foot-col">
@@ -161,7 +251,7 @@
     <div class="foot-col">
       <h4>Proyecto</h4>
       <ul>
-        <li>Universidad "” IUJO</li>
+        <li>Universidad "— IUJO</li>
         <li>Curso: Ingeniería de Software</li>
         <li>Producto de demostración</li>
         <li>Datos simulados en el navegador</li>
@@ -173,7 +263,6 @@
     <span>Hecho con HTML, CSS, JS y GSAP</span>
   </div>
 </footer>
-</main>
 
 <!-- ================= FLOATING ACTIONS ================= -->
 <div class="fab-stack">
@@ -204,6 +293,7 @@
 <script src="../common/script.js"></script>
 </body>
 </html>
+
 
 
 

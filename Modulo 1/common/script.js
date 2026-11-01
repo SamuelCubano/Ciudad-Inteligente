@@ -23,8 +23,6 @@
   let rutaSeleccionada = null;
 
 
-     ============================================================== */
-
   const RUTAS = [
     { id: 'R1', nombre: 'Avenida Bolívar', calle: 'Av. Bolívar / Av. San Martín', color: '#2f9e63',
       coords: [[10.5060,-66.9146],[10.5095,-66.9050],[10.5060,-66.9220],[10.4953,-66.9235],
@@ -198,9 +196,13 @@
     bd.classList.remove('open');
     document.body.style.overflow = '';
   }
-  $('#modalClose').addEventListener('click', cerrarModal);
+   $('#modalClose').addEventListener('click', cerrarModal);
   $('#modalBackdrop').addEventListener('click', (e) => { if (e.target === $('#modalBackdrop')) cerrarModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarModal(); });
+
+  // Expose modal functions globally
+  window.abrirModal = abrirModal;
+  window.cerrarModal = cerrarModal;
 
   // Acciones dentro de los modales (delegacion)
   $('#modalBody').addEventListener('click', (e) => {
@@ -521,12 +523,16 @@
      5.3 CONTROLES DEL MAPA
      ============================================================== */
 
-  $('#btnZoomIn').addEventListener('click', () => { if (mapa) mapa.zoomIn(); });
-  $('#btnZoomOut').addEventListener('click', () => { if (mapa) mapa.zoomOut(); });
-  $('#btnCapa').addEventListener('click', () => {
+  const _btnZoomIn = $('#btnZoomIn');
+  if (_btnZoomIn) _btnZoomIn.addEventListener('click', () => { if (mapa) mapa.zoomIn(); });
+  const _btnZoomOut = $('#btnZoomOut');
+  if (_btnZoomOut) _btnZoomOut.addEventListener('click', () => { if (mapa) mapa.zoomOut(); });
+  const _btnCapa = $('#btnCapa');
+  if (_btnCapa) _btnCapa.addEventListener('click', () => {
     toast('Mapa base', 'Usando OpenStreetMap estándar', 'info');
   });
-  $('#btnLocate').addEventListener('click', () => {
+  const _btnLocate = $('#btnLocate');
+  if (_btnLocate) _btnLocate.addEventListener('click', () => {
     if (!mapa) return;
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -799,7 +805,8 @@
     );
   }
 
-  $('#unitFilters').addEventListener('click', (e) => {
+  const _unitFilters = $('#unitFilters');
+  if (_unitFilters) _unitFilters.addEventListener('click', (e) => {
     const btn = e.target.closest('.chip-btn');
     if (!btn) return;
     $$('.chip-btn', $('#unitFilters')).forEach(b => b.classList.remove('active'));
@@ -807,7 +814,8 @@
     filtroActivo = btn.dataset.f;
     renderUnidades();
   });
-  $('#unitSearch').addEventListener('input', (e) => { busqueda = e.target.value.toLowerCase(); renderUnidades(); });
+  const _unitSearch = $('#unitSearch');
+  if (_unitSearch) _unitSearch.addEventListener('input', (e) => { busqueda = e.target.value.toLowerCase(); renderUnidades(); });
 
   /* ==============================================================
      10. PARADAS
@@ -832,7 +840,8 @@
       cont.appendChild(tr);
     });
   }
-  $('#stopSearch').addEventListener('input', (e) => renderParadas(e.target.value.toLowerCase()));
+  const _stopSearch = $('#stopSearch');
+  if (_stopSearch) _stopSearch.addEventListener('input', (e) => renderParadas(e.target.value.toLowerCase()));
 
   function renderHeat() {
     const cont = $('#heatMap');
@@ -854,6 +863,11 @@
   const incidentes = [];
   function renderIncidentes() {
     const cont = $('#incList');
+    if (incidentes.length === 0) {
+      $('#incTotal').textContent = cont.children.length + (cont.children.length === 1 ? ' reporte' : ' reportes');
+      $('#kpiIncidents').textContent = cont.children.length;
+      return;
+    }
     cont.innerHTML = '';
     incidentes.forEach(inc => {
       const li = document.createElement('li');
@@ -950,15 +964,16 @@
      12. IDENTIFICACIÓN CON TARJETA + REGISTRO GPS
      ============================================================== */
 
-  const TARJETAS = {
-    '15827344': { nombre: 'José González', rol: 'Conductor · Ruta R1', unidad: 'U-1000', tipo: 'conductor' },
-    '24910387': { nombre: 'María Vargas', rol: 'Conductora · Ruta R2', unidad: 'U-1007', tipo: 'conductor' },
-    '11204456': { nombre: 'Carmen Bracho', rol: 'Pasajera · Plan Tarjeta Urbana', unidad: '—', tipo: 'pasajero' }
+   const TARJETAS = {
+    '15827344': { nombre: 'José González', cedula: 'V-15827344', rol: 'Conductor · Ruta R1', unidad: 'U-1000', tipo: 'conductor', ruta: 'R1', estado: 'Activa', saldo: 'Bs. 45.50', tarjeta: 'TU-00158273', registro: '12/03/2025', acceso: 'Hoy 08:45', viajes: 127, plan: 'Plan Conductor' },
+    '24910387': { nombre: 'María Vargas', cedula: 'V-24910387', rol: 'Conductora · Ruta R2', unidad: 'U-1007', tipo: 'conductor', ruta: 'R2', estado: 'Activa', saldo: 'Bs. 32.00', tarjeta: 'TU-00249103', registro: '05/01/2025', acceso: 'Hoy 07:30', viajes: 98, plan: 'Plan Conductor' },
+    '11204456': { nombre: 'Carmen Bracho', cedula: 'V-11204456', rol: 'Pasajera · Plan Tarjeta Urbana', unidad: '—', tipo: 'pasajero', ruta: '—', estado: 'Activa', saldo: 'Bs. 18.75', tarjeta: 'TU-00112044', registro: '20/06/2025', acceso: 'Ayer 14:20', viajes: 45, plan: 'Plan Urbano' }
   };
 
   let sesion = null;
 
-  $('#tarjetaForm').addEventListener('submit', (e) => {
+  const _tarjetaForm = $('#tarjetaForm');
+  if (_tarjetaForm) _tarjetaForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const raw = $('#tarjetaInput').value.replace(/[^0-9]/g, '');
     if (raw.length < 4) { toast('Tarjeta no válida', 'El número debe tener al menos 4 dígitos.', 'err'); return; }
@@ -967,7 +982,7 @@
       toast('Tarjeta no reconocida', 'El número ' + raw + ' no está registrado en el sistema.', 'err');
       return;
     }
-    sesion = datos;
+     sesion = datos;
     $('#cardSession').hidden = false;
     $('#sessionAvatar').textContent = datos.nombre.split(' ').map(n => n[0]).slice(0, 2).join('');
     $('#sessionName').textContent = datos.nombre;
@@ -975,18 +990,42 @@
     $('#sessionCard').textContent = 'Cédula V-' + raw + ' validada';
     $('#userChipText').textContent = datos.nombre.split(' ')[0];
     $('#gpsUnit').textContent = datos.unidad;
+    // Populate info card
+    const infoCard = $('#cardInfo');
+    if (infoCard) {
+      infoCard.style.display = 'block';
+      const empty = $('#cardEmpty');
+      if (empty) empty.style.display = 'none';
+      $('#infoNombre').textContent = datos.nombre;
+      $('#infoCedula').textContent = datos.cedula || 'V-' + raw;
+      $('#infoTarjeta').textContent = datos.tarjeta || 'TU-' + raw;
+      $('#infoSaldo').textContent = datos.saldo || 'Bs. 0.00';
+      $('#infoRol').textContent = datos.rol;
+      $('#infoPlan').textContent = datos.plan || 'Plan Básico';
+      $('#infoUnidad').textContent = datos.unidad;
+      $('#infoRuta').textContent = datos.ruta || '—';
+      $('#infoViajes').textContent = datos.viajes || 0;
+      $('#infoEstado').textContent = datos.estado || 'Activa';
+      $('#infoRegistro').textContent = datos.registro || '—';
+      $('#infoAcceso').textContent = datos.acceso || '—';
+    }
     toast('Identidad validada', datos.nombre + ' · ' + datos.rol, 'ok');
     if (window.gsap) gsap.fromTo('#cardSession', { y: -10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'back.out(1.5)' });
     if (datos.tipo === 'conductor') registrarRecorrido();
   });
 
-  $('#btnLogout').addEventListener('click', () => {
+  const _btnLogout = $('#btnLogout');
+  if (_btnLogout) _btnLogout.addEventListener('click', () => {
     sesion = null;
     $('#cardSession').hidden = true;
     $('#userChipText').textContent = 'Identificar tarjeta';
     $('#tarjetaInput').value = '';
     $('#gpsRows').innerHTML = '';
     $('#gpsUnit').textContent = 'Sin asignar';
+    const infoCard = $('#cardInfo');
+    if (infoCard) infoCard.style.display = 'none';
+    const empty = $('#cardEmpty');
+    if (empty) empty.style.display = 'block';
     toast('Sesión finalizada', 'La tarjeta ha sido retirada del lector.', 'info');
   });
 
@@ -1015,7 +1054,8 @@
     toast('Registro GPS actualizado', 'Se almacenaron ' + filas.length + ' lecturas de tiempo de la unidad asignada.', 'info');
   }
 
-  $('#btnSimularGps').addEventListener('click', () => {
+  const _btnSimularGps = $('#btnSimularGps');
+  if (_btnSimularGps) _btnSimularGps.addEventListener('click', () => {
     if (!sesion) {
       toast('Identificación requerida', 'Valide su tarjeta para registrar tiempos de recorrido.', 'warn');
       $('#conductor').scrollIntoView({ behavior: 'smooth' });
