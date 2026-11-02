@@ -1,0 +1,492 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TransUrbano | Rutas y Paradas</title>
+<meta name="description" content="Vista unificada de rutas y paradas del Servicio de Transporte Urbano. Agregar rutas, paradas y conductores.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="../common/styles.css">
+<style>
+  .unified-layout{display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+  .crud-card{padding:18px}
+  .crud-card h3{margin-bottom:12px}
+  .crud-form{display:flex;flex-direction:column;gap:10px}
+  .crud-form .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .crud-form .field{display:flex;flex-direction:column;gap:4px}
+  .crud-form .field label{font-size:.78rem;font-weight:800;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.4px}
+  .crud-form .field input,.crud-form .field select{padding:10px 14px;border-radius:12px;border:1px solid rgba(11,61,46,.1);background:rgba(255,255,255,.85);font-size:.88rem;font-weight:600;outline:none;transition:.22s;width:100%;font-family:var(--font-b)}
+  .crud-form .field input:focus,.crud-form .field select:focus{background:#fff;border-color:var(--sky-400);box-shadow:0 0 0 3px rgba(79,195,247,.22)}
+  .crud-list{display:flex;flex-direction:column;gap:8px;max-height:260px;overflow:auto;margin-top:12px}
+  .crud-item{padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.85);display:flex;justify-content:space-between;align-items:center;gap:8px}
+  .crud-item b{font-family:var(--font-h);font-size:.9rem;color:var(--green-900)}
+  .crud-item small{font-size:.72rem;color:var(--ink-soft);font-weight:600}
+  .crud-item .crud-actions{display:flex;gap:6px}
+  .crud-btn{padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;transition:.2s}
+  .crud-btn.edit{background:rgba(41,182,246,.15);color:var(--sky-700)}
+  .crud-btn.del{background:rgba(229,72,77,.15);color:#c0373b}
+  .crud-btn:hover{transform:translateY(-1px)}
+  .tab-row{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+  .tab-btn{padding:9px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.9);cursor:pointer;background:rgba(255,255,255,.7);font-size:.82rem;font-weight:800;color:var(--ink-soft);transition:.25s;box-shadow:var(--shadow-sm)}
+  .tab-btn:hover{background:#fff;transform:translateY(-2px)}
+  .tab-btn.active{background:linear-gradient(160deg,var(--green-400),var(--green-600));color:#fff;border-color:transparent;box-shadow:0 6px 16px rgba(47,158,99,.34)}
+  .tab-panel{display:none}
+  .tab-panel.active{display:block}
+</style>
+</head>
+<body>
+
+<!-- ================= SKY / BACKGROUND ================= -->
+<div class="scene" aria-hidden="true">
+  <div class="sky-gradient"></div>
+  <div class="sun-glow"></div>
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="cloud cloud-4"></div>
+  <div class="hills"></div>
+  <div class="bubbles" id="bubbles"></div>
+</div>
+
+<!-- ================= NAV ================= -->
+<header class="topbar" id="topbar">
+  <a class="brand" href="../inicio/index.html">
+    <span class="brand-mark">
+      <svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg>
+    </span>
+    <span class="brand-text">
+      <strong>TransUrbano</strong>
+      <small>Servicio de Transporte Urbano</small>
+    </span>
+  </a>
+
+  <nav class="menu" id="menu">
+    <a href="../inicio/index.html" class="m-link">Inicio</a>
+    <a href="../panel/index.html" class="m-link">Panel</a>
+    <a href="../rutas/index.html" class="m-link active">Rutas y Paradas</a>
+    <a href="../unidades/index.html" class="m-link">Unidades</a>
+    <a href="../incidencias/index.html" class="m-link">Incidencias</a>
+    <a href="../conductor/index.html" class="m-link">Conductor</a>
+    <a href="../tarjeta/index.html" class="m-link">Tarjeta</a>
+    <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
+      <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
+      <span id="userChipText">Leo Pessi</span>
+      <span id="btnLogout" style="margin-left:8px;font-size:.75rem;font-weight:700;color:#c0373b;cursor:pointer">Cerrar sesión</span>
+    </button>
+
+  </nav>
+
+  <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+</header>
+
+<main>
+
+<section class="section" id="rutas-paradas">
+  <div class="section-head">
+    <h2 class="title"><span class="title-bar"></span>Rutas, paradas y conductores</h2>
+    <p class="subtitle">Vista unificada: gestiona rutas, paradas y conductores desde un solo lugar. Agrega, edita o elimina registros.</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tab-row">
+    <button class="tab-btn active" data-tab="rutas">Rutas</button>
+    <button class="tab-btn" data-tab="paradas">Paradas</button>
+    <button class="tab-btn" data-tab="conductores">Conductores</button>
+  </div>
+
+  <!-- TAB: Rutas -->
+  <div class="tab-panel active" id="tab-rutas">
+    <div class="filters" style="margin-bottom:16px">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="text" id="routeSearch" placeholder="Buscar ruta por nombre, código o sector...">
+      </div>
+      <div class="filter-chips" id="routeFilters">
+        <button class="chip-btn active" data-f="all">Todas</button>
+        <button class="chip-btn" data-f="fluido">Fluidas</button>
+        <button class="chip-btn" data-f="moderado">Moderadas</button>
+        <button class="chip-btn" data-f="congestionado">Congestionadas</button>
+      </div>
+      <div class="filter-chips" id="routeSectorFilters">
+        <button class="chip-btn active" data-f="all">Todos los sectores</button>
+        <button class="chip-btn" data-f="Centro">Centro</button>
+        <button class="chip-btn" data-f="Norte">Norte</button>
+        <button class="chip-btn" data-f="Sur">Sur</button>
+        <button class="chip-btn" data-f="Este">Este</button>
+        <button class="chip-btn" data-f="Oeste">Oeste</button>
+      </div>
+    </div>
+    <div class="unified-layout">
+      <div class="card glass map-card">
+        <div class="map-toolbar">
+          <div class="map-legend">
+            <span class="legend-item"><i style="background:#2f9e63"></i> 5 en ruta</span>
+            <span class="legend-item"><i style="background:#29b6f6"></i> 2 en parada</span>
+            <span class="legend-item"><i style="background:#e5484d"></i> 1 en mantenimiento</span>
+          </div>
+          <div class="map-tools">
+            <button class="icon-btn" id="btnCapa" title="Cambiar mapa base"><svg viewBox="0 0 24 24"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5M3 17l9 5 9-5"/></svg></button>
+            <button class="icon-btn" id="btnZoomIn" title="Acercar"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+            <button class="icon-btn" id="btnZoomOut" title="Alejar"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+            <button class="icon-btn" id="btnLocate" title="Mi ubicación"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></svg></button>
+          </div>
+        </div>
+        <div class="map-viewport" id="mapViewport">
+          <div id="cityMap"></div>
+          <div class="map-scale"><span></span>200 m</div>
+        </div>
+        <div class="map-foot">
+          <span class="live-tag"><i></i> Posiciones actualizadas cada 3 s</span>
+          <span class="muted" id="mapHint">Pasa el cursor sobre una unidad o parada</span>
+        </div>
+      </div>
+
+      <aside class="routes-side">
+        <div class="card glass">
+          <div class="card-head"><h3>Detalle de rutas</h3></div>
+          <div class="route-list" id="routeList">
+            <div class="route-item">
+              <div class="route-header">
+                <span class="route-color" style="background:#2f9e63"></span>
+                <strong>R1 · Av. Bolívar</strong>
+                <span class="route-badge operativa">5 en ruta</span>
+              </div>
+              <small>Terminal La Bandera → Los Chaguaramos · 14 km · 26 paradas</small>
+            </div>
+            <div class="route-item">
+              <div class="route-header">
+                <span class="route-color" style="background:#29b6f6"></span>
+                <strong>R2 · Caracas-La Guaira</strong>
+                <span class="route-badge parada">2 en parada</span>
+              </div>
+              <small>Centro → Litoral · 28 km · 31 paradas</small>
+            </div>
+            <div class="route-item">
+              <div class="route-header">
+                <span class="route-color" style="background:#8b7cf6"></span>
+                <strong>R3 · Av. Universidad</strong>
+                <span class="route-badge operativa">1 en ruta</span>
+              </div>
+              <small>Plaza Venezuela → Ciudad Universitaria · 18 km · 24 paradas</small>
+            </div>
+            <div class="route-item">
+              <div class="route-header">
+                <span class="route-color" style="background:#f5a623"></span>
+                <strong>R4 · Av. Miranda</strong>
+                <span class="route-badge mantenimiento">1 en mantenimiento</span>
+              </div>
+              <small>Petare → Centro · 22 km · 28 paradas</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- TAB: Paradas -->
+  <div class="tab-panel" id="tab-paradas">
+    <div class="filters" style="margin-bottom:16px">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="text" id="stopSearch" class="mini-input" placeholder="Buscar parada por nombre, ruta o sector...">
+      </div>
+      <div class="filter-chips" id="stopFilters">
+        <button class="chip-btn active" data-f="all">Todas</button>
+        <button class="chip-btn" data-f="R1">R1</button>
+        <button class="chip-btn" data-f="R2">R2</button>
+        <button class="chip-btn" data-f="R3">R3</button>
+        <button class="chip-btn" data-f="R4">R4</button>
+      </div>
+      <div class="filter-chips" id="stopStatusFilters">
+        <button class="chip-btn active" data-f="all">Todos los estados</button>
+        <button class="chip-btn" data-f="activa">Activas</button>
+        <button class="chip-btn" data-f="alta">Alta demanda</button>
+        <button class="chip-btn" data-f="saturada">Saturadas</button>
+      </div>
+      <div class="filter-chips" id="stopSectorFilters">
+        <button class="chip-btn active" data-f="all">Todos los sectores</button>
+        <button class="chip-btn" data-f="Centro">Centro</button>
+        <button class="chip-btn" data-f="Norte">Norte</button>
+        <button class="chip-btn" data-f="Sur">Sur</button>
+        <button class="chip-btn" data-f="Este">Este</button>
+        <button class="chip-btn" data-f="Oeste">Oeste</button>
+      </div>
+    </div>
+    <div class="card glass">
+      <div class="stops-table-wrap">
+        <table class="stops-table">
+          <thead>
+            <tr>
+              <th>Parada</th>
+              <th>Ruta</th>
+              <th>Sector</th>
+              <th>En espera</th>
+              <th>ETA</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="stopsList">
+            <tr><td>Terminal La Bandera</td><td>R1</td><td>Centro</td><td>12</td><td>2 min</td><td><span class="chip chip-green">Activa</span></td><td> </td></tr>
+            <tr><td>Plaza Venezuela</td><td>R1</td><td>Centro</td><td>28</td><td>5 min</td><td><span class="chip chip-amber">Alta demanda</span></td><td> </td></tr>
+            <tr><td>Parque Central</td><td>R1</td><td>Centro</td><td>8</td><td>1 min</td><td><span class="chip chip-green">Activa</span></td><td> </td></tr>
+            <tr><td>Bellas Artes</td><td>R3</td><td>Norte</td><td>15</td><td>3 min</td><td><span class="chip chip-green">Activa</span></td><td> </td></tr>
+            <tr><td>Ciudad Universitaria</td><td>R3</td><td>Norte</td><td>35</td><td>7 min</td><td><span class="chip chip-red">Saturada</span></td><td> </td></tr>
+            <tr><td>Los Chaguaramos</td><td>R3</td><td>Norte</td><td>5</td><td>4 min</td><td><span class="chip chip-green">Activa</span></td><td> </td></tr>
+            <tr><td>La California</td><td>R4</td><td>Este</td><td>22</td><td>6 min</td><td><span class="chip chip-amber">Alta demanda</span></td><td> </td></tr>
+            <tr><td>Chacao</td><td>R4</td><td>Este</td><td>40</td><td>9 min</td><td><span class="chip chip-red">Saturada</span></td><td> </td></tr>
+            <tr><td>Altamira</td><td>R4</td><td>Este</td><td>18</td><td>3 min</td><td><span class="chip chip-green">Activa</span></td><td> </td></tr>
+            <tr><td>Petare</td><td>R4</td><td>Este</td><td>55</td><td>12 min</td><td><span class="chip chip-red">Saturada</span></td><td> </td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB: Conductores -->
+  <div class="tab-panel" id="tab-conductores">
+    <div class="filters" style="margin-bottom:16px">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="text" id="driverSearch" placeholder="Buscar conductor por nombre, código o ruta...">
+      </div>
+    </div>
+    <div class="card glass">
+      <div class="card-head"><h3>Conductores registrados</h3></div>
+      <div class="crud-list">
+        <div class="crud-item"><div><b>José González</b><br><small>CON-4417 · Ruta R1 · U-1000</small></div><div class="crud-actions"></div></div>
+        <div class="crud-item"><div><b>María Vargas</b><br><small>CON-4418 · Ruta R2 · U-1007</small></div><div class="crud-actions"></div></div>
+        <div class="crud-item"><div><b>Luis Rodríguez</b><br><small>CON-4419 · Ruta R3 · U-1014</small></div><div class="crud-actions"></div></div>
+        <div class="crud-item"><div><b>Carmen Bracho</b><br><small>CON-4420 · Ruta R4 · U-1021</small></div><div class="crud-actions"></div></div>
+        <div class="crud-item"><div><b>Rafael Herrera</b><br><small>CON-4421 · Ruta R5 · U-1028</small></div><div class="crud-actions"></div></div>
+        <div class="crud-item"><div><b>Sandra Mérquez</b><br><small>CON-4422 · Ruta R6 · U-1035</small></div><div class="crud-actions"></div></div>
+        <div class="crud-item"><div><b>Andrés Lovera</b><br><small>CON-4423 · Ruta R7 · U-1042</small></div><div class="crud-actions"></div></div>
+        <div class="crud-item"><div><b>Paola Requena</b><br><small>CON-4424 · Ruta R8 · U-1049</small></div><div class="crud-actions"></div></div>
+      </div>
+    </div>
+  </div>
+
+  </section>
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="foot-grid">
+    <div class="foot-col">
+      <a class="brand footer-brand" href="../inicio/index.html">
+        <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
+        <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
+      </a>
+      <p class="muted">Solución a la incertidumbre del transporte y su pasaje, reclamación de incidentes e información inmediata de datos de las unidades.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Módulo 1</h4>
+      <ul>
+        <li>Panel de control</li>
+        <li>Rutas y paradas</li>
+        <li>Unidades</li>
+        <li>Incidencias</li>
+        <li>Conductores</li>
+        <li>Tarjeta</li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>No funcional</h4>
+      <ul>
+        <li>Identificación con tarjeta</li>
+        <li>Ubicación espacial GPS</li>
+        <li>Registro de tiempos</li>
+        <li>Botón de emergencia</li>
+        <li>Botón de reporte</li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Proyecto</h4>
+      <ul>
+        <li>Universidad "— IUJO</li>
+        <li>Curso: Ingeniería de Software</li>
+        <li>Producto de demostración</li>
+        <li>Datos simulados en el navegador</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 TransUrbano · Proyecto universitario</span>
+    <span>Hecho con HTML, CSS, JS y GSAP</span>
+  </div>
+</footer>
+
+<!-- ================= FLOATING ACTIONS ================= -->
+<div class="fab-stack">
+  <button class="fab fab-report" id="btnReporte" title="Reportar incidencia">
+    <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+    <span class="fab-label">Reportar</span>
+  </button>
+  <button class="fab fab-emerg" id="btnEmergencia" title="Emergencia">
+    <span class="fab-pulse"></span>
+    <svg viewBox="0 0 24 24"><path d="M12 2 2 7v6c0 5 4.2 8.8 10 9 5.8-.2 10-4 10-9V7z"/><path d="M12 8v5"/><circle cx="12" cy="16.2" r="1"/></svg>
+    <span class="fab-label">Emergencia</span>
+  </button>
+</div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="../common/script.js"></script>
+<script>
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Map init
+  document.addEventListener('DOMContentLoaded', function() {
+    if (typeof L === 'undefined') return;
+    const map = L.map('cityMap', { center: [10.5060, -66.9146], zoom: 13, zoomControl: false, attributionControl: true, scrollWheelZoom: true });
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '&copy; OpenStreetMap contributors', maxZoom: 19 }).addTo(map);
+    const rutas = [
+      { id: 'R1', nombre: 'Av. Bolívar', color: '#2f9e63', coords: [[10.5060,-66.9146],[10.5095,-66.9050],[10.5060,-66.9220],[10.4953,-66.9235],[10.4818,-66.9498]] },
+      { id: 'R2', nombre: 'Caracas-La Guaira', color: '#29b6f6', coords: [[10.5060,-66.9146],[10.4969,-66.8857],[10.5085,-66.8990],[10.5218,-66.9454]] },
+      { id: 'R3', nombre: 'Av. Universidad', color: '#8b7cf6', coords: [[10.5060,-66.9146],[10.5030,-66.9000],[10.4969,-66.8857],[10.4988,-66.8520]] },
+      { id: 'R4', nombre: 'Av. Miranda', color: '#f5a623', coords: [[10.5060,-66.9146],[10.4969,-66.8857],[10.4956,-66.8489],[10.4821,-66.8404]] }
+    ];
+    rutas.forEach(r => L.polyline(r.coords, { color: r.color, weight: 4, opacity: 0.8 }).addTo(map));
+    const allCoords = rutas.flatMap(r => r.coords);
+    if (allCoords.length) map.fitBounds(allCoords, { padding: [20, 20] });
+    document.getElementById('btnZoomIn').addEventListener('click', () => map.zoomIn());
+    document.getElementById('btnZoomOut').addEventListener('click', () => map.zoomOut());
+    document.getElementById('btnLocate').addEventListener('click', () => map.setView([10.5060, -66.9146], 13));
+    document.getElementById('btnCapa').addEventListener('click', () => { if (window.toast) toast('Mapa base', 'Usando OpenStreetMap estóndar', 'info'); });
+  });
+
+  // Search and filter functionality
+  function filterItems(selector, query) {
+    document.querySelectorAll(selector).forEach(item => {
+      item.style.display = item.textContent.toLowerCase().includes(query.toLowerCase()) ? '' : 'none';
+    });
+  }
+
+  const stopSearch = document.getElementById('stopSearch');
+  if (stopSearch) {
+    stopSearch.addEventListener('input', (e) => filterItems('#stopsList tr', e.target.value));
+  }
+  const routeSearch = document.getElementById('routeSearch');
+  if (routeSearch) {
+    routeSearch.addEventListener('input', (e) => filterItems('#routeList .route-item', e.target.value));
+  }
+  const driverSearch = document.getElementById('driverSearch');
+  if (driverSearch) {
+    driverSearch.addEventListener('input', (e) => filterItems('.crud-list .crud-item', e.target.value));
+  }
+
+  // Filter chips for routes
+  const routeFilters = document.getElementById('routeFilters');
+  if (routeFilters) {
+    routeFilters.addEventListener('click', (e) => {
+      const btn = e.target.closest('.chip-btn');
+      if (!btn) return;
+      routeFilters.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.f;
+      document.querySelectorAll('#routeList .route-item').forEach(item => {
+        if (f === 'all') { item.style.display = ''; return; }
+        item.style.display = item.textContent.toLowerCase().includes(f) ? '' : 'none';
+      });
+    });
+  }
+
+  // Filter chips for routes by sector
+  const routeSectorFilters = document.getElementById('routeSectorFilters');
+  if (routeSectorFilters) {
+    routeSectorFilters.addEventListener('click', (e) => {
+      const btn = e.target.closest('.chip-btn');
+      if (!btn) return;
+      routeSectorFilters.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.f;
+      document.querySelectorAll('#routeList .route-item').forEach(item => {
+        if (f === 'all') { item.style.display = ''; return; }
+        item.style.display = item.textContent.includes(f) ? '' : 'none';
+      });
+    });
+  }
+
+  // Filter chips for stops by route
+  const stopFilters = document.getElementById('stopFilters');
+  if (stopFilters) {
+    stopFilters.addEventListener('click', (e) => {
+      const btn = e.target.closest('.chip-btn');
+      if (!btn) return;
+      stopFilters.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.f;
+      document.querySelectorAll('#stopsList tr').forEach(tr => {
+        if (f === 'all') { tr.style.display = ''; return; }
+        tr.style.display = tr.cells[1] && tr.cells[1].textContent === f ? '' : 'none';
+      });
+    });
+  }
+
+  // Filter chips for stops by status
+  const stopStatusFilters = document.getElementById('stopStatusFilters');
+  if (stopStatusFilters) {
+    stopStatusFilters.addEventListener('click', (e) => {
+      const btn = e.target.closest('.chip-btn');
+      if (!btn) return;
+      stopStatusFilters.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.f;
+      document.querySelectorAll('#stopsList tr').forEach(tr => {
+        if (f === 'all') { tr.style.display = ''; return; }
+        tr.style.display = tr.textContent.toLowerCase().includes(f) ? '' : 'none';
+      });
+    });
+  }
+
+  // Filter chips for stops by sector
+  const stopSectorFilters = document.getElementById('stopSectorFilters');
+  if (stopSectorFilters) {
+    stopSectorFilters.addEventListener('click', (e) => {
+      const btn = e.target.closest('.chip-btn');
+      if (!btn) return;
+      stopSectorFilters.querySelectorAll('.chip-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.f;
+      document.querySelectorAll('#stopsList tr').forEach(tr => {
+        if (f === 'all') { tr.style.display = ''; return; }
+        tr.style.display = tr.textContent.includes(f) ? '' : 'none';
+      });
+    });
+  }
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

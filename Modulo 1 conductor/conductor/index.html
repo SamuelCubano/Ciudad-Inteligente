@@ -1,0 +1,365 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TransUrbano | Estación del Conductor</title>
+<meta name="description" content="Identificación con tarjeta, asignación de unidad y registro GPS de tiempos de llegada.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<link rel="stylesheet" href="../common/styles.css">
+<style>
+  .crud-list{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow:auto}
+  .crud-item{padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.85);display:flex;justify-content:space-between;align-items:center;gap:10px;transition:.2s}
+  .crud-item:hover{background:#fff;box-shadow:var(--shadow-sm)}
+  .crud-item .info{flex:1}
+  .crud-item .info b{font-family:var(--font-h);font-size:.92rem;color:var(--green-900);display:block}
+  .crud-item .info small{font-size:.72rem;color:var(--ink-soft);font-weight:600}
+  .crud-item .actions{display:flex;gap:4px;flex-shrink:0}
+  .crud-btn{padding:5px 9px;border-radius:7px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;transition:.2s}
+  .crud-btn.edit{background:rgba(41,182,246,.15);color:var(--sky-700)}
+  .crud-btn.suspend{background:rgba(245,166,35,.18);color:#a96c00}
+  .crud-btn.del{background:rgba(229,72,77,.15);color:#c0373b}
+  .crud-btn:hover{transform:translateY(-1px)}
+  .filter-row{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+  .filter-row .search-box{flex:1;min-width:180px;max-width:260px}
+  .filter-row .search-box input{padding:9px 14px 9px 36px;border-radius:12px;border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.75);font-size:.85rem;font-weight:700;outline:none;width:100%}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .field{display:flex;flex-direction:column;gap:4px}
+  .field label{font-size:.78rem;font-weight:800;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.4px}
+  .field input,.field select{padding:10px 14px;border-radius:12px;border:1px solid rgba(11,61,46,.1);background:rgba(255,255,255,.85);font-size:.88rem;font-weight:600;outline:none;width:100%;font-family:var(--font-b)}
+  .field input:focus,.field select:focus{background:#fff;border-color:var(--sky-400);box-shadow:0 0 0 3px rgba(79,195,247,.22)}
+  .status-chip{font-size:.62rem;font-weight:900;padding:2px 7px;border-radius:999px;white-space:nowrap}
+  .status-chip.activo{background:rgba(74,169,108,.16);color:var(--green-700)}
+  .status-chip.suspendido{background:rgba(245,166,35,.18);color:#a96c00}
+  .status-chip.inactivo{background:rgba(229,72,77,.15);color:#c0373b}
+
+  .driver-profile{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .profile-card{grid-column:1/-1}
+  .profile-head{display:flex;align-items:center;gap:18px;margin-bottom:16px}
+  .profile-head .driver-photo{width:90px;height:90px;border-radius:50%;overflow:hidden;flex-shrink:0;box-shadow:var(--shadow-md)}
+  .profile-head .driver-photo img{width:100%;height:100%;object-fit:cover}
+  .profile-info h3{font-family:var(--font-h);font-size:1.4rem;color:var(--green-900);margin:0 0 4px}
+  .profile-info p{margin:0 0 8px;font-size:.85rem}
+  .profile-chips{display:flex;gap:6px;flex-wrap:wrap}
+  .profile-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding-top:14px;border-top:1px solid rgba(11,61,46,.08)}
+  .profile-stats .stat{text-align:center}
+  .profile-stats .stat b{font-family:var(--font-h);font-size:1.3rem;color:var(--green-900);display:block}
+  .profile-stats .stat small{font-size:.7rem;color:var(--ink-soft);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+  .schedule-list{display:flex;flex-direction:column;gap:10px}
+  .schedule-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.85);transition:.2s}
+  .schedule-item:hover{background:#fff;box-shadow:var(--shadow-sm)}
+  .sched-time{text-align:center;min-width:50px}
+  .sched-time b{font-family:var(--font-h);font-size:1.1rem;color:var(--green-900);display:block}
+  .sched-time small{font-size:.65rem;color:var(--ink-soft);font-weight:700;text-transform:uppercase}
+  .sched-route{flex:1}
+  .sched-route b{font-family:var(--font-h);font-size:.9rem;color:var(--green-900);display:block}
+  .sched-route small{font-size:.72rem;color:var(--ink-soft);font-weight:600}
+  .sched-status{flex-shrink:0}
+  .route-detail{display:flex;flex-direction:column;gap:8px}
+  .rd-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(11,61,46,.06)}
+  .rd-row span{font-size:.82rem;color:var(--ink-soft);font-weight:700}
+  .rd-row b{font-size:.88rem;color:var(--green-900)}
+  @media(max-width:768px){.driver-profile{grid-template-columns:1fr}.profile-stats{grid-template-columns:repeat(2,1fr)}}
+
+
+  /* Enhanced conductor profile styles */
+  .driver-profile{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .profile-card{grid-column:1/-1;background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(240,251,245,.9));border:1px solid rgba(255,255,255,.95);box-shadow:0 8px 32px rgba(11,61,46,.08)}
+  .profile-head{display:flex;align-items:center;gap:20px;margin-bottom:18px}
+  .profile-head .driver-photo{width:100px;height:100px;border-radius:50%;overflow:hidden;flex-shrink:0;box-shadow:0 4px 16px rgba(11,61,46,.15);border:3px solid #fff}
+  .profile-head .driver-photo img{width:100%;height:100%;object-fit:cover}
+  .profile-info h3{font-family:var(--font-h);font-size:1.5rem;color:var(--green-900);margin:0 0 4px;font-weight:700}
+  .profile-info p{margin:0 0 10px;font-size:.88rem;color:var(--ink-soft);font-weight:600}
+  .profile-chips{display:flex;gap:8px;flex-wrap:wrap}
+  .profile-chips .chip{font-size:.72rem;font-weight:800;padding:4px 10px;border-radius:999px}
+  .profile-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;padding-top:16px;border-top:1px solid rgba(11,61,46,.08)}
+  .profile-stats .stat{text-align:center;padding:8px;border-radius:12px;background:rgba(255,255,255,.5);transition:.2s}
+  .profile-stats .stat:hover{background:#fff;transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+  .profile-stats .stat b{font-family:var(--font-h);font-size:1.4rem;color:var(--green-900);display:block;margin-bottom:2px}
+  .profile-stats .stat small{font-size:.68rem;color:var(--ink-soft);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+  .schedule-card{background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(240,251,245,.9));border:1px solid rgba(255,255,255,.95)}
+  .schedule-list{display:flex;flex-direction:column;gap:10px}
+  .schedule-item{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9);transition:.25s cubic-bezier(.22,1,.36,1)}
+  .schedule-item:hover{background:#fff;box-shadow:0 4px 16px rgba(11,61,46,.08);transform:translateY(-2px)}
+  .sched-time{text-align:center;min-width:56px;padding:6px 8px;border-radius:10px;background:rgba(47,158,99,.08)}
+  .sched-time b{font-family:var(--font-h);font-size:1.15rem;color:var(--green-900);display:block;line-height:1}
+  .sched-time small{font-size:.62rem;color:var(--ink-soft);font-weight:700;text-transform:uppercase;letter-spacing:.5px;margin-top:2px;display:block}
+  .sched-route{flex:1}
+  .sched-route b{font-family:var(--font-h);font-size:.92rem;color:var(--green-900);display:block;margin-bottom:2px}
+  .sched-route small{font-size:.74rem;color:var(--ink-soft);font-weight:600}
+  .sched-status{flex-shrink:0;font-size:.7rem;font-weight:800;padding:4px 10px;border-radius:999px}
+  .btn-cancel{flex-shrink:0;padding:6px 12px;border-radius:10px;font-size:.72rem;font-weight:800;transition:.2s}
+  .btn-cancel:hover{background:rgba(229,72,77,.15);color:#c0373b;transform:translateY(-1px)}
+  .route-info-card{background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(240,251,245,.9));border:1px solid rgba(255,255,255,.95)}
+  .route-detail{display:flex;flex-direction:column;gap:6px}
+  .rd-row{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.5);transition:.2s}
+  .rd-row:hover{background:rgba(255,255,255,.8)}
+  .rd-row span{font-size:.82rem;color:var(--ink-soft);font-weight:700}
+  .rd-row b{font-size:.9rem;color:var(--green-900);font-weight:800}
+  @media(max-width:768px){.driver-profile{grid-template-columns:1fr}.profile-stats{grid-template-columns:repeat(2,1fr)}.schedule-item{flex-wrap:wrap}}
+  @media(max-width:480px){.profile-stats{grid-template-columns:1fr 1fr}.sched-time{min-width:48px}}
+
+</style>
+</head>
+<body>
+
+<!-- ================= SKY / BACKGROUND ================= -->
+<div class="scene" aria-hidden="true">
+  <div class="sky-gradient"></div>
+  <div class="sun-glow"></div>
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="cloud cloud-4"></div>
+  <div class="hills"></div>
+  <div class="bubbles" id="bubbles"></div>
+</div>
+
+<!-- ================= NAV ================= -->
+<header class="topbar" id="topbar">
+  <a class="brand" href="../inicio/index.html">
+    <span class="brand-mark">
+      <svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg>
+    </span>
+    <span class="brand-text">
+      <strong>TransUrbano</strong>
+      <small>Servicio de Transporte Urbano</small>
+    </span>
+  </a>
+
+  <nav class="menu" id="menu">
+    <a href="../inicio/index.html" class="m-link">Inicio</a>
+    <a href="../panel/index.html" class="m-link">Panel</a>
+    <a href="../rutas/index.html" class="m-link">Rutas y Paradas</a>
+    <a href="../unidades/index.html" class="m-link">Unidades</a>
+    <a href="../incidencias/index.html" class="m-link">Incidencias</a>
+    <a href="../conductor/index.html" class="m-link active">Conductor</a>
+    <a href="../tarjeta/index.html" class="m-link">Tarjeta</a>
+    <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
+      <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
+      <span id="userChipText">Leo Pessi</span>
+      <span id="btnLogout" style="margin-left:8px;font-size:.75rem;font-weight:700;color:#c0373b;cursor:pointer">Cerrar sesión</span>
+    </button>
+  </nav>
+
+  <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+</header>
+
+<main>
+
+<section class="section" id="conductor">
+  <div class="section-head">
+    <h2 class="title"><span class="title-bar"></span>Perfil del conductor</h2>
+    <p class="subtitle">Leo Pessi · CON-4417 · Unidad U-1000 · Ruta R1</p>
+  </div>
+
+  <div class="driver-profile">
+    <!-- Profile card -->
+    <div class="card glass profile-card">
+      <div class="profile-head">
+        <div class="driver-photo">
+          <img src="https://i.pinimg.com/736x/b6/a5/57/b6a557cd27de0e7f37074379c9190c97.jpg" alt="Leo Pessi" />
+        </div>
+        <div class="profile-info">
+          <h3>Leo Pessi</h3>
+          <p class="muted">Conductor · Ruta R1 · Unidad U-1000</p>
+          <div class="profile-chips">
+            <span class="chip chip-green">Activo</span>
+            <span class="chip chip-blue">Tarjeta COND-4417</span>
+            <span class="chip chip-amber">Turno mañana</span>
+          </div>
+        </div>
+      </div>
+      <div class="profile-stats">
+        <div class="stat"><b>127</b><small>Viajes hoy</small></div>
+        <div class="stat"><b>8.5h</b><small>Horas activas</small></div>
+        <div class="stat"><b>94%</b><small>Puntualidad</small></div>
+        <div class="stat"><b>0</b><small>Retrasos críticos</small></div>
+      </div>
+    </div>
+
+    <!-- Schedule card -->
+    <div class="card glass schedule-card">
+      <div class="card-head">
+        <h3>Mis horarios</h3>
+        <span class="muted">Semana actual</span>
+      </div>
+      <div class="schedule-list">
+        <div class="schedule-item">
+          <div class="sched-time"><b>06:00</b><small>Salida</small></div>
+          <div class="sched-route"><b>R1 · Av. Bolívar</b><small>Plaza Bolívar → Antímano</small></div>
+          <div class="sched-status chip chip-green">En curso</div>
+          <button class="btn btn-glass btn-sm btn-cancel" data-sched="1">Cancelar</button>
+        </div>
+        <div class="schedule-item">
+          <div class="sched-time"><b>08:30</b><small>Salida</small></div>
+          <div class="sched-route"><b>R1 · Av. Bolívar</b><small>Plaza Bolívar → Antímano</small></div>
+          <div class="sched-status chip chip-blue">Programado</div>
+          <button class="btn btn-glass btn-sm btn-cancel" data-sched="2">Cancelar</button>
+        </div>
+        <div class="schedule-item">
+          <div class="sched-time"><b>11:00</b><small>Salida</small></div>
+          <div class="sched-route"><b>R1 · Av. Bolívar</b><small>Plaza Bolívar → Antímano</small></div>
+          <div class="sched-status chip chip-blue">Programado</div>
+          <button class="btn btn-glass btn-sm btn-cancel" data-sched="3">Cancelar</button>
+        </div>
+        <div class="schedule-item">
+          <div class="sched-time"><b>14:00</b><small>Salida</small></div>
+          <div class="sched-route"><b>R1 · Av. Bolívar</b><small>Antímano → Plaza Bolívar</small></div>
+          <div class="sched-status chip chip-blue">Programado</div>
+          <button class="btn btn-glass btn-sm btn-cancel" data-sched="4">Cancelar</button>
+        </div>
+        <div class="schedule-item">
+          <div class="sched-time"><b>17:30</b><small>Salida</small></div>
+          <div class="sched-route"><b>R1 · Av. Bolívar</b><small>Antímano → Plaza Bolívar</small></div>
+          <div class="sched-status chip chip-blue">Programado</div>
+          <button class="btn btn-glass btn-sm btn-cancel" data-sched="5">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Route info card -->
+    <div class="card glass route-info-card">
+      <div class="card-head">
+        <h3>Mi ruta asignada</h3>
+        <span class="muted">R1 · Av. Bolívar</span>
+      </div>
+      <div class="route-detail">
+        <div class="rd-row"><span>Código</span><b>R1</b></div>
+        <div class="rd-row"><span>Nombre</span><b>Av. Bolívar</b></div>
+        <div class="rd-row"><span>Sector</span><b>Centro</b></div>
+        <div class="rd-row"><span>Paradas</span><b>26</b></div>
+        <div class="rd-row"><span>Distancia</span><b>14 km</b></div>
+        <div class="rd-row"><span>Tiempo promedio</span><b>42 min</b></div>
+        <div class="rd-row"><span>Estado tráfico</span><b style="color:var(--green-700)">Fluido</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Management section -->
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="foot-grid">
+    <div class="foot-col">
+      <a class="brand footer-brand" href="../inicio/index.html">
+        <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
+        <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
+      </a>
+      <p class="muted">Solución a la incertidumbre del transporte y su pasaje, reclamación de incidentes e información inmediata de datos de las unidades.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Módulo 1</h4>
+      <ul>
+        <li>Panel de control</li>
+        <li>Rutas y paradas</li>
+        <li>Unidades</li>
+        <li>Incidencias</li>
+        <li>Conductores</li>
+        <li>Tarjeta</li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>No funcional</h4>
+      <ul>
+        <li>Identificación con tarjeta</li>
+        <li>Ubicación espacial GPS</li>
+        <li>Registro de tiempos</li>
+        <li>Botón de emergencia</li>
+        <li>Botón de reporte</li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Proyecto</h4>
+      <ul>
+        <li>Universidad "— IUJO</li>
+        <li>Curso: Ingeniería de Software</li>
+        <li>Producto de demostración</li>
+        <li>Datos simulados en el navegador</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 TransUrbano · Proyecto universitario</span>
+    <span>Hecho con HTML, CSS, JS y GSAP</span>
+  </div>
+</footer>
+
+<!-- ================= FLOATING ACTIONS ================= -->
+<div class="fab-stack">
+  <button class="fab fab-report" id="btnReporte" title="Reportar incidencia">
+    <svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+    <span class="fab-label">Reportar</span>
+  </button>
+  <button class="fab fab-emerg" id="btnEmergencia" title="Emergencia">
+    <span class="fab-pulse"></span>
+    <svg viewBox="0 0 24 24"><path d="M12 2 2 7v6c0 5 4.2 8.8 10 9 5.8-.2 10-4 10-9V7z"/><path d="M12 8v5"/><circle cx="12" cy="16.2" r="1"/></svg>
+    <span class="fab-label">Emergencia</span>
+  </button>
+</div>
+
+<!-- ================= MODAL ================= -->
+<div class="modal-backdrop" id="modalBackdrop">
+  <div class="modal" id="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Cerrar">&times;</button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="toast-stack" id="toastStack"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="../common/script.js"></script>
+<script>// Cancel schedule handler
+document.querySelectorAll('.btn-cancel').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const schedId = btn.dataset.sched;
+    const schedItem = btn.closest('.schedule-item');
+    const time = schedItem.querySelector('.sched-time b').textContent;
+    const route = schedItem.querySelector('.sched-route b').textContent;
+    const html = '<div style="text-align:center">' +
+      '<h3 class="modal-title">Cancelar horario</h3>' +
+      '<p class="modal-sub">¿Desea cancelar el horario de las ' + time + ' en la ruta ' + route + '?</p>' +
+      '<div class="field" style="text-align:left;margin:12px 0">' +
+      '<label for="cancelReason">Motivo de cancelación</label>' +
+      '<textarea id="cancelReason" rows="3" placeholder="Indique el motivo de la cancelación..." style="width:100%;padding:10px;border-radius:12px;border:1px solid rgba(11,61,46,.1);font-size:.88rem;font-weight:600;outline:none;font-family:var(--font-b)"></textarea>' +
+      '</div>' +
+      '<div class="modal-actions">' +
+      '<button class="btn btn-primary" id="btnConfirmCancel" data-sched="' + schedId + '">Confirmar cancelación</button>' +
+      '<button class="btn btn-glass" onclick="document.getElementById(\'modalClose\').click()">Volver</button>' +
+      '</div></div>';
+    if (window.abrirModal) window.abrirModal(html);
+    setTimeout(() => {
+      const confirmBtn = document.getElementById('btnConfirmCancel');
+      if (confirmBtn) {
+        confirmBtn.addEventListener('click', () => {
+          const reason = document.getElementById('cancelReason').value.trim();
+          if (!reason) { alert('Indique el motivo de la cancelación.'); return; }
+          schedItem.style.opacity = '0.4';
+          schedItem.style.textDecoration = 'line-through';
+          const status = schedItem.querySelector('.sched-status');
+          if (status) { status.textContent = 'Cancelado'; status.className = 'sched-status chip chip-red'; }
+          btn.remove();
+          if (window.cerrarModal) window.cerrarModal();
+          if (window.toast) window.toast('Horario cancelado', 'Se registró el motivo: ' + reason, 'warn');
+        });
+      }
+    }, 100);
+  });
+});
+
+</script>
+</body>
+</html>
+
+
+
+
