@@ -55,21 +55,38 @@
       <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
       <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
     </a>
-    <nav class="menu" id="menu" aria-label="Navegación principal">
-      <a href="../inicio/index.html" class="m-link">Inicio</a>
-      <a href="../panel/index.html" class="m-link">Panel</a>
-      <a href="../rutas/index.html" class="m-link">Rutas y Paradas</a>
-      <a href="../unidades/index.html" class="m-link">Unidades</a>
-      <a href="../mantenimiento/index.html" class="m-link">Mantenimiento</a>
-      <a href="../residuos/index.html" class="m-link active" aria-current="page">Residuos</a>
-      <a href="../incidencias/index.html" class="m-link">Incidencias</a>
-      <a href="../conductor/index.html" class="m-link">Conductor</a>
-      <a href="../tarjeta/index.html" class="m-link">Tarjeta</a>
-      <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
+    <nav class="menu" id="menu">
+    <a href="../inicio/index.html" class="m-link">Inicio</a>
+    <div class="dropdown">
+      <button class="m-link dropdown-toggle" type="button">Operación ▾</button>
+      <div class="dropdown-menu">
+        <a href="../rutas/index.html" class="dropdown-item">Rutas y Paradas</a>
+        <a href="../unidades/index.html" class="dropdown-item">Unidades</a>
+        <a href="../conductor/index.html" class="dropdown-item">Conductor</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="m-link dropdown-toggle" type="button">Flota y Mantenimiento ▾</button>
+      <div class="dropdown-menu">
+        <a href="../unidades/index.html" class="dropdown-item">Unidades (Inventario)</a>
+        <a href="../mantenimiento/index.html" class="dropdown-item">Mantenimiento</a>
+        <a href="../residuos/index.html" class="dropdown-item">Residuos</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="m-link dropdown-toggle" type="button">Gestión y Control ▾</button>
+      <div class="dropdown-menu">
+        <a href="../panel/index.html" class="dropdown-item">Panel</a>
+        <a href="../incidencias/index.html" class="dropdown-item">Incidencias</a>
+        <a href="../tarjeta/index.html" class="dropdown-item">Tarjeta</a>
+      </div>
+    </div>
+    <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
       <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
-      <span id="userChipText">Iniciar sesiÃ³n o Registrarse</span>
+      <span id="userChipText">Iniciar sesión o Registrarse</span>
     </button>
   </nav>
+
     <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
   </header>
 
@@ -198,5 +215,6 @@
       updateRoutes();
     });
   </script>
+<script src="../common/script.js"></script>
 </body>
 </html>
