@@ -1285,6 +1285,19 @@
      16. MENÚ MÓVIL + INICIO
      ============================================================== */
 
+
+  // Dropdown toggle
+  document.querySelectorAll('.dropdown-toggle').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const dd = btn.closest('.dropdown');
+      dd.classList.toggle('open');
+    });
+  });
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.dropdown.open').forEach(d => d.classList.remove('open'));
+  });
+
   $('#burger').addEventListener('click', () => $('#menu').classList.toggle('open'));
   $$('.m-link').forEach(l => l.addEventListener('click', () => $('#menu').classList.remove('open')));
 

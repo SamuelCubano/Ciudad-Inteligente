@@ -78,12 +78,30 @@
 
   <nav class="menu" id="menu">
     <a href="../inicio/index.html" class="m-link">Inicio</a>
-    <a href="../panel/index.html" class="m-link">Panel</a>
-    <a href="../rutas/index.html" class="m-link">Rutas y Paradas</a>
-    <a href="../unidades/index.html" class="m-link">Unidades</a>
-    <a href="../incidencias/index.html" class="m-link">Incidencias</a>
-    <a href="../conductor/index.html" class="m-link">Conductor</a>
-    <a href="../tarjeta/index.html" class="m-link active">Tarjeta</a>
+    <div class="dropdown">
+      <button class="m-link dropdown-toggle" type="button">Operación ▾</button>
+      <div class="dropdown-menu">
+        <a href="../rutas/index.html" class="dropdown-item">Rutas y Paradas</a>
+        <a href="../unidades/index.html" class="dropdown-item">Unidades</a>
+        <a href="../conductor/index.html" class="dropdown-item">Conductor</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="m-link dropdown-toggle" type="button">Flota y Mantenimiento ▾</button>
+      <div class="dropdown-menu">
+        <a href="../unidades/index.html" class="dropdown-item">Unidades (Inventario)</a>
+        <a href="#" class="dropdown-item">Mantenimiento</a>
+        <a href="#" class="dropdown-item">Residuos</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="m-link dropdown-toggle" type="button">Gestión y Control ▾</button>
+      <div class="dropdown-menu">
+        <a href="../panel/index.html" class="dropdown-item">Panel</a>
+        <a href="../incidencias/index.html" class="dropdown-item">Incidencias</a>
+        <a href="../tarjeta/index.html" class="dropdown-item">Tarjeta</a>
+      </div>
+    </div>
     <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
       <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
       <span id="userChipText">Leo Pessi</span>
