@@ -42,12 +42,15 @@
     <a href="../panel/index.html" class="m-link">Panel</a>
     <a href="../rutas/index.html" class="m-link">Rutas y Paradas</a>
     <a href="../unidades/index.html" class="m-link active">Unidades</a>
+    <a href="../mantenimiento/index.html" class="m-link">Mantenimiento</a>
+    <a href="../residuos/index.html" class="m-link">Residuos</a>
         <a href="../incidencias/index.html" class="m-link">Incidencias</a>
     <a href="../conductor/index.html" class="m-link">Conductor</a>
     <a href="../tarjeta/index.html" class="m-link">Tarjeta</a>
     <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
       <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
-      <span id="userChipText">Iniciar sesión o Registrarse</span>
+      <span id="userChipText">Admin</span>
+      <span id="btnLogout" style="margin-left:8px;font-size:.75rem;font-weight:700;color:#c0373b;cursor:pointer">Cerrar sesión</span>
     </button>
 
   </nav>
@@ -75,10 +78,31 @@
       <button class="chip-btn" data-f="mantenimiento">Mantenimiento</button>
       <button class="chip-btn" data-f="accessible">Accesible</button>
     </div>
-    
+    <button class="btn btn-primary btn-sm" id="btnNuevaUnidad" style="margin-left:auto">
+      <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+      Nueva unidad
+    </button>
   </div>
 
   <div class="units-grid" id="unitsGrid">
+    <div class="card glass crud-card" style="grid-column:1/-1;display:none" id="nuevaUnidadForm">
+      <div class="card-head"><h3>Nueva unidad</h3></div>
+      <form class="crud-form" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <div class="field"><label>ID de unidad</label><input type="text" placeholder="Ej: U-501"></div>
+        <div class="field"><label>Placa</label><input type="text" placeholder="Ej: AB1234"></div>
+        <div class="field"><label>Tipo</label><select><option>Bus urbano</option><option>Bus ejecutivo</option><option>Microbus</option><option>Bus articulado</option><option>Bus eléctrico</option></select></div>
+        <div class="field"><label>Puestos</label><input type="number" placeholder="0"></div>
+        <div class="field"><label>Espacios reservados</label><input type="number" placeholder="0"></div>
+        <div class="field"><label>Ruta asignada</label><select><option>R1</option><option>R2</option><option>R3</option><option>R4</option><option>R5</option><option>R6</option><option>R7</option><option>R8</option></select></div>
+        <div class="field"><label>Conductor</label><input type="text" placeholder="Ej: Juan Pérez"></div>
+        <div class="field"><label>Tarjeta (cédula)</label><input type="text" placeholder="Ej: 15827344" inputmode="numeric"></div>
+        <div class="field"><label>Estado</label><select><option value="operativa">Operativa</option><option value="parada">En parada</option><option value="mantenimiento">Mantenimiento</option></select></div>
+        <div style="grid-column:1/-1;display:flex;gap:10px;margin-top:4px">
+          <button class="btn btn-primary" type="submit">Crear unidad</button>
+          <button class="btn btn-glass" type="button" id="btnCancelarUnidad">Cancelar</button>
+        </div>
+      </form>
+    </div>
     <article class="unit-card">
       <div class="uc-head">
         <div><div class="uc-id">U-101</div><div class="uc-pLate">PLACA A1B2C3 · Articulado</div></div>
@@ -93,7 +117,7 @@
         <div class="spec"><b>28</b><small>Espacios</small></div>
         <div class="spec"><b>R1</b><small>Ruta</small></div>
       </div>
-      <div class="uc-foot"><span>Ocupación 65%</span></div>
+      <div class="uc-foot"><span>Ocupación 65%</span><span style="display:flex;gap:6px"><button class="crud-btn edit" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button><button class="crud-btn del" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button></span></div>
     </article>
 
     <article class="unit-card">
@@ -110,7 +134,7 @@
         <div class="spec"><b>23</b><small>Espacios</small></div>
         <div class="spec"><b>R1</b><small>Ruta</small></div>
       </div>
-      <div class="uc-foot"><span>Ocupación 72%</span></div>
+      <div class="uc-foot"><span>Ocupación 72%</span><span style="display:flex;gap:6px"><button class="crud-btn edit" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button><button class="crud-btn del" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button></span></div>
     </article>
 
     <article class="unit-card">
@@ -127,7 +151,7 @@
         <div class="spec"><b>2</b><small>Espacios</small></div>
         <div class="spec"><b>R2</b><small>Ruta</small></div>
       </div>
-      <div class="uc-foot"><span>Ocupación 48%</span></div>
+      <div class="uc-foot"><span>Ocupación 48%</span><span style="display:flex;gap:6px"><button class="crud-btn edit" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button><button class="crud-btn del" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button></span></div>
     </article>
 
     <article class="unit-card">
@@ -144,7 +168,7 @@
         <div class="spec"><b>2</b><small>Espacios</small></div>
         <div class="spec"><b>R2</b><small>Ruta</small></div>
       </div>
-      <div class="uc-foot"><span>Ocupación 30%</span></div>
+      <div class="uc-foot"><span>Ocupación 30%</span><span style="display:flex;gap:6px"><button class="crud-btn edit" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button><button class="crud-btn del" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button></span></div>
     </article>
 
     <article class="unit-card">
@@ -161,7 +185,7 @@
         <div class="spec"><b>4</b><small>Espacios</small></div>
         <div class="spec"><b>R3</b><small>Ruta</small></div>
       </div>
-      <div class="uc-foot"><span>Ocupación 85%</span></div>
+      <div class="uc-foot"><span>Ocupación 85%</span><span style="display:flex;gap:6px"><button class="crud-btn edit" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button><button class="crud-btn del" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button></span></div>
     </article>
 
     <article class="unit-card">
@@ -178,7 +202,7 @@
         <div class="spec"><b>2</b><small>Espacios</small></div>
         <div class="spec"><b>R3</b><small>Ruta</small></div>
       </div>
-      <div class="uc-foot"><span>Ocupación 0%</span></div>
+      <div class="uc-foot"><span>Ocupación 0%</span><span style="display:flex;gap:6px"><button class="crud-btn edit" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button><button class="crud-btn del" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button></span></div>
     </article>
 
     <article class="unit-card">
@@ -195,7 +219,7 @@
         <div class="spec"><b>4</b><small>Espacios</small></div>
         <div class="spec"><b>R4</b><small>Ruta</small></div>
       </div>
-      <div class="uc-foot"><span>Ocupación 55%</span></div>
+      <div class="uc-foot"><span>Ocupación 55%</span><span style="display:flex;gap:6px"><button class="crud-btn edit" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button><button class="crud-btn del" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button></span></div>
     </article>
 
     <article class="unit-card">
@@ -212,7 +236,7 @@
         <div class="spec"><b>2</b><small>Espacios</small></div>
         <div class="spec"><b>R4</b><small>Ruta</small></div>
       </div>
-      <div class="uc-foot"><span>Ocupación 25%</span></div>
+      <div class="uc-foot"><span>Ocupación 25%</span><span style="display:flex;gap:6px"><button class="crud-btn edit" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button><button class="crud-btn del" style="padding:6px 10px;border-radius:8px;border:none;cursor:pointer;font-size:.72rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button></span></div>
     </article>
   </div>
 </section>
@@ -308,8 +332,6 @@
 </script>
 </body>
 </html>
-
-
 
 
 

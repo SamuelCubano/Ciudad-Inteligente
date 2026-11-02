@@ -68,12 +68,15 @@
     <a href="../panel/index.html" class="m-link">Panel</a>
     <a href="../rutas/index.html" class="m-link">Rutas y Paradas</a>
     <a href="../unidades/index.html" class="m-link">Unidades</a>
+    <a href="../mantenimiento/index.html" class="m-link">Mantenimiento</a>
+    <a href="../residuos/index.html" class="m-link">Residuos</a>
     <a href="../incidencias/index.html" class="m-link">Incidencias</a>
     <a href="../conductor/index.html" class="m-link active">Conductor</a>
     <a href="../tarjeta/index.html" class="m-link">Tarjeta</a>
     <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
       <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
-      <span id="userChipText">Iniciar sesión o Registrarse</span>
+      <span id="userChipText">Admin</span>
+      <span id="btnLogout" style="margin-left:8px;font-size:.75rem;font-weight:700;color:#c0373b;cursor:pointer">Cerrar sesión</span>
     </button>
   </nav>
 
@@ -133,14 +136,14 @@
         <table class="gps-table">
           <thead><tr><th>Parada</th><th>Programado</th><th>Real (GPS)</th><th>Diferencia</th><th>Estado</th><th>Acciones</th></tr></thead>
           <tbody id="gpsRows">
-            <tr><td>Terminal La Bandera</td><td>06:00</td><td>06:00</td><td class="ok">+0 min</td><td><span class="chip chip-green">A tiempo</span></td><td></td></tr>
-            <tr><td>Plaza Venezuela</td><td>06:15</td><td>06:16</td><td class="warn">+1 min</td><td><span class="chip chip-amber">Retraso leve</span></td><td></td></tr>
-            <tr><td>Parque Central</td><td>06:28</td><td>06:27</td><td class="ok">-1 min</td><td><span class="chip chip-green">Adelantado</span></td><td></td></tr>
-            <tr><td>Bellas Artes</td><td>06:38</td><td>06:42</td><td class="warn">+4 min</td><td><span class="chip chip-amber">Retraso</span></td><td></td></tr>
-            <tr><td>Ciudad Universitaria</td><td>06:50</td><td>06:50</td><td class="ok">+0 min</td><td><span class="chip chip-green">A tiempo</span></td><td></td></tr>
-            <tr><td>Los Chaguaramos</td><td>07:05</td><td>07:12</td><td class="bad">+7 min</td><td><span class="chip chip-red">Retraso crático</span></td><td></td></tr>
-            <tr><td>La California</td><td>07:20</td><td>--:--</td><td>--</td><td><span class="chip">Pendiente</span></td><td></td></tr>
-            <tr><td>Chacao</td><td>07:35</td><td>--:--</td><td>--</td><td><span class="chip">Pendiente</span></td><td></td></tr>
+            <tr><td>Terminal La Bandera</td><td>06:00</td><td>06:00</td><td class="ok">+0 min</td><td><span class="chip chip-green">A tiempo</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Plaza Venezuela</td><td>06:15</td><td>06:16</td><td class="warn">+1 min</td><td><span class="chip chip-amber">Retraso leve</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Parque Central</td><td>06:28</td><td>06:27</td><td class="ok">-1 min</td><td><span class="chip chip-green">Adelantado</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Bellas Artes</td><td>06:38</td><td>06:42</td><td class="warn">+4 min</td><td><span class="chip chip-amber">Retraso</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Ciudad Universitaria</td><td>06:50</td><td>06:50</td><td class="ok">+0 min</td><td><span class="chip chip-green">A tiempo</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Los Chaguaramos</td><td>07:05</td><td>07:12</td><td class="bad">+7 min</td><td><span class="chip chip-red">Retraso crático</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>La California</td><td>07:20</td><td>--:--</td><td>--</td><td><span class="chip">Pendiente</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
+            <tr><td>Chacao</td><td>07:35</td><td>--:--</td><td>--</td><td><span class="chip">Pendiente</span></td><td><button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Editar</button> <button class="crud-btn suspend" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(245,166,35,.18);color:#a96c00">Suspender</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -153,7 +156,68 @@
 </section>
 
 <!-- Management section -->
+<section class="section" id="gestion" style="padding-top:0">
+  <div class="section-head" style="margin-bottom:20px">
+    <h2 class="title"><span class="title-bar"></span>Gestión de conductores</h2>
+    <p class="subtitle">Administra conductores, asigna rutas y unidades, edita horarios.</p>
+  </div>
 
+  <div class="driver-layout">
+    <div class="card glass">
+      <div class="card-head"><h3>Conductores registrados</h3></div>
+      <div class="filter-row">
+        <div class="search-box">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input type="text" id="driverSearch" placeholder="Buscar conductor..." style="padding:9px 14px 9px 36px;border-radius:12px;border:1px solid rgba(255,255,255,.9);background:rgba(255,255,255,.75);font-size:.85rem;font-weight:700;outline:none;width:100%">
+        </div>
+      </div>
+      <div class="crud-list">
+        <div class="crud-item">
+          <div class="info"><b>Leo Pessi</b><small>CON-4417 · U-1000 · R1 · <span class="status-chip activo">Activo</span></small></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
+        </div>
+        <div class="crud-item">
+          <div class="info"><b>Cristian Orlando</b><small>CON-4418 · U-1007 · R2 · <span class="status-chip activo">Activo</span></small></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
+        </div>
+        <div class="crud-item">
+          <div class="info"><b>Cierro a las Siete</b><small>CON-4419 · U-1014 · R3 · <span class="status-chip suspendido">Suspendido</span></small></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
+        </div>
+        <div class="crud-item">
+          <div class="info"><b>Lamina de Tamal</b><small>CON-4420 · U-1021 · R2 · <span class="status-chip activo">Activo</span></small></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
+        </div>
+        <div class="crud-item">
+          <div class="info"><b>Nicolas Inmaduro</b><small>CON-4421 · U-1028 · R3 · <span class="status-chip activo">Activo</span></small></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card glass">
+      <div class="card-head"><h3>Asignar / Editar conductor</h3></div>
+      <form class="tarjeta-form" style="display:flex;flex-direction:column;gap:10px">
+        <div class="field-row">
+          <div class="field"><label>Nombre completo</label><input type="text" placeholder="Ej: Juan Pérez"></div>
+          <div class="field"><label>Código conductor</label><input type="text" placeholder="Ej: CON-4425"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Ruta asignada</label><select><option>R1</option><option>R2</option><option>R3</option><option>R4</option><option>R5</option><option>R6</option><option>R7</option><option>R8</option></select></div>
+          <div class="field"><label>Unidad asignada</label><select><option>U-1000</option><option>U-1007</option><option>U-1014</option><option>U-1021</option><option>U-1028</option></select></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Cambiar hora de salida</label><input type="time" value="06:00"></div>
+          <div class="field"><label>Estado</label><select><option>Activo</option><option>Suspendido</option><option>Inactivo</option></select></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:4px">
+          <button class="btn btn-primary" type="submit">Guardar cambios</button>
+          <button class="btn btn-soft" type="button">Asignar nueva ruta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
 
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
@@ -231,8 +295,6 @@
 <script src="../common/script.js"></script>
 </body>
 </html>
-
-
 
 
 

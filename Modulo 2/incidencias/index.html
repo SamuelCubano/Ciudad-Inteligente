@@ -60,12 +60,15 @@
     <a href="../panel/index.html" class="m-link">Panel</a>
     <a href="../rutas/index.html" class="m-link">Rutas y Paradas</a>
     <a href="../unidades/index.html" class="m-link">Unidades</a>
+    <a href="../mantenimiento/index.html" class="m-link">Mantenimiento</a>
+    <a href="../residuos/index.html" class="m-link">Residuos</a>
         <a href="../incidencias/index.html" class="m-link active">Incidencias</a>
     <a href="../conductor/index.html" class="m-link">Conductor</a>
     <a href="../tarjeta/index.html" class="m-link">Tarjeta</a>
     <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
       <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
-      <span id="userChipText">Iniciar sesión o Registrarse</span>
+      <span id="userChipText">Admin</span>
+      <span id="btnLogout" style="margin-left:8px;font-size:.75rem;font-weight:700;color:#c0373b;cursor:pointer">Cerrar sesión</span>
     </button>
 
   </nav>
@@ -82,7 +85,6 @@
   </div>
 
   <div class="inc-layout">
-    
     <form class="card glass inc-form" id="incForm" novalidate>
       <div class="form-head"><h3>Nueva incidencia</h3><span class="chip chip-green">Respuesta < 5 min</span></div>
 
@@ -147,7 +149,6 @@
       </div>
     </form>
 
-
     <div class="inc-side">
       <div class="card glass">
         <div class="card-head"><h3>Reportes</h3><span class="muted" id="incTotal"></span></div>
@@ -160,8 +161,8 @@
             </div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="inc-status en-proceso">En proceso</span>
-              
-              
+              <button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Responder</button>
+              <button class="crud-btn del" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button>
             </div>
           </li>
           <li class="inc-item">
@@ -172,8 +173,8 @@
             </div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="inc-status resuelta">Resuelta</span>
-              
-              
+              <button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Responder</button>
+              <button class="crud-btn del" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button>
             </div>
           </li>
           <li class="inc-item">
@@ -184,8 +185,8 @@
             </div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="inc-status en-proceso">En proceso</span>
-              
-              
+              <button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Responder</button>
+              <button class="crud-btn del" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button>
             </div>
           </li>
           <li class="inc-item">
@@ -196,8 +197,8 @@
             </div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="inc-status resuelta">Resuelta</span>
-              
-              
+              <button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Responder</button>
+              <button class="crud-btn del" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button>
             </div>
           </li>
           <li class="inc-item">
@@ -208,8 +209,8 @@
             </div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="inc-status escalada">Escalada</span>
-              
-              
+              <button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Responder</button>
+              <button class="crud-btn del" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button>
             </div>
           </li>
           <li class="inc-item">
@@ -220,8 +221,8 @@
             </div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="inc-status resuelta">Resuelta</span>
-              
-              
+              <button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Responder</button>
+              <button class="crud-btn del" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button>
             </div>
           </li>
           <li class="inc-item">
@@ -232,8 +233,8 @@
             </div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="inc-status resuelta">Resuelta</span>
-              
-              
+              <button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Responder</button>
+              <button class="crud-btn del" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button>
             </div>
           </li>
           <li class="inc-item">
@@ -244,8 +245,8 @@
             </div>
             <div style="display:flex;gap:4px;align-items:center">
               <span class="inc-status en-proceso">En proceso</span>
-              
-              
+              <button class="crud-btn edit" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(41,182,246,.15);color:var(--sky-700)">Responder</button>
+              <button class="crud-btn del" style="padding:4px 8px;border-radius:6px;border:none;cursor:pointer;font-size:.68rem;font-weight:800;background:rgba(229,72,77,.15);color:#c0373b">Eliminar</button>
             </div>
           </li>
       </div>
@@ -427,8 +428,6 @@
   }
 </script>
 </html>
-
-
 
 
 

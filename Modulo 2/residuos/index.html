@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Planificación de recolección y separación de residuos urbanos por sector.">
+  <title>Gestión de residuos | TransUrbano</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../common/styles.css">
+  <style>
+    .view-section{padding-top:120px}
+    .kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:22px}
+    .waste-layout{display:grid;grid-template-columns:minmax(270px,.72fr) minmax(0,1.8fr);gap:16px;align-items:start}
+    .view-card{min-width:0}
+    .view-card h3{font-size:1.12rem;color:var(--green-900)}
+    .view-form{display:grid;gap:12px}
+    .view-form .btn{width:100%}
+    .table-tools{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+    .table-tools .mini-input{flex:1;min-width:180px}
+    .view-table-wrap{overflow-x:auto;border-radius:16px}
+    .view-table{width:100%;border-collapse:collapse;min-width:620px;text-align:left}
+    .view-table th{padding:11px 12px;color:var(--ink-soft);font-size:.72rem;text-transform:uppercase;letter-spacing:.35px}
+    .view-table td{padding:12px;border-top:1px solid rgba(11,61,46,.08);font-size:.85rem;font-weight:700}
+    .view-table tbody tr:hover{background:rgba(255,255,255,.48)}
+    .view-table td small{display:block;color:var(--ink-soft);font-weight:600}
+    .route-status,.waste-type{display:inline-flex;padding:5px 9px;border-radius:999px;font-size:.68rem;font-weight:900;white-space:nowrap}
+    .route-status.en-ruta{background:rgba(41,182,246,.15);color:var(--sky-700)}
+    .route-status.pendiente{background:rgba(245,166,35,.18);color:#a96c00}
+    .route-status.completada{background:rgba(74,169,108,.16);color:var(--green-700)}
+    .waste-type.orgánico{background:rgba(74,169,108,.16);color:var(--green-700)}
+    .waste-type.reciclable{background:rgba(41,182,246,.15);color:var(--sky-700)}
+    .waste-type.no-aprovechable{background:rgba(139,124,246,.16);color:#6555c7}
+    .classification{display:grid;gap:12px;margin-top:14px}
+    .class-row{display:grid;grid-template-columns:112px 1fr 38px;align-items:center;gap:10px;font-size:.78rem;font-weight:800;color:var(--ink-soft)}
+    .class-track{height:9px;border-radius:999px;background:rgba(11,61,46,.08);overflow:hidden}
+    .class-track span{height:100%;display:block;border-radius:inherit;background:linear-gradient(90deg,var(--green-400),var(--sky-500))}
+    .class-row b{text-align:right;color:var(--green-900)}
+    .view-note{margin-top:14px;color:var(--ink-soft);font-size:.8rem;line-height:1.5}
+    @media(max-width:900px){.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.waste-layout{grid-template-columns:1fr}}
+    @media(max-width:640px){.view-section{padding-top:100px}.kpi-grid{gap:9px}.view-card{padding:16px}}
+  </style>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <div class="sky-gradient"></div><div class="sun-glow"></div>
+    <div class="cloud cloud-1"></div><div class="cloud cloud-2"></div>
+    <div class="cloud cloud-3"></div><div class="cloud cloud-4"></div>
+    <div class="hills"></div><div class="bubbles" id="bubbles"></div>
+  </div>
+
+  <header class="topbar" id="topbar">
+    <a class="brand" href="../inicio/index.html">
+      <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
+      <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
+    </a>
+    <nav class="menu" id="menu" aria-label="Navegación principal">
+      <a href="../inicio/index.html" class="m-link">Inicio</a>
+      <a href="../panel/index.html" class="m-link">Panel</a>
+      <a href="../rutas/index.html" class="m-link">Rutas y Paradas</a>
+      <a href="../unidades/index.html" class="m-link">Unidades</a>
+      <a href="../mantenimiento/index.html" class="m-link">Mantenimiento</a>
+      <a href="../residuos/index.html" class="m-link active" aria-current="page">Residuos</a>
+      <a href="../incidencias/index.html" class="m-link">Incidencias</a>
+      <a href="../conductor/index.html" class="m-link">Conductor</a>
+      <a href="../tarjeta/index.html" class="m-link">Tarjeta</a>
+    </nav>
+    <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+  </header>
+
+  <main>
+    <section class="section view-section" id="gestion-residuos">
+      <div class="section-head">
+        <h1 class="title"><span class="title-bar"></span>Gestión de residuos</h1>
+        <p class="subtitle">Organiza las rutas de recolección, monitorea los puntos de acopio y fomenta la separación responsable en cada sector.</p>
+      </div>
+
+      <div class="kpi-grid" aria-label="Indicadores de gestión de residuos">
+        <article class="stat glass"><span class="stat-ico" style="background:linear-gradient(150deg,var(--green-400),var(--green-600))">♻</span><b>82%</b><small>Separación correcta</small></article>
+        <article class="stat glass"><span class="stat-ico" style="background:linear-gradient(150deg,var(--sky-400),var(--sky-600))">↗</span><b>24.6 t</b><small>Recolectadas esta semana</small></article>
+        <article class="stat glass"><span class="stat-ico" style="background:linear-gradient(150deg,#ffd15c,var(--amber))">▣</span><b>68</b><small>Puntos de acopio</small></article>
+        <article class="stat glass"><span class="stat-ico" style="background:linear-gradient(150deg,var(--green-400),var(--sky-500))">◷</span><b id="pendingCount">2</b><small>Recolecciones pendientes</small></article>
+      </div>
+
+      <div class="waste-layout">
+        <section class="card glass view-card" aria-labelledby="collectionTitle">
+          <div class="card-head"><h3 id="collectionTitle">Programar recolección</h3><span class="chip-green">Nueva ruta</span></div>
+          <form class="view-form" id="collectionForm">
+            <div class="field"><label for="sector">Sector</label><select id="sector" name="sector" required><option value="">Selecciona un sector</option><option>Centro</option><option>Norte</option><option>Sur</option><option>Este</option><option>Oeste</option></select></div>
+            <div class="field"><label for="wasteType">Tipo de residuo</label><select id="wasteType" name="wasteType" required><option value="">Selecciona una categoría</option><option>Orgánico</option><option>Reciclable</option><option>No aprovechable</option></select></div>
+            <div class="field-row">
+              <div class="field"><label for="quantity">Cantidad estimada (kg)</label><input id="quantity" name="quantity" type="number" min="1" max="50000" placeholder="Ej. 350" required></div>
+              <div class="field"><label for="collectionDate">Fecha</label><input id="collectionDate" name="collectionDate" type="date" required></div>
+            </div>
+            <button class="btn btn-primary" type="submit">Programar ruta</button>
+            <p id="collectionMessage" class="small" role="status" aria-live="polite"></p>
+          </form>
+
+          <div class="card-head" style="margin-top:24px"><h3>Residuos recolectados</h3><span class="small muted">Esta semana</span></div>
+          <div class="classification" aria-label="Distribución semanal por tipo">
+            <div class="class-row"><span>Orgánicos</span><div class="class-track"><span style="width:72%"></span></div><b>72%</b></div>
+            <div class="class-row"><span>Reciclables</span><div class="class-track"><span style="width:58%"></span></div><b>58%</b></div>
+            <div class="class-row"><span>No aprovechables</span><div class="class-track"><span style="width:34%"></span></div><b>34%</b></div>
+          </div>
+          <p class="view-note">Los porcentajes representan el avance de recolección de cada categoría frente a la meta semanal.</p>
+        </section>
+
+        <section class="card glass view-card" aria-labelledby="routesTitle">
+          <div class="card-head"><h3 id="routesTitle">Rutas y puntos de recolección</h3><span class="chip-amber">Operación urbana</span></div>
+          <div class="table-tools">
+            <input class="mini-input" id="routeSearch" type="search" placeholder="Buscar sector o residuo" aria-label="Buscar recolecciones">
+            <select class="mini-input" id="routeStatus" aria-label="Filtrar por estado">
+              <option value="">Todos los estados</option><option value="En ruta">En ruta</option><option value="Pendiente">Pendiente</option><option value="Completada">Completada</option>
+            </select>
+          </div>
+          <div class="view-table-wrap">
+            <table class="view-table">
+              <thead><tr><th>Sector</th><th>Residuo</th><th>Cantidad</th><th>Horario</th><th>Estado</th></tr></thead>
+              <tbody id="routesTable">
+                <tr data-status="En ruta"><td>Centro<small>Plaza Bolívar</small></td><td><span class="waste-type orgánico">Orgánico</span></td><td>420 kg</td><td>08:00</td><td><span class="route-status en-ruta">En ruta</span></td></tr>
+                <tr data-status="Pendiente"><td>Norte<small>Plaza Venezuela</small></td><td><span class="waste-type reciclable">Reciclable</span></td><td>310 kg</td><td>10:30</td><td><span class="route-status pendiente">Pendiente</span></td></tr>
+                <tr data-status="Completada"><td>Este<small>Petare</small></td><td><span class="waste-type no-aprovechable">No aprovechable</span></td><td>280 kg</td><td>07:15</td><td><span class="route-status completada">Completada</span></td></tr>
+                <tr data-status="Pendiente"><td>Oeste<small>Catia</small></td><td><span class="waste-type orgánico">Orgánico</span></td><td>360 kg</td><td>12:00</td><td><span class="route-status pendiente">Pendiente</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p id="emptyRoutes" class="muted small" hidden>No hay rutas que coincidan con la búsqueda.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="footer-bottom"><span>TransUrbano · Gestión sostenible de residuos</span><span>Datos de demostración</span></div></footer>
+  <script>
+    const menu = document.getElementById('menu');
+    const burger = document.getElementById('burger');
+    burger.addEventListener('click', () => {
+      const isOpen = menu.classList.toggle('open');
+      burger.setAttribute('aria-expanded', String(isOpen));
+    });
+    menu.querySelectorAll('.m-link').forEach(link => link.addEventListener('click', () => {
+      menu.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+    }));
+
+    const routeSearch = document.getElementById('routeSearch');
+    const routeStatus = document.getElementById('routeStatus');
+    const routesTable = document.getElementById('routesTable');
+    const updateRoutes = () => {
+      const query = routeSearch.value.trim().toLocaleLowerCase('es');
+      const status = routeStatus.value;
+      let visible = 0;
+      routesTable.querySelectorAll('tr').forEach(row => {
+        const matches = row.textContent.toLocaleLowerCase('es').includes(query)
+          && (!status || row.dataset.status === status);
+        row.hidden = !matches;
+        if (matches) visible += 1;
+      });
+      document.getElementById('emptyRoutes').hidden = visible !== 0;
+    };
+    routeSearch.addEventListener('input', updateRoutes);
+    routeStatus.addEventListener('change', updateRoutes);
+    document.getElementById('collectionForm').addEventListener('submit', event => {
+      event.preventDefault();
+      const values = new FormData(event.currentTarget);
+      const row = document.createElement('tr');
+      row.dataset.status = 'Pendiente';
+      const sectorCell = document.createElement('td');
+      sectorCell.textContent = String(values.get('sector'));
+      const point = document.createElement('small');
+      point.textContent = 'Nuevo punto de acopio';
+      sectorCell.append(point);
+      const typeCell = document.createElement('td');
+      const typeTag = document.createElement('span');
+      const wasteType = String(values.get('wasteType'));
+      typeTag.className = 'waste-type ' + wasteType.toLocaleLowerCase('es').replaceAll(' ', '-');
+      typeTag.textContent = wasteType;
+      typeCell.append(typeTag);
+      const quantityCell = document.createElement('td');
+      quantityCell.textContent = Number(values.get('quantity')).toLocaleString('es') + ' kg';
+      const dateCell = document.createElement('td');
+      dateCell.textContent = new Date(String(values.get('collectionDate') + 'T12:00:00')).toLocaleDateString('es', { day: '2-digit', month: 'short' });
+      const statusCell = document.createElement('td');
+      const statusTag = document.createElement('span');
+      statusTag.className = 'route-status pendiente';
+      statusTag.textContent = 'Pendiente';
+      statusCell.append(statusTag);
+      row.append(sectorCell, typeCell, quantityCell, dateCell, statusCell);
+      routesTable.prepend(row);
+      event.currentTarget.reset();
+      document.getElementById('collectionMessage').textContent = 'Recolección programada correctamente.';
+      document.getElementById('pendingCount').textContent = String(Number(document.getElementById('pendingCount').textContent) + 1);
+      updateRoutes();
+    });
+  </script>
+</body>
+</html>

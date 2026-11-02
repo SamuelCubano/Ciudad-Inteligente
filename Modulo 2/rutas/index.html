@@ -68,12 +68,15 @@
     <a href="../panel/index.html" class="m-link">Panel</a>
     <a href="../rutas/index.html" class="m-link active">Rutas y Paradas</a>
     <a href="../unidades/index.html" class="m-link">Unidades</a>
+    <a href="../mantenimiento/index.html" class="m-link">Mantenimiento</a>
+    <a href="../residuos/index.html" class="m-link">Residuos</a>
     <a href="../incidencias/index.html" class="m-link">Incidencias</a>
     <a href="../conductor/index.html" class="m-link">Conductor</a>
     <a href="../tarjeta/index.html" class="m-link">Tarjeta</a>
     <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
       <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
-      <span id="userChipText">Iniciar sesión o Registrarse</span>
+      <span id="userChipText">Admin</span>
+      <span id="btnLogout" style="margin-left:8px;font-size:.75rem;font-weight:700;color:#c0373b;cursor:pointer">Cerrar sesión</span>
     </button>
 
   </nav>
@@ -94,6 +97,7 @@
     <button class="tab-btn active" data-tab="rutas">Rutas</button>
     <button class="tab-btn" data-tab="paradas">Paradas</button>
     <button class="tab-btn" data-tab="conductores">Conductores</button>
+    <button class="tab-btn" data-tab="crear">Crear nuevo</button>
   </div>
 
   <!-- TAB: Rutas -->
@@ -229,16 +233,16 @@
             </tr>
           </thead>
           <tbody id="stopsList">
-            <tr><td>Terminal La Bandera</td><td>R1</td><td>Centro</td><td>12</td><td>2 min</td><td><span class="chip chip-green">Activa</span></td><td> </td></tr>
-            <tr><td>Plaza Venezuela</td><td>R1</td><td>Centro</td><td>28</td><td>5 min</td><td><span class="chip chip-amber">Alta demanda</span></td><td> </td></tr>
-            <tr><td>Parque Central</td><td>R1</td><td>Centro</td><td>8</td><td>1 min</td><td><span class="chip chip-green">Activa</span></td><td> </td></tr>
-            <tr><td>Bellas Artes</td><td>R3</td><td>Norte</td><td>15</td><td>3 min</td><td><span class="chip chip-green">Activa</span></td><td> </td></tr>
-            <tr><td>Ciudad Universitaria</td><td>R3</td><td>Norte</td><td>35</td><td>7 min</td><td><span class="chip chip-red">Saturada</span></td><td> </td></tr>
-            <tr><td>Los Chaguaramos</td><td>R3</td><td>Norte</td><td>5</td><td>4 min</td><td><span class="chip chip-green">Activa</span></td><td> </td></tr>
-            <tr><td>La California</td><td>R4</td><td>Este</td><td>22</td><td>6 min</td><td><span class="chip chip-amber">Alta demanda</span></td><td> </td></tr>
-            <tr><td>Chacao</td><td>R4</td><td>Este</td><td>40</td><td>9 min</td><td><span class="chip chip-red">Saturada</span></td><td> </td></tr>
-            <tr><td>Altamira</td><td>R4</td><td>Este</td><td>18</td><td>3 min</td><td><span class="chip chip-green">Activa</span></td><td> </td></tr>
-            <tr><td>Petare</td><td>R4</td><td>Este</td><td>55</td><td>12 min</td><td><span class="chip chip-red">Saturada</span></td><td> </td></tr>
+            <tr><td>Terminal La Bandera</td><td>R1</td><td>Centro</td><td>12</td><td>2 min</td><td><span class="chip chip-green">Activa</span></td><td><button class="crud-btn edit">Editar</button> <button class="crud-btn del">Eliminar</button></td></tr>
+            <tr><td>Plaza Venezuela</td><td>R1</td><td>Centro</td><td>28</td><td>5 min</td><td><span class="chip chip-amber">Alta demanda</span></td><td><button class="crud-btn edit">Editar</button> <button class="crud-btn del">Eliminar</button></td></tr>
+            <tr><td>Parque Central</td><td>R1</td><td>Centro</td><td>8</td><td>1 min</td><td><span class="chip chip-green">Activa</span></td><td><button class="crud-btn edit">Editar</button> <button class="crud-btn del">Eliminar</button></td></tr>
+            <tr><td>Bellas Artes</td><td>R3</td><td>Norte</td><td>15</td><td>3 min</td><td><span class="chip chip-green">Activa</span></td><td><button class="crud-btn edit">Editar</button> <button class="crud-btn del">Eliminar</button></td></tr>
+            <tr><td>Ciudad Universitaria</td><td>R3</td><td>Norte</td><td>35</td><td>7 min</td><td><span class="chip chip-red">Saturada</span></td><td><button class="crud-btn edit">Editar</button> <button class="crud-btn del">Eliminar</button></td></tr>
+            <tr><td>Los Chaguaramos</td><td>R3</td><td>Norte</td><td>5</td><td>4 min</td><td><span class="chip chip-green">Activa</span></td><td><button class="crud-btn edit">Editar</button> <button class="crud-btn del">Eliminar</button></td></tr>
+            <tr><td>La California</td><td>R4</td><td>Este</td><td>22</td><td>6 min</td><td><span class="chip chip-amber">Alta demanda</span></td><td><button class="crud-btn edit">Editar</button> <button class="crud-btn del">Eliminar</button></td></tr>
+            <tr><td>Chacao</td><td>R4</td><td>Este</td><td>40</td><td>9 min</td><td><span class="chip chip-red">Saturada</span></td><td><button class="crud-btn edit">Editar</button> <button class="crud-btn del">Eliminar</button></td></tr>
+            <tr><td>Altamira</td><td>R4</td><td>Este</td><td>18</td><td>3 min</td><td><span class="chip chip-green">Activa</span></td><td><button class="crud-btn edit">Editar</button> <button class="crud-btn del">Eliminar</button></td></tr>
+            <tr><td>Petare</td><td>R4</td><td>Este</td><td>55</td><td>12 min</td><td><span class="chip chip-red">Saturada</span></td><td><button class="crud-btn edit">Editar</button> <button class="crud-btn del">Eliminar</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -256,19 +260,78 @@
     <div class="card glass">
       <div class="card-head"><h3>Conductores registrados</h3></div>
       <div class="crud-list">
-        <div class="crud-item"><div><b>José González</b><br><small>CON-4417 · Ruta R1 · U-1000</small></div><div class="crud-actions"></div></div>
-        <div class="crud-item"><div><b>María Vargas</b><br><small>CON-4418 · Ruta R2 · U-1007</small></div><div class="crud-actions"></div></div>
-        <div class="crud-item"><div><b>Luis Rodríguez</b><br><small>CON-4419 · Ruta R3 · U-1014</small></div><div class="crud-actions"></div></div>
-        <div class="crud-item"><div><b>Carmen Bracho</b><br><small>CON-4420 · Ruta R4 · U-1021</small></div><div class="crud-actions"></div></div>
-        <div class="crud-item"><div><b>Rafael Herrera</b><br><small>CON-4421 · Ruta R5 · U-1028</small></div><div class="crud-actions"></div></div>
-        <div class="crud-item"><div><b>Sandra Mérquez</b><br><small>CON-4422 · Ruta R6 · U-1035</small></div><div class="crud-actions"></div></div>
-        <div class="crud-item"><div><b>Andrés Lovera</b><br><small>CON-4423 · Ruta R7 · U-1042</small></div><div class="crud-actions"></div></div>
-        <div class="crud-item"><div><b>Paola Requena</b><br><small>CON-4424 · Ruta R8 · U-1049</small></div><div class="crud-actions"></div></div>
+        <div class="crud-item"><div><b>José González</b><br><small>CON-4417 · Ruta R1 · U-1000</small></div><div class="crud-actions"><button class="crud-btn edit">Editar</button><button class="crud-btn del">Eliminar</button></div></div>
+        <div class="crud-item"><div><b>María Vargas</b><br><small>CON-4418 · Ruta R2 · U-1007</small></div><div class="crud-actions"><button class="crud-btn edit">Editar</button><button class="crud-btn del">Eliminar</button></div></div>
+        <div class="crud-item"><div><b>Luis Rodríguez</b><br><small>CON-4419 · Ruta R3 · U-1014</small></div><div class="crud-actions"><button class="crud-btn edit">Editar</button><button class="crud-btn del">Eliminar</button></div></div>
+        <div class="crud-item"><div><b>Carmen Bracho</b><br><small>CON-4420 · Ruta R4 · U-1021</small></div><div class="crud-actions"><button class="crud-btn edit">Editar</button><button class="crud-btn del">Eliminar</button></div></div>
+        <div class="crud-item"><div><b>Rafael Herrera</b><br><small>CON-4421 · Ruta R5 · U-1028</small></div><div class="crud-actions"><button class="crud-btn edit">Editar</button><button class="crud-btn del">Eliminar</button></div></div>
+        <div class="crud-item"><div><b>Sandra Mérquez</b><br><small>CON-4422 · Ruta R6 · U-1035</small></div><div class="crud-actions"><button class="crud-btn edit">Editar</button><button class="crud-btn del">Eliminar</button></div></div>
+        <div class="crud-item"><div><b>Andrés Lovera</b><br><small>CON-4423 · Ruta R7 · U-1042</small></div><div class="crud-actions"><button class="crud-btn edit">Editar</button><button class="crud-btn del">Eliminar</button></div></div>
+        <div class="crud-item"><div><b>Paola Requena</b><br><small>CON-4424 · Ruta R8 · U-1049</small></div><div class="crud-actions"><button class="crud-btn edit">Editar</button><button class="crud-btn del">Eliminar</button></div></div>
       </div>
     </div>
   </div>
 
-  </section>
+  <!-- TAB: Crear nuevo -->
+  <div class="tab-panel" id="tab-crear">
+    <div class="unified-layout">
+      <div class="card glass crud-card">
+        <h3>Nueva ruta</h3>
+        <form class="crud-form">
+          <div class="field-row">
+            <div class="field"><label>Nombre de la ruta</label><input type="text" placeholder="Ej: Av. Principal"></div>
+            <div class="field"><label>Código</label><input type="text" placeholder="Ej: R9"></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Sector</label><select><option>Centro</option><option>Norte</option><option>Sur</option><option>Este</option><option>Oeste</option></select></div>
+            <div class="field"><label>Color</label><input type="color" value="#2f9e63"></div>
+          </div>
+          <div class="field"><label>Calles / Avenidas</label><input type="text" placeholder="Ej: Av. Principal / Calle 5"></div>
+          <div class="field-row">
+            <div class="field"><label>Paradas</label><input type="number" placeholder="0"></div>
+            <div class="field"><label>Tiempo promedio (min)</label><input type="number" placeholder="0"></div>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Crear ruta</button>
+        </form>
+      </div>
+
+      <div class="card glass crud-card">
+        <h3>Nueva parada</h3>
+        <form class="crud-form">
+          <div class="field"><label>Nombre de la parada</label><input type="text" placeholder="Ej: Plaza Bolívar"></div>
+          <div class="field-row">
+            <div class="field"><label>Ruta</label><select><option>R1</option><option>R2</option><option>R3</option><option>R4</option></select></div>
+            <div class="field"><label>Sector</label><select><option>Centro</option><option>Norte</option><option>Sur</option><option>Este</option><option>Oeste</option></select></div>
+          </div>
+          <div class="field-row">
+            <div class="field"><label>Capacidad</label><input type="number" placeholder="0"></div>
+            <div class="field"><label>ETA (min)</label><input type="number" placeholder="0"></div>
+          </div>
+          <button class="btn btn-primary btn-block" type="submit">Crear parada</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card glass crud-card" style="margin-top:16px">
+      <h3>Nuevo conductor</h3>
+      <form class="crud-form">
+        <div class="field-row">
+          <div class="field"><label>Nombre completo</label><input type="text" placeholder="Ej: Juan Pérez"></div>
+          <div class="field"><label>Código de conductor</label><input type="text" placeholder="Ej: CON-4425"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Ruta asignada</label><select><option>R1</option><option>R2</option><option>R3</option><option>R4</option><option>R5</option><option>R6</option><option>R7</option><option>R8</option></select></div>
+          <div class="field"><label>Unidad asignada</label><select><option>U-1000</option><option>U-1007</option><option>U-1014</option><option>U-1021</option></select></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Tarjeta (cédula)</label><input type="text" placeholder="Ej: 15827344" inputmode="numeric"></div>
+          <div class="field"><label>Rol</label><select><option>Conductor</option><option>Conductora</option></select></div>
+        </div>
+        <button class="btn btn-primary btn-block" type="submit">Registrar conductor</button>
+      </form>
+    </div>
+  </div>
+</section>
 
 <!-- ================= FOOTER ================= -->
 <footer class="footer">
@@ -477,8 +540,6 @@
 </script>
 </body>
 </html>
-
-
 
 
 

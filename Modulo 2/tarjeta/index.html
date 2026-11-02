@@ -81,12 +81,15 @@
     <a href="../panel/index.html" class="m-link">Panel</a>
     <a href="../rutas/index.html" class="m-link">Rutas y Paradas</a>
     <a href="../unidades/index.html" class="m-link">Unidades</a>
+    <a href="../mantenimiento/index.html" class="m-link">Mantenimiento</a>
+    <a href="../residuos/index.html" class="m-link">Residuos</a>
     <a href="../incidencias/index.html" class="m-link">Incidencias</a>
     <a href="../conductor/index.html" class="m-link">Conductor</a>
     <a href="../tarjeta/index.html" class="m-link active">Tarjeta</a>
     <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
       <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
-      <span id="userChipText">Iniciar sesión o Registrarse</span>
+      <span id="userChipText">Admin</span>
+      <span id="btnLogout" style="margin-left:8px;font-size:.75rem;font-weight:700;color:#c0373b;cursor:pointer">Cerrar sesión</span>
     </button>
   </nav>
 
@@ -173,7 +176,27 @@
   <!-- Registry + create -->
   <div class="tarjeta-layout">
     <!-- Create card -->
-    
+    <div class="card glass crud-card">
+      <div class="card-head"><h3>Crear / Asignar tarjeta</h3></div>
+      <form class="crud-form">
+        <div class="field-row">
+          <div class="field"><label>Nombre completo</label><input type="text" placeholder="Ej: Juan Pérez"></div>
+          <div class="field"><label>Cédula / Código</label><input type="text" placeholder="Ej: 15827344" inputmode="numeric"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Rol</label><select><option value="conductor">Conductor</option><option value="pasajero">Pasajero</option><option value="admin">Administrador</option></select></div>
+          <div class="field"><label>Unidad asignada</label><select><option value="">Sin asignar</option><option>U-1000</option><option>U-1007</option><option>U-1014</option><option>U-1021</option><option>U-1028</option><option>U-1035</option><option>U-1042</option><option>U-1049</option></select></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Ruta asignada</label><select><option value="">Sin asignar</option><option>R1</option><option>R2</option><option>R3</option><option>R4</option><option>R5</option><option>R6</option><option>R7</option><option>R8</option></select></div>
+          <div class="field"><label>Estado</label><select><option value="activa">Activa</option><option value="suspendida">Suspendida</option></select></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:4px">
+          <button class="btn btn-primary" type="submit">Crear tarjeta</button>
+          <button class="btn btn-soft" type="button">Asignar a existente</button>
+        </div>
+      </form>
+    </div>
 
     <!-- Registry -->
     <div class="card glass crud-card">
@@ -197,7 +220,7 @@
             <small>V-15827344 · U-1000 · R1</small>
             <div class="meta"><span class="role-badge conductor">Conductor</span><span class="status-chip activa">Activa</span></div>
           </div>
-          <div class="actions"></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
         </div>
         <div class="crud-item" data-role="conductor">
           <div class="info">
@@ -205,7 +228,7 @@
             <small>V-24910387 · U-1007 · R2</small>
             <div class="meta"><span class="role-badge conductor">Conductora</span><span class="status-chip activa">Activa</span></div>
           </div>
-          <div class="actions"></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
         </div>
         <div class="crud-item" data-role="pasajero">
           <div class="info">
@@ -213,7 +236,7 @@
             <small>V-11204456 · Sin unidad</small>
             <div class="meta"><span class="role-badge pasajero">Pasajera</span><span class="status-chip activa">Activa</span></div>
           </div>
-          <div class="actions"></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
         </div>
         <div class="crud-item" data-role="admin">
           <div class="info">
@@ -221,7 +244,7 @@
             <small>V-99999999 · Sin unidad</small>
             <div class="meta"><span class="role-badge admin">Administrador</span><span class="status-chip activa">Activa</span></div>
           </div>
-          <div class="actions"></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
         </div>
         <div class="crud-item" data-role="conductor">
           <div class="info">
@@ -229,7 +252,7 @@
             <small>V-18765432 · U-1014 · R3</small>
             <div class="meta"><span class="role-badge conductor">Conductor</span><span class="status-chip suspendida">Suspendida</span></div>
           </div>
-          <div class="actions"></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
         </div>
         <div class="crud-item" data-role="pasajero">
           <div class="info">
@@ -237,7 +260,7 @@
             <small>V-22334455 · Sin unidad</small>
             <div class="meta"><span class="role-badge pasajero">Pasajera</span><span class="status-chip activa">Activa</span></div>
           </div>
-          <div class="actions"></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
         </div>
         <div class="crud-item" data-role="conductor">
           <div class="info">
@@ -245,7 +268,7 @@
             <small>V-33445566 · U-1028 · R5</small>
             <div class="meta"><span class="role-badge conductor">Conductor</span><span class="status-chip activa">Activa</span></div>
           </div>
-          <div class="actions"></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
         </div>
         <div class="crud-item" data-role="conductor">
           <div class="info">
@@ -253,7 +276,7 @@
             <small>V-44556677 · U-1035 · R6</small>
             <div class="meta"><span class="role-badge conductor">Conductora</span><span class="status-chip activa">Activa</span></div>
           </div>
-          <div class="actions"></div>
+          <div class="actions"><button class="crud-btn edit">Editar</button><button class="crud-btn suspend">Suspender</button><button class="crud-btn del">Eliminar</button></div>
         </div>
       </div>
     </div>
@@ -363,8 +386,6 @@
 </script>
 </body>
 </html>
-
-
 
 
 
