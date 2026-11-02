@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TransUrbano | Rutas y Paradas</title>
+<title>TransUrbano | Rutas y paradas y Paradas</title>
 <meta name="description" content="Vista unificada de rutas y paradas del Servicio de Transporte Urbano. Agregar rutas, paradas y conductores.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,7 +68,7 @@
     <div class="dropdown">
       <button class="m-link dropdown-toggle" type="button">Operación ▾</button>
       <div class="dropdown-menu">
-        <a href="../rutas/index.html" class="dropdown-item">Rutas y Paradas</a>
+        <a href="../rutas/index.html" class="dropdown-item">Rutas y paradas y Paradas</a>
         <a href="../unidades/index.html" class="dropdown-item">Unidades</a>
         <a href="../conductor/index.html" class="dropdown-item">Conductor</a>
       </div>
@@ -102,18 +102,18 @@
 
 <section class="section" id="rutas-paradas">
   <div class="section-head">
-    <h2 class="title"><span class="title-bar"></span>Rutas, paradas y conductores</h2>
+    <h2 class="title"><span class="title-bar"></span>Rutas y paradas, paradas y conductores</h2>
     <p class="subtitle">Vista unificada: gestiona rutas, paradas y conductores desde un solo lugar. Agrega, edita o elimina registros.</p>
   </div>
 
   <!-- Tabs -->
   <div class="tab-row">
-    <button class="tab-btn active" data-tab="rutas">Rutas</button>
+    <button class="tab-btn active" data-tab="rutas">Rutas y paradas</button>
     <button class="tab-btn" data-tab="paradas">Paradas</button>
-    <button class="tab-btn" data-tab="conductores">Conductores</button>
+    <button class="tab-btn" data-tab="conductores">Conductor</button>
   </div>
 
-  <!-- TAB: Rutas -->
+  <!-- TAB: Rutas y paradas -->
   <div class="tab-panel active" id="tab-rutas">
     <div class="filters" style="margin-bottom:16px">
       <div class="search-box">
@@ -262,7 +262,7 @@
     </div>
   </div>
 
-  <!-- TAB: Conductores -->
+  <!-- TAB: Conductor -->
   <div class="tab-panel" id="tab-conductores">
     <div class="filters" style="margin-bottom:16px">
       <div class="search-box">
@@ -271,7 +271,7 @@
       </div>
     </div>
     <div class="card glass">
-      <div class="card-head"><h3>Conductores registrados</h3></div>
+      <div class="card-head"><h3>Conductor registrados</h3></div>
       <div class="crud-list">
         <div class="crud-item"><div><b>José González</b><br><small>CON-4417 · Ruta R1 · U-1000</small></div><div class="crud-actions"></div></div>
         <div class="crud-item"><div><b>María Vargas</b><br><small>CON-4418 · Ruta R2 · U-1007</small></div><div class="crud-actions"></div></div>
@@ -298,33 +298,27 @@
       <p class="muted">Solución a la incertidumbre del transporte y su pasaje, reclamación de incidentes e información inmediata de datos de las unidades.</p>
     </div>
     <div class="foot-col">
-      <h4>Módulo 1</h4>
+      <h4>Operación</h4>
       <ul>
-        <li>Panel de control</li>
-        <li>Rutas y paradas</li>
-        <li>Unidades</li>
-        <li>Incidencias</li>
-        <li>Conductores</li>
-        <li>Tarjeta</li>
+        <li><a href="../rutas/index.html">Rutas y paradas</a></li>
+        <li><a href="../unidades/index.html">Unidades</a></li>
+        <li><a href="../conductor/index.html">Conductor</a></li>
       </ul>
     </div>
     <div class="foot-col">
-      <h4>No funcional</h4>
+      <h4>Flota y mantenimiento</h4>
       <ul>
-        <li>Identificación con tarjeta</li>
-        <li>Ubicación espacial GPS</li>
-        <li>Registro de tiempos</li>
-        <li>Botón de emergencia</li>
-        <li>Botón de reporte</li>
+        <li><a href="../unidades/index.html">Unidades</a></li>
+        <li><a href="../mantenimiento/index.html">Mantenimiento</a></li>
+        <li><a href="../residuos/index.html">Residuos</a></li>
       </ul>
     </div>
     <div class="foot-col">
-      <h4>Proyecto</h4>
+      <h4>Gestión y control</h4>
       <ul>
-        <li>Universidad "— IUJO</li>
-        <li>Curso: Ingeniería de Software</li>
-        <li>Producto de demostración</li>
-        <li>Datos simulados en el navegador</li>
+        <li><a href="../panel/index.html">Panel</a></li>
+        <li><a href="../incidencias/index.html">Incidencias</a></li>
+        <li><a href="../tarjeta/index.html">Tarjeta</a></li>
       </ul>
     </div>
   </div>
