@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TransUrbano | Identificar Tarjeta</title>
-<meta name="description" content="Identificación con tarjeta para conductores y pasajeros del Servicio de Transporte Urbano.">
+<title>TransUrbano | Perfil del Pasajero</title>
+<meta name="description" content="Perfil del pasajero del Servicio de Transporte Urbano.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -102,10 +102,9 @@
         <a href="../tarjeta/index.html" class="dropdown-item">Tarjeta</a>
       </div>
     </div>
-    <button class="btn-glass btn-user" id="btnTarjeta" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
+    <a class="btn-glass btn-user" id="btnTarjeta" href="../auth/index.html" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
       <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
-      <span id="userChipText">Iniciar sesiÃ³n o Registrarse</span>
-    </button>
+      <span id="userChipText">Iniciar sesión o Registrarse</span></a>
   </nav>
 
   <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
@@ -115,13 +114,13 @@
 
 <section class="section" id="tarjeta">
   <div class="section-head">
-    <h2 class="title"><span class="title-bar"></span>Identificar tarjeta</h2>
-    <p class="subtitle">Validación de identidad y gestión de tarjetas para conductores, pasajeros y administradores.</p>
+    <h2 class="title"><span class="title-bar"></span>Perfil del pasajero</h2>
+    <p class="subtitle">Datos del pasajero y su tarjeta urbana.</p>
   </div>
 
   <!-- Lector + info -->
   <div class="driver-layout">
-    <div class="card glass card-reader">
+    <div class="card glass card-reader" style="display:none">
       <div class="reader-visual">
         <div class="reader-glow"></div>
         <div class="reader-slot">
@@ -154,7 +153,7 @@
       </div>
     </div>
 
-    <div class="card glass" id="infoCard">
+    <div class="card glass" id="infoCard" style="grid-column:1/-1">
       <div class="card-head"><h3>Información de la tarjeta</h3></div>
       <div id="cardInfo" style="display:block;">
         <div class="info-grid">

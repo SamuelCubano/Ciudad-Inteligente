@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TransUrbano | Iniciar sesión / Registrarse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../common/styles.css">
+<style>
+  .auth-wrap{max-width:460px;margin:40px auto}
+  .auth-tabs{display:flex;gap:8px;margin-bottom:16px}
+  .auth-tabs button{flex:1;padding:10px;border-radius:12px;border:1px solid rgba(11,61,46,.1);background:rgba(255,255,255,.7);font-weight:800;cursor:pointer}
+  .auth-tabs button.active{background:var(--green-700);color:#fff}
+  .auth-form{display:flex;flex-direction:column;gap:12px}
+  .auth-form .field{display:flex;flex-direction:column;gap:4px}
+  .auth-form .field label{font-size:.75rem;font-weight:800;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.4px}
+  .auth-form .field input{padding:10px 14px;border-radius:12px;border:1px solid rgba(11,61,46,.1);background:rgba(255,255,255,.85);font-size:.88rem;font-weight:600;outline:none;width:100%;font-family:var(--font-b)}
+</style>
+</head>
+<body>
+
+<div class="scene" aria-hidden="true">
+  <div class="sky-gradient"></div>
+  <div class="sun-glow"></div>
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+  <div class="cloud cloud-4"></div>
+  <div class="hills"></div>
+  <div class="bubbles" id="bubbles"></div>
+</div>
+
+<header class="topbar" id="topbar">
+  <a class="brand" href="../inicio/index.html">
+    <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
+    <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
+  </a>
+  <nav class="menu" id="menu">
+    <a href="../inicio/index.html" class="m-link">Inicio</a>
+    <div class="dropdown">
+      <button class="m-link dropdown-toggle" type="button">Operación ▾</button>
+      <div class="dropdown-menu">
+        <a href="../rutas/index.html" class="dropdown-item">Rutas y Paradas</a>
+        <a href="../unidades/index.html" class="dropdown-item">Unidades</a>
+        <a href="../conductor/index.html" class="dropdown-item">Conductor</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="m-link dropdown-toggle" type="button">Flota y Mantenimiento ▾</button>
+      <div class="dropdown-menu">
+        <a href="../unidades/index.html" class="dropdown-item">Unidades (Inventario)</a>
+        <a href="#" class="dropdown-item">Mantenimiento</a>
+        <a href="#" class="dropdown-item">Residuos</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="m-link dropdown-toggle" type="button">Gestión y Control ▾</button>
+      <div class="dropdown-menu">
+        <a href="../panel/index.html" class="dropdown-item">Panel</a>
+        <a href="../incidencias/index.html" class="dropdown-item">Incidencias</a>
+        <a href="../tarjeta/index.html" class="dropdown-item">Tarjeta</a>
+      </div>
+    </div>
+    <a class="btn-glass btn-user" id="btnTarjeta" href="../auth/index.html" style="display:flex;align-items:center;gap:8px;border-radius:999px;padding:6px 14px">
+      <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><circle cx="8.5" cy="11.5" r="2.5"/><path d="M5 17c.8-1.6 2-2.4 3.5-2.4S11.2 15.4 12 17"/></svg>
+      <span id="userChipText">Iniciar sesión o Registrarse</span></a>
+  </nav>
+  <button class="burger" id="burger" aria-label="Abrir menú"><span></span><span></span><span></span></button>
+</header>
+
+<main>
+<section class="section">
+  <div class="section-head"><h2 class="title"><span class="title-bar"></span>Iniciar sesión / Registrarse</h2></div>
+  <div class="card glass auth-wrap">
+    <div class="auth-tabs">
+      <button class="active" data-tab="login">Iniciar sesión</button>
+      <button data-tab="register">Registrarse</button>
+    </div>
+    <form class="auth-form" id="loginForm">
+      <div class="field"><label>Correo o cédula</label><input type="text" required></div>
+      <div class="field"><label>Contraseña</label><input type="password" required></div>
+      <button class="btn btn-primary btn-block" type="submit">Entrar</button>
+    </form>
+    <form class="auth-form" id="registerForm" style="display:none">
+      <div class="field"><label>Nombre completo</label><input type="text" required></div>
+      <div class="field"><label>Cédula</label><input type="text" required></div>
+      <div class="field"><label>Correo</label><input type="email" required></div>
+      <div class="field"><label>Teléfono</label><input type="tel" required></div>
+      <div class="field"><label>Contraseña</label><input type="password" required></div>
+      <div class="field"><label>Confirmar contraseña</label><input type="password" required></div>
+      <button class="btn btn-primary btn-block" type="submit">Crear cuenta</button>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="foot-grid">
+    <div class="foot-col">
+      <a class="brand footer-brand" href="../inicio/index.html">
+        <span class="brand-mark"><svg viewBox="0 0 64 64"><path d="M10 40h44v10a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4zM16 40V22a16 16 0 0 1 32 0v18"/></svg></span>
+        <span class="brand-text"><strong>TransUrbano</strong><small>Servicio de Transporte Urbano</small></span>
+      </a>
+      <p class="muted">Solución a la incertidumbre del transporte y su pasaje, reclamación de incidentes e información inmediata de datos de las unidades.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Operación</h4>
+      <ul>
+        <li><a href="../rutas/index.html">Rutas y paradas</a></li>
+        <li><a href="../unidades/index.html">Unidades</a></li>
+        <li><a href="../conductor/index.html">Conductor</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Flota y mantenimiento</h4>
+      <ul>
+        <li><a href="../unidades/index.html">Unidades</a></li>
+        <li><a href="../mantenimiento/index.html">Mantenimiento</a></li>
+        <li><a href="../residuos/index.html">Residuos</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Gestión y control</h4>
+      <ul>
+        <li><a href="../panel/index.html">Panel</a></li>
+        <li><a href="../incidencias/index.html">Incidencias</a></li>
+        <li><a href="../tarjeta/index.html">Tarjeta</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>© 2026 TransUrbano · Proyecto universitario</span>
+    <span>Hecho con HTML, CSS, JS y GSAP</span>
+  </div>
+</footer>
+
+<script src="../common/script.js"></script>
+<script>
+  document.querySelectorAll('.auth-tabs button').forEach(b=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll('.auth-tabs button').forEach(x=>x.classList.remove('active'));
+      b.classList.add('active');
+      document.getElementById('loginForm').style.display = b.dataset.tab==='login'?'flex':'none';
+      document.getElementById('registerForm').style.display = b.dataset.tab==='register'?'flex':'none';
+    });
+  });
+  document.querySelectorAll('.auth-form').forEach(f=>f.addEventListener('submit',e=>{e.preventDefault();alert('Demo sin backend');}));
+</script>
+</body>
+</html>
